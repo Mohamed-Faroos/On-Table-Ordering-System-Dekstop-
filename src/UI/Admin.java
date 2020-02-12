@@ -55,7 +55,7 @@ public class Admin extends javax.swing.JFrame {
         btnLogout.setBackground(new java.awt.Color(255, 0, 51));
         btnLogout.setForeground(new java.awt.Color(255, 255, 255));
         btnLogout.setText("< Logout");
-        btnLogout.setBorder(null);
+        btnLogout.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         btnLogout.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
@@ -66,8 +66,8 @@ public class Admin extends javax.swing.JFrame {
         btnUser.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         btnUser.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnUser.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                MouseEntered(evt);
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnUserMouseClicked(evt);
             }
         });
 
@@ -76,33 +76,18 @@ public class Admin extends javax.swing.JFrame {
         btnCategory.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/category.png"))); // NOI18N
         btnCategory.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         btnCategory.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnCategory.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                MouseEntered(evt);
-            }
-        });
 
         btnProducts.setForeground(new java.awt.Color(255, 255, 255));
         btnProducts.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnProducts.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/foods.png"))); // NOI18N
         btnProducts.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         btnProducts.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnProducts.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                MouseEntered(evt);
-            }
-        });
 
         btnTab.setForeground(new java.awt.Color(255, 255, 255));
         btnTab.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnTab.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/tablet.png"))); // NOI18N
         btnTab.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         btnTab.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnTab.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                MouseEntered(evt);
-            }
-        });
 
         jLabel7.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
@@ -113,11 +98,6 @@ public class Admin extends javax.swing.JFrame {
         btnTab1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/prediction.png"))); // NOI18N
         btnTab1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         btnTab1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnTab1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                MouseEntered(evt);
-            }
-        });
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -129,9 +109,6 @@ public class Admin extends javax.swing.JFrame {
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
-                        .addComponent(Heading)
-                        .addGap(74, 74, 74))
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(mainPanelLayout.createSequentialGroup()
@@ -140,7 +117,11 @@ public class Admin extends javax.swing.JFrame {
                             .addGroup(mainPanelLayout.createSequentialGroup()
                                 .addGap(138, 138, 138)
                                 .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(Heading)
+                        .addGap(79, 79, 79)))
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -208,9 +189,10 @@ public class Admin extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MouseEntered
-            this.setForeground(Color.black);
-    }//GEN-LAST:event_MouseEntered
+    private void btnUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUserMouseClicked
+        ManageUser mu=new ManageUser();
+        mu.setVisible(true);
+    }//GEN-LAST:event_btnUserMouseClicked
 
     /**
      * @param args the command line arguments
