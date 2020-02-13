@@ -90,4 +90,13 @@ public class DBUserTest {
         assertEquals(expResult, result);
     }
     
+    @Test
+    public void testLastID()
+    {
+        System.out.println("testLastID");   
+        DBUser instance = new DBUser(); 
+        String result = instance.lastID();
+        assertEquals("U001", result);
+    }
+    
 }
