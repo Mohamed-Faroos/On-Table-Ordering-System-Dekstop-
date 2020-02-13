@@ -3,22 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package main;
-
-import UI.Admin;
+package DB;
 
 /**
  *
  * @author Faroos
  */
-public class Main {
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        Admin adm=new Admin();
-        adm.setVisible(true);
+public class DBUser {
+    
+    DBUtil util;
+    
+    public DBUser()
+    {
+        util=DBUtil.getIntence();
     }
+    
+    
     
 }
