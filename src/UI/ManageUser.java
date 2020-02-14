@@ -5,6 +5,12 @@
  */
 package UI;
 
+import DB.DBUser;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import main.User;
+
 /**
  *
  * @author Faroos
@@ -15,9 +21,14 @@ public class ManageUser extends javax.swing.JFrame {
      * Creates new form ManageUser
      */
     public ManageUser() {
+        
         initComponents();
-                txtMsg.setVisible(false);
-
+        txtMsg.setVisible(false);
+        txtMsg1.setVisible(false);
+        getLastID();
+        txtId.disable();
+        getAllUsers();
+        
     }
 
     /**
@@ -53,8 +64,29 @@ public class ManageUser extends javax.swing.JFrame {
         txtMsg = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         txtCpassword = new javax.swing.JPasswordField();
+        jLabel12 = new javax.swing.JLabel();
+        txtPassword2 = new javax.swing.JPasswordField();
+        jLabel13 = new javax.swing.JLabel();
+        txtCpassword2 = new javax.swing.JPasswordField();
         Search = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblUsers = new javax.swing.JTable();
+        jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
+        txtId1 = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        cmbType1 = new javax.swing.JComboBox<>();
+        jLabel9 = new javax.swing.JLabel();
+        txtName1 = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        txtPassword1 = new javax.swing.JPasswordField();
+        jLabel11 = new javax.swing.JLabel();
+        txtCpassword1 = new javax.swing.JPasswordField();
+        txtMsg1 = new javax.swing.JLabel();
+        btnUpdate = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        cmbStatus = new javax.swing.JComboBox<>();
+        btnViewUser = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -66,11 +98,11 @@ public class ManageUser extends javax.swing.JFrame {
         Heading.setForeground(new java.awt.Color(255, 255, 255));
         Heading.setText("Manage Users");
         mainPanel.add(Heading);
-        Heading.setBounds(40, 90, 175, 29);
+        Heading.setBounds(50, 90, 175, 29);
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
         mainPanel.add(jSeparator1);
-        jSeparator1.setBounds(260, 20, 12, 530);
+        jSeparator1.setBounds(260, 20, 12, 560);
 
         btnExit.setForeground(new java.awt.Color(255, 255, 255));
         btnExit.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -89,7 +121,7 @@ public class ManageUser extends javax.swing.JFrame {
         txtFooter.setForeground(new java.awt.Color(255, 255, 255));
         txtFooter.setText("Designed & Developed by Mohamed Faroos");
         mainPanel.add(txtFooter);
-        txtFooter.setBounds(33, 502, 209, 21);
+        txtFooter.setBounds(30, 540, 209, 21);
 
         txtTitle.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         txtTitle.setForeground(new java.awt.Color(255, 255, 255));
@@ -129,7 +161,7 @@ public class ManageUser extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 640, Short.MAX_VALUE)
+            .addGap(0, 670, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -137,7 +169,7 @@ public class ManageUser extends javax.swing.JFrame {
         );
 
         mainPanel.add(jPanel2);
-        jPanel2.setBounds(270, 40, 640, 50);
+        jPanel2.setBounds(270, 40, 670, 50);
 
         addUser.setBackground(new java.awt.Color(0, 102, 153));
         addUser.setLayout(null);
@@ -212,43 +244,145 @@ public class ManageUser extends javax.swing.JFrame {
         addUser.add(txtCpassword);
         txtCpassword.setBounds(140, 350, 280, 30);
 
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel12.setText("Password");
+        addUser.add(jLabel12);
+        jLabel12.setBounds(140, 260, 80, 16);
+
+        txtPassword2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        addUser.add(txtPassword2);
+        txtPassword2.setBounds(140, 280, 280, 30);
+
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel13.setText("Comfirm Password");
+        addUser.add(jLabel13);
+        jLabel13.setBounds(140, 330, 130, 16);
+
+        txtCpassword2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        addUser.add(txtCpassword2);
+        txtCpassword2.setBounds(140, 350, 280, 30);
+
         userTabPane.addTab("", addUser);
 
         Search.setBackground(new java.awt.Color(0, 102, 153));
+        Search.setLayout(null);
 
-        jLabel3.setText("tab2");
+        tblUsers.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "User ID", "Username", "User Type"
+            }
+        ));
+        jScrollPane1.setViewportView(tblUsers);
 
-        javax.swing.GroupLayout SearchLayout = new javax.swing.GroupLayout(Search);
-        Search.setLayout(SearchLayout);
-        SearchLayout.setHorizontalGroup(
-            SearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(SearchLayout.createSequentialGroup()
-                .addGap(241, 241, 241)
-                .addComponent(jLabel3)
-                .addContainerGap(330, Short.MAX_VALUE))
-        );
-        SearchLayout.setVerticalGroup(
-            SearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(SearchLayout.createSequentialGroup()
-                .addGap(76, 76, 76)
-                .addComponent(jLabel3)
-                .addContainerGap(382, Short.MAX_VALUE))
-        );
+        Search.add(jScrollPane1);
+        jScrollPane1.setBounds(10, 20, 470, 210);
+
+        jPanel1.setBackground(new java.awt.Color(0, 102, 153));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        jPanel1.setLayout(null);
+
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("User ID");
+        jPanel1.add(jLabel3);
+        jLabel3.setBounds(50, 10, 60, 16);
+
+        txtId1.setEditable(false);
+        jPanel1.add(txtId1);
+        txtId1.setBounds(40, 30, 230, 30);
+
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("User Type");
+        jPanel1.add(jLabel8);
+        jLabel8.setBounds(40, 70, 80, 16);
+
+        cmbType1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select an User Type", "Cashier", "Chef" }));
+        jPanel1.add(cmbType1);
+        cmbType1.setBounds(40, 90, 230, 30);
+
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setText("Username");
+        jPanel1.add(jLabel9);
+        jLabel9.setBounds(40, 130, 80, 16);
+        jPanel1.add(txtName1);
+        txtName1.setBounds(40, 150, 230, 30);
+
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setText("Password");
+        jPanel1.add(jLabel10);
+        jLabel10.setBounds(320, 10, 80, 16);
+        jPanel1.add(txtPassword1);
+        txtPassword1.setBounds(320, 30, 230, 30);
+
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setText("Comfirm Password");
+        jPanel1.add(jLabel11);
+        jLabel11.setBounds(320, 70, 130, 16);
+        jPanel1.add(txtCpassword1);
+        txtCpassword1.setBounds(320, 90, 230, 30);
+
+        txtMsg1.setForeground(new java.awt.Color(255, 255, 255));
+        txtMsg1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtMsg1.setText("Message");
+        jPanel1.add(txtMsg1);
+        txtMsg1.setBounds(70, 190, 460, 20);
+
+        btnUpdate.setFont(new java.awt.Font("Lucida Grande", 1, 15)); // NOI18N
+        btnUpdate.setForeground(new java.awt.Color(51, 255, 204));
+        btnUpdate.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnUpdate.setText("Update");
+        btnUpdate.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 255, 204)));
+        btnUpdate.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnUpdateMouseClicked(evt);
+            }
+        });
+        jPanel1.add(btnUpdate);
+        btnUpdate.setBounds(240, 220, 110, 30);
+
+        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel14.setText("Status");
+        jPanel1.add(jLabel14);
+        jLabel14.setBounds(320, 130, 130, 16);
+
+        cmbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Available", "Not Available" }));
+        jPanel1.add(cmbStatus);
+        cmbStatus.setBounds(320, 150, 230, 30);
+
+        Search.add(jPanel1);
+        jPanel1.setBounds(10, 240, 570, 260);
+
+        btnViewUser.setForeground(new java.awt.Color(255, 255, 255));
+        btnViewUser.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnViewUser.setText("View ");
+        btnViewUser.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        btnViewUser.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnViewUserMouseClicked(evt);
+            }
+        });
+        Search.add(btnViewUser);
+        btnViewUser.setBounds(490, 40, 90, 30);
 
         userTabPane.addTab("", Search);
 
         mainPanel.add(userTabPane);
-        userTabPane.setBounds(290, 41, 620, 520);
+        userTabPane.setBounds(290, 41, 610, 550);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 924, Short.MAX_VALUE)
+            .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 906, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 566, Short.MAX_VALUE)
+            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 590, Short.MAX_VALUE)
         );
 
         pack();
@@ -261,6 +395,7 @@ public class ManageUser extends javax.swing.JFrame {
 
     private void btnViewMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnViewMouseClicked
             userTabPane.setSelectedIndex(1);
+            getAllUsers();
     }//GEN-LAST:event_btnViewMouseClicked
 
     private void btnExitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExitMouseClicked
@@ -297,11 +432,159 @@ public class ManageUser extends javax.swing.JFrame {
                              txtMsg.setVisible(true);
                              txtMsg.setText("Error : Password Not Matched");
                          }else{
-                             txtMsg.setVisible(true);
-                             txtMsg.setText("Success : User Added Successfully");
+                             try {
+                                    String id=txtId.getText();
+                                    int userType=cmbType.getSelectedIndex();
+                                    String username=txtName.getText();
+                                    String password=txtPassword.getText();
+                                    int status=0; 
+
+                                    User us=new User(id, username, password, userType, status);
+                                    DBUser dbu=new DBUser();
+                                    boolean rs=dbu.addUser(us);
+
+                                    if(rs)
+                                    {
+                                       txtMsg.setVisible(true);
+                                       txtMsg.setText("Success : User Added Successfully");
+                                       getLastID();
+                                       
+                                       cmbType.setSelectedIndex(0);
+                                       txtName.setText("");
+                                       txtPassword.setText("");
+                                       txtCpassword.setText("");
+                                       
+                                    }else{
+                                       txtMsg.setVisible(true);
+                                       txtMsg.setText("Error : Please check Entered Details");    
+                                    }
+                             } catch (Exception e) {
+                                 e.printStackTrace();
+                             }
+                             
                          }
     }//GEN-LAST:event_btnSubmitMouseClicked
 
+    private void btnViewUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnViewUserMouseClicked
+        int row = tblUsers.getSelectedRow();
+        
+        String ID=tblUsers.getValueAt(row, 0).toString();
+        
+        DBUser dbu=new DBUser();
+        User us=dbu.getUser(ID);
+        
+       txtId1.setText(ID);
+       cmbType1.setSelectedIndex(us.getUserType());
+       txtName1.setText(us.getUsername());
+       txtPassword1.setText(us.getPassword());
+       txtCpassword1.setText(us.getPassword());
+       cmbStatus.setSelectedIndex(us.getStaus());
+
+    }//GEN-LAST:event_btnViewUserMouseClicked
+
+    private void btnUpdateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUpdateMouseClicked
+              txtMsg1.setVisible(false);
+        
+        if(cmbType1.getSelectedIndex()==0)
+        {
+            txtMsg1.setVisible(true);
+            txtMsg1.setText("Error : Please Select an User-Type");
+        }else
+            if(txtName1.getText().isEmpty())
+            {
+                txtMsg1.setVisible(true);
+                txtMsg1.setText("Error : Please Enter Username");
+            }else
+                 if(txtPassword1.getText().isEmpty())
+                 {
+                     txtMsg1.setVisible(true);
+                     txtMsg1.setText("Error : Please Enter password");
+                 }else
+                     if(txtCpassword1.getText().isEmpty())
+                     {
+                         txtMsg1.setVisible(true);
+                         txtMsg1.setText("Error : Please Enter Confirm assword");
+                     }else 
+                         if(!txtPassword1.getText().equals(txtCpassword1.getText()))
+                         {
+                             txtMsg1.setVisible(true);
+                             txtMsg1.setText("Error : Password Not Matched");
+                         }else{
+                             try {
+                                    String id=txtId1.getText();
+                                    int userType=cmbType1.getSelectedIndex();
+                                    String username=txtName1.getText();
+                                    String password=txtPassword1.getText();
+                                    int status=cmbStatus.getSelectedIndex(); 
+
+                                    User us=new User(id, username, password, userType, status);
+                                    DBUser dbu=new DBUser();
+                                    boolean rs=dbu.updateUser(us);
+
+                                    if(rs)
+                                    {
+                                       txtMsg1.setVisible(true);
+                                       txtMsg1.setText("Success : User Updated Successfully");
+                                       getAllUsers();
+                                       txtId1.setText("");
+                                       cmbType1.setSelectedIndex(0);
+                                       txtName1.setText("");
+                                       txtPassword1.setText("");
+                                       txtCpassword1.setText("");
+                                       cmbStatus.setSelectedIndex(0);
+                                       
+                                    }else{
+                                       txtMsg1.setVisible(true);
+                                       txtMsg1.setText("Error : Please check Entered Details");    
+                                    }
+                             } catch (Exception e) {
+                                 e.printStackTrace();
+                             }
+                             
+                         }
+    }//GEN-LAST:event_btnUpdateMouseClicked
+
+    public void getLastID()
+    {
+        DBUser dbu=new DBUser();
+        String UID=dbu.lastID();
+        
+        txtId.setText(UID);
+    }
+    
+    
+    public void getAllUsers()
+    {
+        
+        
+        DBUser dbu=new DBUser();
+        dbu.getAllUser();
+        
+        List<User> al= dbu.getAllUser();
+        
+        DefaultTableModel model=(DefaultTableModel)tblUsers.getModel();
+            model.setRowCount(0);
+            Object[] row=new Object[3];
+            
+            for(int i=1;i<al.size();i++)
+                {
+                    row[0]=al.get(i).getUid();
+                    row[1]=al.get(i).getUsername();
+
+                    if(al.get(i).getUserType()==1){
+
+                        row[2]="Cashier";
+                    }else{
+                        
+                        row[2]="Chef";
+                    }
+                    
+                    
+                    model.addRow(row);
+                }
+            
+            
+    }
     /**
      * @param args the command line arguments
      */
@@ -344,24 +627,45 @@ public class ManageUser extends javax.swing.JFrame {
     private javax.swing.JLabel btnAddUser;
     private javax.swing.JLabel btnExit;
     private javax.swing.JLabel btnSubmit;
+    private javax.swing.JLabel btnUpdate;
     private javax.swing.JLabel btnView;
+    private javax.swing.JLabel btnViewUser;
+    private javax.swing.JComboBox<String> cmbStatus;
     private javax.swing.JComboBox<String> cmbType;
+    private javax.swing.JComboBox<String> cmbType1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JPanel mainPanel;
+    private javax.swing.JTable tblUsers;
     private javax.swing.JPasswordField txtCpassword;
+    private javax.swing.JPasswordField txtCpassword1;
+    private javax.swing.JPasswordField txtCpassword2;
     private javax.swing.JLabel txtFooter;
     private javax.swing.JTextField txtId;
+    private javax.swing.JTextField txtId1;
     private javax.swing.JLabel txtMsg;
+    private javax.swing.JLabel txtMsg1;
     private javax.swing.JTextField txtName;
+    private javax.swing.JTextField txtName1;
     private javax.swing.JPasswordField txtPassword;
+    private javax.swing.JPasswordField txtPassword1;
+    private javax.swing.JPasswordField txtPassword2;
     private javax.swing.JLabel txtTitle;
     private javax.swing.JTabbedPane userTabPane;
     // End of variables declaration//GEN-END:variables
