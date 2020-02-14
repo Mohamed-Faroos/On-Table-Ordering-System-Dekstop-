@@ -108,6 +108,8 @@ public class DBUser {
     public String lastID()
     {
         String UID = null;
+        String IDS=null ;
+
             try
         {
             String sql="Select * from User";
@@ -123,7 +125,6 @@ public class DBUser {
             String x = UID.substring(1);
             int ID = Integer.parseInt(x);
             
-            String IDS=null ;
             
             if(ID>0 && ID<9)
             {
@@ -148,6 +149,6 @@ public class DBUser {
     {
         e.printStackTrace();
     }
-    return UID;
+    return IDS;
     }
 }
