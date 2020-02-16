@@ -36,7 +36,6 @@ public class Admin extends javax.swing.JFrame {
         btnLogout = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         btnUser = new javax.swing.JLabel();
-        btnCategory = new javax.swing.JLabel();
         btnProducts = new javax.swing.JLabel();
         btnTab = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -71,17 +70,16 @@ public class Admin extends javax.swing.JFrame {
             }
         });
 
-        btnCategory.setForeground(new java.awt.Color(255, 255, 255));
-        btnCategory.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        btnCategory.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/category.png"))); // NOI18N
-        btnCategory.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-        btnCategory.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
         btnProducts.setForeground(new java.awt.Color(255, 255, 255));
         btnProducts.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnProducts.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/foods.png"))); // NOI18N
         btnProducts.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         btnProducts.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnProducts.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnProductsMouseClicked(evt);
+            }
+        });
 
         btnTab.setForeground(new java.awt.Color(255, 255, 255));
         btnTab.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -123,48 +121,33 @@ public class Admin extends javax.swing.JFrame {
                         .addComponent(Heading)
                         .addGap(79, 79, 79)))
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGap(30, 30, 30)
+                        .addGap(14, 14, 14)
+                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(mainPanelLayout.createSequentialGroup()
+                                .addGap(140, 140, 140)
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE))
+                            .addGroup(mainPanelLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(btnTab, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(125, 125, 125)
+                                .addComponent(btnTab1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addGap(88, 88, 88)
                         .addComponent(btnUser)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
-                        .addComponent(btnCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(43, 43, 43)
-                        .addComponent(btnProducts, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(46, 46, 46))
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGap(140, 140, 140)
-                        .addComponent(jLabel1)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnTab, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(55, 55, 55)
-                        .addComponent(btnTab1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(119, 119, 119))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnProducts, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(91, 91, 91))
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGap(37, 37, 37)
-                        .addComponent(jLabel1)
-                        .addGap(68, 68, 68)
-                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnProducts, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnUser, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(55, 55, 55)
-                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnTab1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnTab, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGap(213, 213, 213)
-                        .addComponent(Heading)
-                        .addGap(35, 35, 35)
-                        .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(213, 213, 213)
+                .addComponent(Heading)
+                .addGap(35, 35, 35)
+                .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28))
@@ -172,6 +155,17 @@ public class Admin extends javax.swing.JFrame {
                 .addGap(0, 20, Short.MAX_VALUE)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 533, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(17, 17, 17))
+            .addGroup(mainPanelLayout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addComponent(jLabel1)
+                .addGap(78, 78, 78)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnUser, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnProducts, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(54, 54, 54)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnTab, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnTab1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -193,6 +187,11 @@ public class Admin extends javax.swing.JFrame {
         ManageUser mu=new ManageUser();
         mu.setVisible(true);
     }//GEN-LAST:event_btnUserMouseClicked
+
+    private void btnProductsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProductsMouseClicked
+        ManageFood mf=new ManageFood();
+        mf.setVisible(true);
+    }//GEN-LAST:event_btnProductsMouseClicked
 
     /**
      * @param args the command line arguments
@@ -231,7 +230,6 @@ public class Admin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Heading;
-    private javax.swing.JLabel btnCategory;
     private javax.swing.JButton btnLogout;
     private javax.swing.JLabel btnProducts;
     private javax.swing.JLabel btnTab;
