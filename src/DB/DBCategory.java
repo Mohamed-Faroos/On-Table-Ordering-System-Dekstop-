@@ -29,7 +29,7 @@ public class DBCategory {
     public boolean addCategory(Category ct)
     {
         String sql="INSERT INTO `category`(`cid`, `category`, `description`, `status`) VALUES"
-                + " ('"+ct.getcId()+"','"+ct.getcName()+"','"+ct.getDiscription()+"',"+ct.getStatus()+"s)";
+                + " ('"+ct.getcId()+"','"+ct.getcName()+"','"+ct.getDiscription()+"',"+ct.getStatus()+")";
         return util.DBUpdate(sql);
     }
     
@@ -95,7 +95,7 @@ public class DBCategory {
     
     public boolean updateCategory(Category ct)
     {
-        String sql="UPDATE `category` SET `description`='"+ct.getDiscription()+"',`status`="+ct.getStatus()+" WHERE `cid`="+ct.getcId()+"";
+        String sql="UPDATE `category` SET `description`='"+ct.getDiscription()+"',`status`="+ct.getStatus()+" WHERE `cid`='"+ct.getcId()+"'";
         return util.DBUpdate(sql);
     }
     
