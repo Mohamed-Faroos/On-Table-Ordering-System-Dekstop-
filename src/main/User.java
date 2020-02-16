@@ -14,19 +14,22 @@ public class User {
     private String username;
     private String password;
     private int userType;
+    private int status;
 
     public User() {
         this.uid = "";
         this.username = "";
         this.password = "";
         this.userType = 0;
+        this.status=0;
     }
 
-    public User(String uid, String username, String password, int userType) {
+    public User(String uid, String username, String password, int userType,int status) {
         this.uid = uid;
         this.username = username;
         this.password = password;
         this.userType = userType;
+        this.status=status;
     }
 
     
@@ -84,6 +87,18 @@ public class User {
      */
     public void setUserType(int userType) {
         this.userType = userType;
+    }
+    
+    
+    public int getStaus() {
+        return status;
+    }
+
+    /**
+     * @param userType the userType to set
+     */
+    public void setStatus(int status) {
+        this.status = status;
     }
     
     

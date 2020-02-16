@@ -5,53 +5,51 @@
  */
 package DB;
 
-import java.util.List;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.List;
+import main.Category;
 import main.User;
 
 /**
  *
  * @author Faroos
  */
-public class DBUser {
-    
+public class DBCategory {
     DBUtil util;
     ResultSet rs;
-    User user;
-    ArrayList<User> userl;
-    
-    public DBUser()
+    Category cate;
+    ArrayList<Category> cateL;
+
+    public DBCategory()
     {
         util=DBUtil.getIntence();
     }
     
-    public boolean addUser(User ow)
+    public boolean addCategory(Category ct)
     {
-        String sql="INSERT INTO `User`(`uid`, `username`, `password`, `userType`,`status`) VALUES"
-                + " ('"+ow.getUid()+"','"+ow.getUsername()+"','"+ow.getPassword()+"',"+ow.getUserType()+","+ow.getStaus()+")";
-        
+        String sql="INSERT INTO `category`(`cid`, `category`, `description`, `status`) VALUES"
+                + " ('"+ct.getcId()+"','"+ct.getcName()+"','"+ct.getDiscription()+"',"+ct.getStatus()+")";
         return util.DBUpdate(sql);
     }
     
-    public User getUser(String id)
+     public Category getCategory(String id)
     {
     
         try {
             
-            String sql="Select * From User Where uid='"+id+"'";
+            String sql="Select * From category Where cid='"+id+"'";
             
             rs=util.DBData(sql);
             
             if(rs.next())
             {
-                String ID=rs.getString("uid");
-                String username=rs.getString("username");
-                String password=rs.getString("password");
-                int userType=rs.getInt("userType");
+                String ID=rs.getString("cid");
+                String category=rs.getString("category");
+                String description=rs.getString("description");
                 int status=rs.getInt("status");
                 
-                user = new User(ID, username, password, userType, status);
+                cate = new Category(ID, category, description, status);
             }
             
             
@@ -59,16 +57,16 @@ public class DBUser {
             e.printStackTrace();
         }
         
-        return user;
+        return cate;
     }
     
     /**
      *
      * @return
      */
-    public List<User> getAllUser()
+    public List<Category> getAllCategory()
     {
-        userl= new ArrayList<>();
+        cateL= new ArrayList<>();
         try {
             
             String sql="Select * From User";
@@ -77,14 +75,13 @@ public class DBUser {
             
             while(rs.next())
             {
-                String ID=rs.getString("uid");
-                String username=rs.getString("username");
-                String password=rs.getString("password");
-                int userType=rs.getInt("userType");
+                String ID=rs.getString("cid");
+                String category=rs.getString("category");
+                String description=rs.getString("description");
                 int status=rs.getInt("status");
                 
-                user = new User(ID, username, password, userType, status);
-                userl.add(user);
+                cate = new Category(ID, category, description, status);
+                cateL.add(cate);
             }
             
             
@@ -92,13 +89,13 @@ public class DBUser {
             e.printStackTrace();
         }
         
-        return userl;
+        return cateL;
 
     }
     
-    public boolean updateUser(User us)
+    public boolean updateCategory(Category ct)
     {
-        String sql="UPDATE User set username='"+us.getUsername()+"',password='"+us.getPassword()+"',status="+us.getStaus()+" where uid='"+us.getUid()+"'";
+        String sql="UPDATE `category` SET `description`='"+ct.getDiscription()+"',`status`="+ct.getStatus()+" WHERE `cid`='"+ct.getcId()+"'";
         return util.DBUpdate(sql);
     }
     
@@ -112,14 +109,14 @@ public class DBUser {
 
             try
         {
-            String sql="Select * from User";
+            String sql="Select * from Category";
             rs = util.DBData(sql);
            
             
             
             while(rs.next())
             {
-                UID = rs.getString("uid");
+                UID = rs.getString("cid");
             }
             UID = UID.trim();
             String x = UID.substring(1);
@@ -129,19 +126,19 @@ public class DBUser {
             if(ID>0 && ID<9)
             {
                 ID=ID+1;
-                IDS="U00"+ID;
+                IDS="C00"+ID;
             }
             
             else if(ID>=9 && ID<99)
             {
                 ID=ID+1;
-                IDS="U0"+ID;
+                IDS="C0"+ID;
             }
             
             else if(ID >=99)
             {
                 ID=ID+1;
-                IDS="U"+ID;
+                IDS="C"+ID;
             }
             
      
