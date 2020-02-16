@@ -33,7 +33,6 @@ public class Admin extends javax.swing.JFrame {
 
         mainPanel = new javax.swing.JPanel();
         Heading = new javax.swing.JLabel();
-        btnLogout = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         btnUser = new javax.swing.JLabel();
         btnProducts = new javax.swing.JLabel();
@@ -41,23 +40,24 @@ public class Admin extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         btnTab1 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
-        mainPanel.setBackground(new java.awt.Color(0, 102, 153));
+        mainPanel.setBackground(new java.awt.Color(51, 51, 51));
+        mainPanel.setLayout(null);
 
-        Heading.setFont(new java.awt.Font("Lucida Sans", 1, 24)); // NOI18N
+        Heading.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
         Heading.setForeground(new java.awt.Color(255, 255, 255));
         Heading.setText("Admin Panel");
-
-        btnLogout.setBackground(new java.awt.Color(255, 0, 51));
-        btnLogout.setForeground(new java.awt.Color(255, 255, 255));
-        btnLogout.setText("< Logout");
-        btnLogout.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-        btnLogout.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        mainPanel.add(Heading);
+        Heading.setBounds(150, 60, 120, 30);
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        mainPanel.add(jSeparator1);
+        jSeparator1.setBounds(410, 20, 12, 533);
 
         btnUser.setForeground(new java.awt.Color(255, 255, 255));
         btnUser.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -69,6 +69,8 @@ public class Admin extends javax.swing.JFrame {
                 btnUserMouseClicked(evt);
             }
         });
+        mainPanel.add(btnUser);
+        btnUser.setBounds(480, 130, 127, 139);
 
         btnProducts.setForeground(new java.awt.Color(255, 255, 255));
         btnProducts.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -80,103 +82,60 @@ public class Admin extends javax.swing.JFrame {
                 btnProductsMouseClicked(evt);
             }
         });
+        mainPanel.add(btnProducts);
+        btnProducts.setBounds(730, 130, 125, 139);
 
         btnTab.setForeground(new java.awt.Color(255, 255, 255));
         btnTab.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnTab.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/tablet.png"))); // NOI18N
         btnTab.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         btnTab.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        mainPanel.add(btnTab);
+        btnTab.setBounds(480, 330, 122, 139);
 
         jLabel7.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Designed & Developed by Mohamed Faroos");
+        mainPanel.add(jLabel7);
+        jLabel7.setBounds(90, 520, 209, 21);
 
         btnTab1.setForeground(new java.awt.Color(255, 255, 255));
         btnTab1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnTab1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/prediction.png"))); // NOI18N
         btnTab1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         btnTab1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        mainPanel.add(btnTab1);
+        btnTab1.setBounds(730, 330, 122, 139);
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("On-Table Ordering System");
+        mainPanel.add(jLabel1);
+        jLabel1.setBounds(550, 30, 251, 22);
 
-        javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
-        mainPanel.setLayout(mainPanelLayout);
-        mainPanelLayout.setHorizontalGroup(
-            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mainPanelLayout.createSequentialGroup()
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(mainPanelLayout.createSequentialGroup()
-                                .addGap(73, 73, 73)
-                                .addComponent(jLabel7))
-                            .addGroup(mainPanelLayout.createSequentialGroup()
-                                .addGap(138, 138, 138)
-                                .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(Heading)
-                        .addGap(79, 79, 79)))
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(mainPanelLayout.createSequentialGroup()
-                                .addGap(140, 140, 140)
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE))
-                            .addGroup(mainPanelLayout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(btnTab, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(125, 125, 125)
-                                .addComponent(btnTab1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGap(88, 88, 88)
-                        .addComponent(btnUser)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnProducts, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(91, 91, 91))
-        );
-        mainPanelLayout.setVerticalGroup(
-            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mainPanelLayout.createSequentialGroup()
-                .addGap(213, 213, 213)
-                .addComponent(Heading)
-                .addGap(35, 35, 35)
-                .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
-                .addGap(0, 20, Short.MAX_VALUE)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 533, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(17, 17, 17))
-            .addGroup(mainPanelLayout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addComponent(jLabel1)
-                .addGap(78, 78, 78)
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnUser, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnProducts, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(54, 54, 54)
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnTab, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnTab1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        );
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Logo.png"))); // NOI18N
+        jLabel9.setText("jLabel9");
+        mainPanel.add(jLabel9);
+        jLabel9.setBounds(0, 160, 380, 210);
+
+        jLabel2.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel2.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Logout");
+        jLabel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 51)));
+        mainPanel.add(jLabel2);
+        jLabel2.setBounds(150, 460, 90, 30);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 920, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 573, Short.MAX_VALUE)
         );
 
         pack();
@@ -230,13 +189,14 @@ public class Admin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Heading;
-    private javax.swing.JButton btnLogout;
     private javax.swing.JLabel btnProducts;
     private javax.swing.JLabel btnTab;
     private javax.swing.JLabel btnTab1;
     private javax.swing.JLabel btnUser;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JPanel mainPanel;
     // End of variables declaration//GEN-END:variables

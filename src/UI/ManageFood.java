@@ -53,7 +53,7 @@ public class ManageFood extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
-        mainPanel.setBackground(new java.awt.Color(0, 102, 153));
+        mainPanel.setBackground(new java.awt.Color(51, 51, 51));
         mainPanel.setLayout(null);
 
         Heading.setFont(new java.awt.Font("Lucida Sans", 1, 24)); // NOI18N
@@ -66,10 +66,10 @@ public class ManageFood extends javax.swing.JFrame {
         mainPanel.add(jSeparator1);
         jSeparator1.setBounds(250, 20, 12, 580);
 
-        btnExit.setForeground(new java.awt.Color(255, 255, 255));
+        btnExit.setForeground(new java.awt.Color(255, 255, 0));
         btnExit.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnExit.setText("Exit");
-        btnExit.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        btnExit.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 51)));
         btnExit.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnExit.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -85,10 +85,10 @@ public class ManageFood extends javax.swing.JFrame {
         mainPanel.add(txtFooter);
         txtFooter.setBounds(30, 560, 209, 21);
 
-        btnUpdateCategory.setForeground(new java.awt.Color(255, 255, 255));
+        btnUpdateCategory.setForeground(new java.awt.Color(255, 255, 0));
         btnUpdateCategory.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnUpdateCategory.setText("Update Category");
-        btnUpdateCategory.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        btnUpdateCategory.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 51)));
         btnUpdateCategory.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnUpdateCategory.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -98,10 +98,10 @@ public class ManageFood extends javax.swing.JFrame {
         mainPanel.add(btnUpdateCategory);
         btnUpdateCategory.setBounds(60, 250, 140, 38);
 
-        btnAddcategory.setForeground(new java.awt.Color(255, 255, 255));
+        btnAddcategory.setForeground(new java.awt.Color(255, 255, 0));
         btnAddcategory.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnAddcategory.setText("Add Category");
-        btnAddcategory.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        btnAddcategory.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 51)));
         btnAddcategory.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAddcategory.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -111,7 +111,7 @@ public class ManageFood extends javax.swing.JFrame {
         mainPanel.add(btnAddcategory);
         btnAddcategory.setBounds(60, 180, 140, 38);
 
-        jPanel2.setBackground(new java.awt.Color(0, 102, 153));
+        jPanel2.setBackground(new java.awt.Color(51, 51, 51));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -121,13 +121,13 @@ public class ManageFood extends javax.swing.JFrame {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 30, Short.MAX_VALUE)
+            .addGap(0, 50, Short.MAX_VALUE)
         );
 
         mainPanel.add(jPanel2);
-        jPanel2.setBounds(270, 60, 670, 30);
+        jPanel2.setBounds(270, 40, 670, 50);
 
-        addCategory.setBackground(new java.awt.Color(0, 102, 153));
+        addCategory.setBackground(new java.awt.Color(51, 51, 51));
 
         txtTitle.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         txtTitle.setForeground(new java.awt.Color(255, 255, 255));
@@ -152,7 +152,7 @@ public class ManageFood extends javax.swing.JFrame {
 
         userTabPane.addTab("tab1", addCategory);
 
-        updateCategory.setBackground(new java.awt.Color(0, 102, 153));
+        updateCategory.setBackground(new java.awt.Color(51, 51, 51));
 
         txtTitle2.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         txtTitle2.setForeground(new java.awt.Color(255, 255, 255));
@@ -177,7 +177,7 @@ public class ManageFood extends javax.swing.JFrame {
 
         userTabPane.addTab("tab2", updateCategory);
 
-        addFood.setBackground(new java.awt.Color(0, 102, 153));
+        addFood.setBackground(new java.awt.Color(51, 51, 51));
 
         txtTitle3.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         txtTitle3.setForeground(new java.awt.Color(255, 255, 255));
@@ -202,7 +202,7 @@ public class ManageFood extends javax.swing.JFrame {
 
         userTabPane.addTab("tab3", addFood);
 
-        updateFood.setBackground(new java.awt.Color(0, 102, 153));
+        updateFood.setBackground(new java.awt.Color(51, 51, 51));
 
         txtTitle4.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         txtTitle4.setForeground(new java.awt.Color(255, 255, 255));
@@ -213,16 +213,16 @@ public class ManageFood extends javax.swing.JFrame {
         updateFoodLayout.setHorizontalGroup(
             updateFoodLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(updateFoodLayout.createSequentialGroup()
-                .addGap(279, 279, 279)
+                .addGap(269, 269, 269)
                 .addComponent(txtTitle4)
-                .addContainerGap(285, Short.MAX_VALUE))
+                .addContainerGap(295, Short.MAX_VALUE))
         );
         updateFoodLayout.setVerticalGroup(
             updateFoodLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(updateFoodLayout.createSequentialGroup()
-                .addGap(14, 14, 14)
+                .addGap(15, 15, 15)
                 .addComponent(txtTitle4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(480, Short.MAX_VALUE))
+                .addContainerGap(479, Short.MAX_VALUE))
         );
 
         userTabPane.addTab("tab4", updateFood);
@@ -242,10 +242,10 @@ public class ManageFood extends javax.swing.JFrame {
         mainPanel.add(Heading2);
         Heading2.setBounds(40, 40, 190, 29);
 
-        btnAddFood.setForeground(new java.awt.Color(255, 255, 255));
+        btnAddFood.setForeground(new java.awt.Color(255, 255, 0));
         btnAddFood.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnAddFood.setText("Add Food");
-        btnAddFood.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        btnAddFood.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 51)));
         btnAddFood.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAddFood.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -255,10 +255,10 @@ public class ManageFood extends javax.swing.JFrame {
         mainPanel.add(btnAddFood);
         btnAddFood.setBounds(60, 320, 140, 38);
 
-        btnUpdateFoods.setForeground(new java.awt.Color(255, 255, 255));
+        btnUpdateFoods.setForeground(new java.awt.Color(255, 255, 0));
         btnUpdateFoods.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnUpdateFoods.setText("Update Food");
-        btnUpdateFoods.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        btnUpdateFoods.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 51)));
         btnUpdateFoods.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnUpdateFoods.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {

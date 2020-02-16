@@ -91,7 +91,7 @@ public class ManageUser extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
-        mainPanel.setBackground(new java.awt.Color(0, 102, 153));
+        mainPanel.setBackground(new java.awt.Color(51, 51, 51));
         mainPanel.setLayout(null);
 
         Heading.setFont(new java.awt.Font("Lucida Sans", 1, 24)); // NOI18N
@@ -104,10 +104,11 @@ public class ManageUser extends javax.swing.JFrame {
         mainPanel.add(jSeparator1);
         jSeparator1.setBounds(260, 20, 12, 560);
 
-        btnExit.setForeground(new java.awt.Color(255, 255, 255));
+        btnExit.setBackground(new java.awt.Color(255, 255, 255));
+        btnExit.setForeground(new java.awt.Color(255, 255, 51));
         btnExit.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnExit.setText("Exit");
-        btnExit.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        btnExit.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 51)));
         btnExit.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnExit.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -129,10 +130,11 @@ public class ManageUser extends javax.swing.JFrame {
         mainPanel.add(txtTitle);
         txtTitle.setBounds(460, 10, 251, 30);
 
-        btnView.setForeground(new java.awt.Color(255, 255, 255));
+        btnView.setBackground(new java.awt.Color(255, 255, 255));
+        btnView.setForeground(new java.awt.Color(255, 255, 51));
         btnView.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnView.setText("View & Update");
-        btnView.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        btnView.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 51)));
         btnView.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnView.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -142,10 +144,11 @@ public class ManageUser extends javax.swing.JFrame {
         mainPanel.add(btnView);
         btnView.setBounds(60, 250, 140, 38);
 
-        btnAddUser.setForeground(new java.awt.Color(255, 255, 255));
+        btnAddUser.setBackground(new java.awt.Color(255, 255, 255));
+        btnAddUser.setForeground(new java.awt.Color(255, 255, 51));
         btnAddUser.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnAddUser.setText("Add User");
-        btnAddUser.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        btnAddUser.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 51)));
         btnAddUser.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAddUser.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -155,7 +158,7 @@ public class ManageUser extends javax.swing.JFrame {
         mainPanel.add(btnAddUser);
         btnAddUser.setBounds(60, 180, 140, 38);
 
-        jPanel2.setBackground(new java.awt.Color(0, 102, 153));
+        jPanel2.setBackground(new java.awt.Color(51, 51, 51));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -171,7 +174,7 @@ public class ManageUser extends javax.swing.JFrame {
         mainPanel.add(jPanel2);
         jPanel2.setBounds(270, 40, 670, 50);
 
-        addUser.setBackground(new java.awt.Color(0, 102, 153));
+        addUser.setBackground(new java.awt.Color(51, 51, 51));
         addUser.setLayout(null);
 
         jLabel2.setFont(new java.awt.Font("Lucida Grande", 1, 15)); // NOI18N
@@ -213,17 +216,17 @@ public class ManageUser extends javax.swing.JFrame {
         txtName.setBounds(140, 210, 280, 30);
 
         btnSubmit.setFont(new java.awt.Font("Lucida Grande", 1, 15)); // NOI18N
-        btnSubmit.setForeground(new java.awt.Color(51, 255, 204));
+        btnSubmit.setForeground(new java.awt.Color(0, 204, 0));
         btnSubmit.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnSubmit.setText("Submit");
-        btnSubmit.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 255, 204)));
+        btnSubmit.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 204, 0)));
         btnSubmit.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnSubmitMouseClicked(evt);
             }
         });
         addUser.add(btnSubmit);
-        btnSubmit.setBounds(220, 430, 110, 30);
+        btnSubmit.setBounds(220, 430, 110, 40);
 
         txtPassword.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         addUser.add(txtPassword);
@@ -264,7 +267,7 @@ public class ManageUser extends javax.swing.JFrame {
 
         userTabPane.addTab("", addUser);
 
-        Search.setBackground(new java.awt.Color(0, 102, 153));
+        Search.setBackground(new java.awt.Color(51, 51, 51));
         Search.setLayout(null);
 
         tblUsers.setModel(new javax.swing.table.DefaultTableModel(
@@ -283,7 +286,7 @@ public class ManageUser extends javax.swing.JFrame {
         Search.add(jScrollPane1);
         jScrollPane1.setBounds(10, 20, 470, 210);
 
-        jPanel1.setBackground(new java.awt.Color(0, 102, 153));
+        jPanel1.setBackground(new java.awt.Color(51, 51, 51));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         jPanel1.setLayout(null);
 
@@ -333,10 +336,10 @@ public class ManageUser extends javax.swing.JFrame {
         txtMsg1.setBounds(70, 190, 460, 20);
 
         btnUpdate.setFont(new java.awt.Font("Lucida Grande", 1, 15)); // NOI18N
-        btnUpdate.setForeground(new java.awt.Color(51, 255, 204));
+        btnUpdate.setForeground(new java.awt.Color(0, 204, 0));
         btnUpdate.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnUpdate.setText("Update");
-        btnUpdate.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 255, 204)));
+        btnUpdate.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 204, 0)));
         btnUpdate.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnUpdateMouseClicked(evt);
