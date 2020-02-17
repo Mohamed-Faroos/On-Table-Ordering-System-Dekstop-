@@ -69,7 +69,7 @@ public class DBCategory {
         cateL= new ArrayList<>();
         try {
             
-            String sql="Select * From User";
+            String sql="Select * From category";
             
             rs=util.DBData(sql);
             
