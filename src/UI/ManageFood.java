@@ -5,6 +5,13 @@
  */
 package UI;
 
+import DB.DBCategory;
+import DB.DBUser;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import main.Category;
+import main.User;
+
 /**
  *
  * @author Faroos
@@ -16,6 +23,10 @@ public class ManageFood extends javax.swing.JFrame {
      */
     public ManageFood() {
         initComponents();
+        txtcmsg.setVisible(false);
+        txtcmsg1.setVisible(false);
+        getLastId();
+        getAllCategories();
     }
 
     /**
@@ -38,8 +49,32 @@ public class ManageFood extends javax.swing.JFrame {
         userTabPane = new javax.swing.JTabbedPane();
         addCategory = new javax.swing.JPanel();
         txtTitle = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        txtcid = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        txtcname = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtcdesc = new javax.swing.JTextArea();
+        btnCsubmit = new javax.swing.JLabel();
+        txtcmsg = new javax.swing.JLabel();
         updateCategory = new javax.swing.JPanel();
         txtTitle2 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblCategory = new javax.swing.JTable();
+        btnView = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        txtcid1 = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        cmbAvailability = new javax.swing.JComboBox<>();
+        txtcname1 = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        txtcdesc1 = new javax.swing.JTextArea();
+        txtcmsg1 = new javax.swing.JLabel();
+        btnUpdate = new javax.swing.JLabel();
         addFood = new javax.swing.JPanel();
         txtTitle3 = new javax.swing.JLabel();
         updateFood = new javax.swing.JPanel();
@@ -117,7 +152,7 @@ public class ManageFood extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 670, Short.MAX_VALUE)
+            .addGap(0, 680, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -125,55 +160,167 @@ public class ManageFood extends javax.swing.JFrame {
         );
 
         mainPanel.add(jPanel2);
-        jPanel2.setBounds(270, 40, 670, 50);
+        jPanel2.setBounds(260, 40, 680, 50);
 
         addCategory.setBackground(new java.awt.Color(51, 51, 51));
+        addCategory.setLayout(null);
 
         txtTitle.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         txtTitle.setForeground(new java.awt.Color(255, 255, 255));
         txtTitle.setText("Add Category");
+        addCategory.add(txtTitle);
+        txtTitle.setBounds(280, 20, 97, 30);
 
-        javax.swing.GroupLayout addCategoryLayout = new javax.swing.GroupLayout(addCategory);
-        addCategory.setLayout(addCategoryLayout);
-        addCategoryLayout.setHorizontalGroup(
-            addCategoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(addCategoryLayout.createSequentialGroup()
-                .addGap(279, 279, 279)
-                .addComponent(txtTitle)
-                .addContainerGap(283, Short.MAX_VALUE))
-        );
-        addCategoryLayout.setVerticalGroup(
-            addCategoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(addCategoryLayout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(txtTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(480, Short.MAX_VALUE))
-        );
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Category ID");
+        addCategory.add(jLabel1);
+        jLabel1.setBounds(200, 110, 80, 16);
+
+        txtcid.setEditable(false);
+        addCategory.add(txtcid);
+        txtcid.setBounds(190, 130, 270, 30);
+
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Category");
+        addCategory.add(jLabel2);
+        jLabel2.setBounds(200, 190, 70, 16);
+        addCategory.add(txtcname);
+        txtcname.setBounds(190, 210, 270, 30);
+
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Description");
+        addCategory.add(jLabel3);
+        jLabel3.setBounds(200, 270, 80, 16);
+
+        txtcdesc.setColumns(20);
+        txtcdesc.setRows(5);
+        jScrollPane1.setViewportView(txtcdesc);
+
+        addCategory.add(jScrollPane1);
+        jScrollPane1.setBounds(190, 290, 270, 90);
+
+        btnCsubmit.setFont(new java.awt.Font("Lucida Grande", 0, 15)); // NOI18N
+        btnCsubmit.setForeground(new java.awt.Color(51, 204, 0));
+        btnCsubmit.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnCsubmit.setText("Submit");
+        btnCsubmit.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 204, 0)));
+        btnCsubmit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCsubmitMouseClicked(evt);
+            }
+        });
+        addCategory.add(btnCsubmit);
+        btnCsubmit.setBounds(280, 440, 80, 30);
+
+        txtcmsg.setForeground(new java.awt.Color(255, 255, 255));
+        txtcmsg.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtcmsg.setText("Msg");
+        addCategory.add(txtcmsg);
+        txtcmsg.setBounds(160, 400, 330, 20);
 
         userTabPane.addTab("tab1", addCategory);
 
         updateCategory.setBackground(new java.awt.Color(51, 51, 51));
+        updateCategory.setLayout(null);
 
         txtTitle2.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         txtTitle2.setForeground(new java.awt.Color(255, 255, 255));
         txtTitle2.setText("Edit Category");
+        updateCategory.add(txtTitle2);
+        txtTitle2.setBounds(279, 14, 97, 30);
 
-        javax.swing.GroupLayout updateCategoryLayout = new javax.swing.GroupLayout(updateCategory);
-        updateCategory.setLayout(updateCategoryLayout);
-        updateCategoryLayout.setHorizontalGroup(
-            updateCategoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(updateCategoryLayout.createSequentialGroup()
-                .addGap(279, 279, 279)
-                .addComponent(txtTitle2)
-                .addContainerGap(283, Short.MAX_VALUE))
-        );
-        updateCategoryLayout.setVerticalGroup(
-            updateCategoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(updateCategoryLayout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(txtTitle2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(480, Short.MAX_VALUE))
-        );
+        tblCategory.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Category ID", "Category", "Description", "Availability"
+            }
+        ));
+        jScrollPane2.setViewportView(tblCategory);
+
+        updateCategory.add(jScrollPane2);
+        jScrollPane2.setBounds(20, 60, 530, 210);
+
+        btnView.setForeground(new java.awt.Color(255, 255, 255));
+        btnView.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnView.setText("View");
+        btnView.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        btnView.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnViewMouseClicked(evt);
+            }
+        });
+        updateCategory.add(btnView);
+        btnView.setBounds(570, 150, 70, 30);
+
+        jPanel1.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        jPanel1.setLayout(null);
+
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("Category ID");
+        jPanel1.add(jLabel5);
+        jLabel5.setBounds(30, 10, 80, 16);
+
+        txtcid1.setEditable(false);
+        jPanel1.add(txtcid1);
+        txtcid1.setBounds(30, 30, 250, 30);
+
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("Category");
+        jPanel1.add(jLabel6);
+        jLabel6.setBounds(30, 80, 70, 16);
+
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("Availability");
+        jPanel1.add(jLabel7);
+        jLabel7.setBounds(30, 150, 70, 16);
+
+        cmbAvailability.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Available", "Not Available" }));
+        jPanel1.add(cmbAvailability);
+        cmbAvailability.setBounds(30, 170, 250, 27);
+
+        txtcname1.setEditable(false);
+        jPanel1.add(txtcname1);
+        txtcname1.setBounds(30, 100, 250, 30);
+
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("Description");
+        jPanel1.add(jLabel8);
+        jLabel8.setBounds(330, 10, 80, 16);
+
+        txtcdesc1.setColumns(20);
+        txtcdesc1.setRows(5);
+        jScrollPane3.setViewportView(txtcdesc1);
+
+        jPanel1.add(jScrollPane3);
+        jScrollPane3.setBounds(330, 30, 270, 100);
+
+        txtcmsg1.setForeground(new java.awt.Color(255, 255, 255));
+        txtcmsg1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtcmsg1.setText("Msg");
+        jPanel1.add(txtcmsg1);
+        txtcmsg1.setBounds(90, 210, 430, 20);
+
+        btnUpdate.setFont(new java.awt.Font("Lucida Grande", 0, 15)); // NOI18N
+        btnUpdate.setForeground(new java.awt.Color(51, 204, 0));
+        btnUpdate.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnUpdate.setText("Update");
+        btnUpdate.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 204, 0)));
+        btnUpdate.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnUpdateMouseClicked(evt);
+            }
+        });
+        jPanel1.add(btnUpdate);
+        btnUpdate.setBounds(420, 160, 80, 30);
+
+        updateCategory.add(jPanel1);
+        jPanel1.setBounds(20, 280, 630, 240);
 
         userTabPane.addTab("tab2", updateCategory);
 
@@ -311,6 +458,152 @@ public class ManageFood extends javax.swing.JFrame {
         userTabPane.setSelectedIndex(3);
     }//GEN-LAST:event_btnUpdateFoodsMouseClicked
 
+    private void btnCsubmitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCsubmitMouseClicked
+       
+        if(txtcname.getText().isEmpty())
+        {
+            txtcmsg.setVisible(true);
+            txtcmsg.setText("Error : Please Enter Category Name");
+        }else if(txtcdesc.getText().isEmpty())
+        {
+            txtcmsg.setVisible(true);
+            txtcmsg.setText("Error : Please Enter Category Description");
+        }else {
+            
+            try {
+                String ID=txtcid.getText();
+                String name=txtcname.getText();
+                String desc=txtcdesc.getText();
+
+                Category ct=new Category(ID, name, desc, 0);
+
+                DBCategory dbc=new DBCategory();
+                boolean rs=dbc.addCategory(ct);
+
+                if(rs)
+                {
+                    txtcmsg.setVisible(true);
+                    txtcmsg.setText("Success : Category Details Added Successfully");
+                    getLastId();
+                    txtcname.setText("");
+                    txtcdesc.setText("");
+                    
+                }else{
+                    
+                    txtcmsg.setVisible(true);
+                    txtcmsg.setText("Error : Please check the entered details");
+                }
+            } catch (Exception e) {
+                
+                e.printStackTrace();
+            }
+            
+            
+            
+            
+            
+        }
+    }//GEN-LAST:event_btnCsubmitMouseClicked
+
+    private void btnUpdateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUpdateMouseClicked
+        if(txtcname1.getText().isEmpty())
+        {
+            txtcmsg1.setVisible(true);
+            txtcmsg1.setText("Error : Please Enter Category Name");
+        }else if(txtcdesc1.getText().isEmpty())
+        {
+            txtcmsg1.setVisible(true);
+            txtcmsg1.setText("Error : Please Enter Category Description");
+        }else {
+            
+            try {
+                String ID=txtcid1.getText();
+                String name=txtcname1.getText();
+                String desc=txtcdesc1.getText();
+                int availability=cmbAvailability.getSelectedIndex();
+
+                Category ct=new Category(ID, name, desc, availability);
+
+                DBCategory dbc=new DBCategory();
+                boolean rs=dbc.updateCategory(ct);
+
+                if(rs)
+                {
+                    txtcmsg1.setVisible(true);
+                    txtcmsg1.setText("Success : Category Details Updated Successfully");
+                    getAllCategories();
+                    txtcname1.setText("");
+                    txtcdesc1.setText("");
+                    
+                }else{
+                    
+                    txtcmsg1.setVisible(true);
+                    txtcmsg1.setText("Error : Please check the entered details");
+                }
+            } catch (Exception e) {
+                
+                e.printStackTrace();
+            }
+            
+        }
+    }//GEN-LAST:event_btnUpdateMouseClicked
+
+    private void btnViewMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnViewMouseClicked
+          int row = tblCategory.getSelectedRow();
+        
+            String ID=tblCategory.getValueAt(row, 0).toString();
+
+            DBCategory dbc=new DBCategory();
+            Category us=dbc.getCategory(ID);
+
+           txtcid1.setText(ID);
+           cmbAvailability.setSelectedIndex(us.getStatus());
+           txtcname1.setText(us.getcName());
+           txtcdesc1.setText(us.getDiscription());
+    }//GEN-LAST:event_btnViewMouseClicked
+
+    public void getLastId()
+    {
+        DBCategory dbc=new DBCategory();
+        String ID=dbc.lastID();
+        
+        
+        txtcid.setText(ID);
+    }
+    
+    
+      public void getAllCategories()
+    {
+        
+        
+        DBCategory dbu=new DBCategory();
+        
+        
+        List<Category> al= dbu.getAllCategory();
+        
+        DefaultTableModel model=(DefaultTableModel)tblCategory.getModel();
+            model.setRowCount(0);
+            Object[] row=new Object[4];
+            
+            for(int i=0;i<al.size();i++)
+                {
+                    row[0]=al.get(i).getcId();
+                    row[1]=al.get(i).getcName();
+                    row[2]=al.get(i).getDiscription();
+                    if(al.get(i).getStatus()==0){
+
+                        row[3]="Available";
+                    }else{
+                        
+                        row[3]="Not Available";
+                    }
+                    
+                    
+                    model.addRow(row);
+                }
+            
+            
+    }
     /**
      * @param args the command line arguments
      */
@@ -354,18 +647,42 @@ public class ManageFood extends javax.swing.JFrame {
     private javax.swing.JPanel addFood;
     private javax.swing.JLabel btnAddFood;
     private javax.swing.JLabel btnAddcategory;
+    private javax.swing.JLabel btnCsubmit;
     private javax.swing.JLabel btnExit;
+    private javax.swing.JLabel btnUpdate;
     private javax.swing.JLabel btnUpdateCategory;
     private javax.swing.JLabel btnUpdateFoods;
+    private javax.swing.JLabel btnView;
+    private javax.swing.JComboBox<String> cmbAvailability;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JPanel mainPanel;
+    private javax.swing.JTable tblCategory;
     private javax.swing.JLabel txtFooter;
     private javax.swing.JLabel txtTitle;
     private javax.swing.JLabel txtTitle1;
     private javax.swing.JLabel txtTitle2;
     private javax.swing.JLabel txtTitle3;
     private javax.swing.JLabel txtTitle4;
+    private javax.swing.JTextArea txtcdesc;
+    private javax.swing.JTextArea txtcdesc1;
+    private javax.swing.JTextField txtcid;
+    private javax.swing.JTextField txtcid1;
+    private javax.swing.JLabel txtcmsg;
+    private javax.swing.JLabel txtcmsg1;
+    private javax.swing.JTextField txtcname;
+    private javax.swing.JTextField txtcname1;
     private javax.swing.JPanel updateCategory;
     private javax.swing.JPanel updateFood;
     private javax.swing.JTabbedPane userTabPane;
