@@ -27,11 +27,11 @@ public class DBTablet {
     
     public boolean addTablet(Tablet tb)
     {
-        String sql="INSERT INTO `Tablet`(`tid`, `Password`, `status`) VALUES ('"+tb.getTid()+"','"+tb.getPassword()+"',"+tb.getStatus()+")";
+        String sql="INSERT INTO `Tablet`(`tid`, `Password`, `status`,`customerUsage`) VALUES ('"+tb.getTid()+"','"+tb.getPassword()+"',"+tb.getStatus()+",0)";
         return util.DBUpdate(sql);
     }
     
-    public List<Tablet> getAllCategory()
+    public List<Tablet> getAllTablets()
     {
         tbl= new ArrayList<>();
         try {
@@ -46,7 +46,7 @@ public class DBTablet {
                 String password=rs.getString("password");
                 int status=rs.getInt("status");
                 
-                tablet = new Tablet(ID, password, status);
+                tablet = new Tablet(ID, password, status,0);
                 tbl.add(tablet);
             }
             
@@ -74,7 +74,7 @@ public class DBTablet {
                 String password=rs.getString("password");
                 int status=rs.getInt("status");
                 
-                tablet = new Tablet(ID, password, status);
+                tablet = new Tablet(ID, password, status,0);
             }
             
             

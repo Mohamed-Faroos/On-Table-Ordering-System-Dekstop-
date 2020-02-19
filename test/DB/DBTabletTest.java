@@ -45,7 +45,7 @@ public class DBTabletTest {
     @Test
     public void testAddTablet() {
         System.out.println("addTablet");
-        Tablet tb = new Tablet("T001", "tablet001", 0);
+        Tablet tb = new Tablet("T001", "tablet001", 0,0);
         DBTablet instance = new DBTablet();
         boolean expResult = true;
         boolean result = instance.addTablet(tb);
@@ -74,7 +74,7 @@ public class DBTabletTest {
         System.out.println("getTablet");
         String id = "T001";
         DBTablet instance = new DBTablet();
-        Tablet expResult = new Tablet("T001", "tablet001", 0);
+        Tablet expResult = new Tablet("T001", "tablet001", 0,0);
         Tablet result = instance.getTablet(id);
         assertEquals(expResult.getPassword(), result.getPassword());
     }
@@ -85,7 +85,7 @@ public class DBTabletTest {
     @Test
     public void testUpdateTablet() {
         System.out.println("updateTablet");
-        Tablet tb = new Tablet("T001", "tablet0012", 1);
+        Tablet tb = new Tablet("T001", "tablet0012", 1,0);
         DBTablet instance = new DBTablet();
         boolean expResult = true;
         boolean result = instance.updateTablet(tb);

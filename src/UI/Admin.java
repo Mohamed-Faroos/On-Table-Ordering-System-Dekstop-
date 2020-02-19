@@ -90,6 +90,11 @@ public class Admin extends javax.swing.JFrame {
         btnTab.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/tablet.png"))); // NOI18N
         btnTab.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         btnTab.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnTab.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnTabMouseClicked(evt);
+            }
+        });
         mainPanel.add(btnTab);
         btnTab.setBounds(480, 330, 122, 139);
 
@@ -151,6 +156,11 @@ public class Admin extends javax.swing.JFrame {
         ManageFood mf=new ManageFood();
         mf.setVisible(true);
     }//GEN-LAST:event_btnProductsMouseClicked
+
+    private void btnTabMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTabMouseClicked
+        ManageTablet mf=new ManageTablet();
+        mf.setVisible(true);
+    }//GEN-LAST:event_btnTabMouseClicked
 
     /**
      * @param args the command line arguments
