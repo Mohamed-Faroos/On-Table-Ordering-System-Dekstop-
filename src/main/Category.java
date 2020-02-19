@@ -25,6 +25,13 @@ public class Category {
         this.Status = Status;
     }
 
+    public Category() {
+         this.cId = "";
+        this.cName = "";
+        this.discription = "";
+        this.Status = 0;
+    }
+
     
     /**
      * @return the cId

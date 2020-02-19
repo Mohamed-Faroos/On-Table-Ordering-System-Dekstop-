@@ -6,10 +6,26 @@
 package UI;
 
 import DB.DBCategory;
+import DB.DBFood;
 import DB.DBUser;
+import java.awt.Image;
+import static java.awt.PageAttributes.MediaType.B;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.InputStream;
+import java.sql.Blob;
+import java.sql.ResultSet;
 import java.util.List;
+import javax.imageio.ImageIO;
+import javax.sql.rowset.serial.SerialBlob;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import main.Category;
+import main.Food;
 import main.User;
 
 /**
@@ -24,9 +40,19 @@ public class ManageFood extends javax.swing.JFrame {
     public ManageFood() {
         initComponents();
         txtcmsg.setVisible(false);
-        txtcmsg1.setVisible(false);
+        txtcmsg1.setVisible(false);        
+        txtpmsg.setVisible(false);
+        txtpmsg1.setVisible(false);
+        txtpmsg2.setVisible(false);
+
+
         getLastId();
         getAllCategories();
+        setCategories();
+        
+        
+        getLastFoodId();
+        getAllFoods();
     }
 
     /**
@@ -46,7 +72,7 @@ public class ManageFood extends javax.swing.JFrame {
         btnUpdateCategory = new javax.swing.JLabel();
         btnAddcategory = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        userTabPane = new javax.swing.JTabbedPane();
+        foodTab = new javax.swing.JTabbedPane();
         addCategory = new javax.swing.JPanel();
         txtTitle = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -77,8 +103,48 @@ public class ManageFood extends javax.swing.JFrame {
         btnUpdate = new javax.swing.JLabel();
         addFood = new javax.swing.JPanel();
         txtTitle3 = new javax.swing.JLabel();
-        updateFood = new javax.swing.JPanel();
+        btnImage = new javax.swing.JLabel();
+        imageView = new javax.swing.JLabel();
+        btnSubmit = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        txtfid = new javax.swing.JTextField();
+        txtfname = new javax.swing.JTextField();
+        cmbCategory = new javax.swing.JComboBox<>();
+        txtprice = new javax.swing.JTextField();
+        txtquantity = new javax.swing.JTextField();
+        cmbStatus = new javax.swing.JComboBox<>();
+        txtpmsg = new javax.swing.JLabel();
+        txtImageurl = new javax.swing.JTextField();
+        ViewFoods = new javax.swing.JPanel();
         txtTitle4 = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        tblFoods = new javax.swing.JTable();
+        txtFoodSearch = new javax.swing.JTextField();
+        btnViewFood = new javax.swing.JLabel();
+        txtpmsg2 = new javax.swing.JLabel();
+        UpdateFoods = new javax.swing.JPanel();
+        jLabel18 = new javax.swing.JLabel();
+        txtfid1 = new javax.swing.JTextField();
+        jLabel19 = new javax.swing.JLabel();
+        txtfname1 = new javax.swing.JTextField();
+        jLabel20 = new javax.swing.JLabel();
+        cmbCategory1 = new javax.swing.JComboBox<>();
+        jLabel21 = new javax.swing.JLabel();
+        txtprice1 = new javax.swing.JTextField();
+        jLabel22 = new javax.swing.JLabel();
+        txtquantity1 = new javax.swing.JTextField();
+        jLabel23 = new javax.swing.JLabel();
+        cmbStatus1 = new javax.swing.JComboBox<>();
+        txtpmsg1 = new javax.swing.JLabel();
+        btnPUpdate = new javax.swing.JLabel();
+        btnImage1 = new javax.swing.JLabel();
+        imageView1 = new javax.swing.JLabel();
+        txtImageurl1 = new javax.swing.JTextField();
         Heading1 = new javax.swing.JLabel();
         Heading2 = new javax.swing.JLabel();
         btnAddFood = new javax.swing.JLabel();
@@ -218,7 +284,7 @@ public class ManageFood extends javax.swing.JFrame {
         addCategory.add(txtcmsg);
         txtcmsg.setBounds(160, 400, 330, 20);
 
-        userTabPane.addTab("tab1", addCategory);
+        foodTab.addTab("tab1", addCategory);
 
         updateCategory.setBackground(new java.awt.Color(51, 51, 51));
         updateCategory.setLayout(null);
@@ -322,60 +388,278 @@ public class ManageFood extends javax.swing.JFrame {
         updateCategory.add(jPanel1);
         jPanel1.setBounds(20, 280, 630, 240);
 
-        userTabPane.addTab("tab2", updateCategory);
+        foodTab.addTab("tab2", updateCategory);
 
         addFood.setBackground(new java.awt.Color(51, 51, 51));
+        addFood.setLayout(null);
 
         txtTitle3.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         txtTitle3.setForeground(new java.awt.Color(255, 255, 255));
-        txtTitle3.setText("Add Product");
+        txtTitle3.setText("Add Food");
+        addFood.add(txtTitle3);
+        txtTitle3.setBounds(290, 10, 88, 30);
 
-        javax.swing.GroupLayout addFoodLayout = new javax.swing.GroupLayout(addFood);
-        addFood.setLayout(addFoodLayout);
-        addFoodLayout.setHorizontalGroup(
-            addFoodLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(addFoodLayout.createSequentialGroup()
-                .addGap(279, 279, 279)
-                .addComponent(txtTitle3)
-                .addContainerGap(292, Short.MAX_VALUE))
-        );
-        addFoodLayout.setVerticalGroup(
-            addFoodLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(addFoodLayout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(txtTitle3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(480, Short.MAX_VALUE))
-        );
+        btnImage.setFont(new java.awt.Font("Lucida Grande", 1, 15)); // NOI18N
+        btnImage.setForeground(new java.awt.Color(204, 0, 255));
+        btnImage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnImage.setText("Upload Image");
+        btnImage.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 0, 255)));
+        btnImage.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnImageMouseClicked(evt);
+            }
+        });
+        addFood.add(btnImage);
+        btnImage.setBounds(50, 390, 260, 40);
 
-        userTabPane.addTab("tab3", addFood);
+        imageView.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        imageView.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        addFood.add(imageView);
+        imageView.setBounds(50, 150, 260, 220);
 
-        updateFood.setBackground(new java.awt.Color(51, 51, 51));
+        btnSubmit.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        btnSubmit.setForeground(new java.awt.Color(0, 204, 51));
+        btnSubmit.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnSubmit.setText("Submit");
+        btnSubmit.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 204, 51)));
+        btnSubmit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSubmitMouseClicked(evt);
+            }
+        });
+        addFood.add(btnSubmit);
+        btnSubmit.setBounds(440, 440, 110, 30);
+
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel12.setText("Food ID");
+        addFood.add(jLabel12);
+        jLabel12.setBounds(50, 70, 49, 16);
+
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel13.setText("Food Name");
+        addFood.add(jLabel13);
+        jLabel13.setBounds(370, 70, 80, 16);
+
+        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel14.setText("Category");
+        addFood.add(jLabel14);
+        jLabel14.setBounds(370, 140, 70, 16);
+
+        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel15.setText("Price");
+        addFood.add(jLabel15);
+        jLabel15.setBounds(370, 200, 30, 16);
+
+        jLabel16.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel16.setText("Quantity");
+        addFood.add(jLabel16);
+        jLabel16.setBounds(370, 260, 70, 16);
+
+        jLabel17.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel17.setText("Availability");
+        addFood.add(jLabel17);
+        jLabel17.setBounds(370, 320, 90, 30);
+
+        txtfid.setEditable(false);
+        addFood.add(txtfid);
+        txtfid.setBounds(50, 90, 260, 30);
+        addFood.add(txtfname);
+        txtfname.setBounds(370, 90, 250, 30);
+
+        cmbCategory.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        addFood.add(cmbCategory);
+        cmbCategory.setBounds(370, 160, 250, 27);
+        addFood.add(txtprice);
+        txtprice.setBounds(370, 220, 250, 30);
+        addFood.add(txtquantity);
+        txtquantity.setBounds(370, 280, 250, 30);
+
+        cmbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Available", "Not-Available" }));
+        addFood.add(cmbStatus);
+        cmbStatus.setBounds(370, 350, 250, 30);
+
+        txtpmsg.setForeground(new java.awt.Color(255, 255, 255));
+        txtpmsg.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtpmsg.setText("Msg");
+        addFood.add(txtpmsg);
+        txtpmsg.setBounds(330, 400, 320, 16);
+
+        txtImageurl.setBackground(new java.awt.Color(51, 51, 51));
+        txtImageurl.setForeground(new java.awt.Color(51, 51, 51));
+        txtImageurl.setBorder(null);
+        addFood.add(txtImageurl);
+        txtImageurl.setBounds(60, 460, 250, 16);
+
+        foodTab.addTab("tab3", addFood);
+
+        ViewFoods.setBackground(new java.awt.Color(51, 51, 51));
+        ViewFoods.setLayout(null);
 
         txtTitle4.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         txtTitle4.setForeground(new java.awt.Color(255, 255, 255));
-        txtTitle4.setText("View Product");
+        txtTitle4.setText("View Products");
+        ViewFoods.add(txtTitle4);
+        txtTitle4.setBounds(280, 10, 110, 30);
 
-        javax.swing.GroupLayout updateFoodLayout = new javax.swing.GroupLayout(updateFood);
-        updateFood.setLayout(updateFoodLayout);
-        updateFoodLayout.setHorizontalGroup(
-            updateFoodLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(updateFoodLayout.createSequentialGroup()
-                .addGap(269, 269, 269)
-                .addComponent(txtTitle4)
-                .addContainerGap(295, Short.MAX_VALUE))
-        );
-        updateFoodLayout.setVerticalGroup(
-            updateFoodLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(updateFoodLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(txtTitle4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(479, Short.MAX_VALUE))
-        );
+        tblFoods.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Product ID", "Product Name", "Price", "Available Quantity", "Availability"
+            }
+        ));
+        jScrollPane4.setViewportView(tblFoods);
 
-        userTabPane.addTab("tab4", updateFood);
+        ViewFoods.add(jScrollPane4);
+        jScrollPane4.setBounds(10, 100, 640, 340);
 
-        mainPanel.add(userTabPane);
-        userTabPane.setBounds(260, 41, 680, 570);
+        txtFoodSearch.setText("Search");
+        txtFoodSearch.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtFoodSearchMouseClicked(evt);
+            }
+        });
+        txtFoodSearch.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+                txtFoodSearchInputMethodTextChanged(evt);
+            }
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
+        });
+        txtFoodSearch.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtFoodSearchKeyTyped(evt);
+            }
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtFoodSearchKeyPressed(evt);
+            }
+        });
+        ViewFoods.add(txtFoodSearch);
+        txtFoodSearch.setBounds(230, 50, 210, 30);
+
+        btnViewFood.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        btnViewFood.setForeground(new java.awt.Color(255, 255, 255));
+        btnViewFood.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnViewFood.setText("View");
+        btnViewFood.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 255)));
+        btnViewFood.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnViewFoodMouseClicked(evt);
+            }
+        });
+        ViewFoods.add(btnViewFood);
+        btnViewFood.setBounds(290, 480, 120, 40);
+
+        txtpmsg2.setForeground(new java.awt.Color(255, 255, 255));
+        txtpmsg2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtpmsg2.setText("Msg");
+        ViewFoods.add(txtpmsg2);
+        txtpmsg2.setBounds(170, 450, 370, 20);
+
+        foodTab.addTab("tab4", ViewFoods);
+
+        UpdateFoods.setBackground(new java.awt.Color(51, 51, 51));
+        UpdateFoods.setLayout(null);
+
+        jLabel18.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel18.setText("Food ID");
+        UpdateFoods.add(jLabel18);
+        jLabel18.setBounds(50, 70, 49, 16);
+
+        txtfid1.setEditable(false);
+        UpdateFoods.add(txtfid1);
+        txtfid1.setBounds(50, 90, 260, 30);
+
+        jLabel19.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel19.setText("Food Name");
+        UpdateFoods.add(jLabel19);
+        jLabel19.setBounds(370, 70, 80, 16);
+        UpdateFoods.add(txtfname1);
+        txtfname1.setBounds(370, 90, 250, 30);
+
+        jLabel20.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel20.setText("Category");
+        UpdateFoods.add(jLabel20);
+        jLabel20.setBounds(370, 140, 70, 16);
+
+        cmbCategory1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        UpdateFoods.add(cmbCategory1);
+        cmbCategory1.setBounds(370, 160, 250, 27);
+
+        jLabel21.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel21.setText("Price");
+        UpdateFoods.add(jLabel21);
+        jLabel21.setBounds(370, 200, 30, 16);
+        UpdateFoods.add(txtprice1);
+        txtprice1.setBounds(370, 220, 250, 30);
+
+        jLabel22.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel22.setText("Quantity");
+        UpdateFoods.add(jLabel22);
+        jLabel22.setBounds(370, 260, 70, 16);
+        UpdateFoods.add(txtquantity1);
+        txtquantity1.setBounds(370, 280, 250, 30);
+
+        jLabel23.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel23.setText("Availability");
+        UpdateFoods.add(jLabel23);
+        jLabel23.setBounds(370, 320, 90, 30);
+
+        cmbStatus1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Available", "Not-Available" }));
+        UpdateFoods.add(cmbStatus1);
+        cmbStatus1.setBounds(370, 350, 250, 30);
+
+        txtpmsg1.setForeground(new java.awt.Color(255, 255, 255));
+        txtpmsg1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtpmsg1.setText("Msg");
+        UpdateFoods.add(txtpmsg1);
+        txtpmsg1.setBounds(330, 400, 320, 16);
+
+        btnPUpdate.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        btnPUpdate.setForeground(new java.awt.Color(0, 204, 51));
+        btnPUpdate.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnPUpdate.setText("Update");
+        btnPUpdate.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 204, 51)));
+        btnPUpdate.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnPUpdateMouseClicked(evt);
+            }
+        });
+        UpdateFoods.add(btnPUpdate);
+        btnPUpdate.setBounds(440, 440, 110, 30);
+
+        btnImage1.setFont(new java.awt.Font("Lucida Grande", 1, 15)); // NOI18N
+        btnImage1.setForeground(new java.awt.Color(204, 0, 255));
+        btnImage1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnImage1.setText("Upload Image");
+        btnImage1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 0, 255)));
+        btnImage1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnImage1MouseClicked(evt);
+            }
+        });
+        UpdateFoods.add(btnImage1);
+        btnImage1.setBounds(50, 390, 260, 40);
+
+        imageView1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        imageView1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        UpdateFoods.add(imageView1);
+        imageView1.setBounds(50, 150, 260, 220);
+
+        txtImageurl1.setBackground(new java.awt.Color(51, 51, 51));
+        txtImageurl1.setForeground(new java.awt.Color(51, 51, 51));
+        txtImageurl1.setBorder(null);
+        UpdateFoods.add(txtImageurl1);
+        txtImageurl1.setBounds(60, 460, 250, 16);
+
+        foodTab.addTab("tab5", UpdateFoods);
+
+        mainPanel.add(foodTab);
+        foodTab.setBounds(260, 41, 680, 570);
 
         Heading1.setFont(new java.awt.Font("Lucida Sans", 1, 24)); // NOI18N
         Heading1.setForeground(new java.awt.Color(255, 255, 255));
@@ -404,7 +688,7 @@ public class ManageFood extends javax.swing.JFrame {
 
         btnUpdateFoods.setForeground(new java.awt.Color(255, 255, 0));
         btnUpdateFoods.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        btnUpdateFoods.setText("Update Food");
+        btnUpdateFoods.setText("View Foods");
         btnUpdateFoods.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 51)));
         btnUpdateFoods.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnUpdateFoods.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -442,20 +726,21 @@ public class ManageFood extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExitMouseClicked
 
     private void btnUpdateCategoryMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUpdateCategoryMouseClicked
-        userTabPane.setSelectedIndex(1);
+        foodTab.setSelectedIndex(1);
         
     }//GEN-LAST:event_btnUpdateCategoryMouseClicked
 
     private void btnAddcategoryMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddcategoryMouseClicked
-        userTabPane.setSelectedIndex(0);
+        foodTab.setSelectedIndex(0);
     }//GEN-LAST:event_btnAddcategoryMouseClicked
 
     private void btnAddFoodMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddFoodMouseClicked
-        userTabPane.setSelectedIndex(2);
+        foodTab.setSelectedIndex(2);
     }//GEN-LAST:event_btnAddFoodMouseClicked
 
     private void btnUpdateFoodsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUpdateFoodsMouseClicked
-        userTabPane.setSelectedIndex(3);
+        foodTab.setSelectedIndex(3);
+        getAllFoods();
     }//GEN-LAST:event_btnUpdateFoodsMouseClicked
 
     private void btnCsubmitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCsubmitMouseClicked
@@ -562,6 +847,344 @@ public class ManageFood extends javax.swing.JFrame {
            txtcdesc1.setText(us.getDiscription());
     }//GEN-LAST:event_btnViewMouseClicked
 
+    private void btnImageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnImageMouseClicked
+        setimage();
+    }//GEN-LAST:event_btnImageMouseClicked
+
+    private void btnSubmitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSubmitMouseClicked
+       
+        
+        if(txtImageurl.getText().isEmpty())
+        {
+            txtpmsg.setVisible(true);
+            txtpmsg.setText("Error : Upload Food Image");
+        }else
+        if(txtfname.getText().isEmpty())
+        {
+            txtpmsg.setVisible(true);
+            txtpmsg.setText("Error : Enter Food Name");
+        }else if(txtprice.getText().isEmpty())
+        {
+            txtpmsg.setVisible(true);
+            txtpmsg.setText("Error : Enter Food Price");      
+        }else if(txtquantity.getText().isEmpty())
+        {
+            txtpmsg.setVisible(true);
+            txtpmsg.setText("Error : Enter Food Quantity");
+        }else{
+            
+
+            String pid=txtfid.getText();
+            String pname=txtfname.getText();
+            
+             String item=cmbCategory.getSelectedItem().toString();
+             int count=item.length();
+             
+            String cid=item.substring(count-4).trim();
+            int price=Integer.parseInt(txtprice.getText());
+            int quantity=Integer.parseInt(txtquantity.getText());
+            int availability=cmbStatus.getSelectedIndex();
+            String image=txtImageurl.getText();
+            
+                       Food fd=new Food();
+                       fd.setPid(pid);
+                       fd.setPname(pname);
+                       fd.setCid(cid);
+                       fd.setPrice(price);
+                       fd.setQuantity(quantity);
+                       fd.setAvailability(availability);
+                       fd.setImage(image);
+            DBFood dbf=new DBFood();
+            boolean rs=dbf.addFood(fd);
+            
+            if(rs)
+            {
+                txtpmsg.setVisible(true);
+                txtpmsg.setText("Success : Product Added Seccessfully");
+                
+                getLastFoodId();
+                txtfname.setText("");
+                cmbCategory.setSelectedIndex(0);
+                txtprice.setText("");
+                txtquantity.setText("");
+                cmbStatus.setSelectedIndex(0);
+                txtImageurl.setText("");
+                imageView.setIcon(null);
+                
+            }else{
+                txtpmsg.setVisible(true);
+                txtpmsg.setText("Error : Please check entered details");
+            }
+        }
+    }//GEN-LAST:event_btnSubmitMouseClicked
+
+    private void txtFoodSearchKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFoodSearchKeyTyped
+          DBFood dbu=new DBFood();
+        
+        
+            List<Food> al= dbu.getSearchedProducts(txtFoodSearch.getText());
+        
+            DefaultTableModel model=(DefaultTableModel)tblFoods.getModel();
+            model.setRowCount(0);
+            Object[] row=new Object[5];
+            
+            for(int i=0;i<al.size();i++)
+                {
+                    row[0]=al.get(i).getPid();
+                    row[1]=al.get(i).getPname();
+                    row[2]=al.get(i).getPrice();
+                    row[3]=al.get(i).getQuantity();
+
+                    if(al.get(i).getAvailability()==0){
+
+                        row[4]="Available";
+                    }else{
+                        
+                        row[4]="Not Available";
+                    }
+                    
+                    
+                    model.addRow(row);
+                }   
+            
+    }//GEN-LAST:event_txtFoodSearchKeyTyped
+
+    private void txtFoodSearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtFoodSearchMouseClicked
+        txtFoodSearch.setText("");
+    }//GEN-LAST:event_txtFoodSearchMouseClicked
+
+    private void txtFoodSearchKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFoodSearchKeyPressed
+        
+    }//GEN-LAST:event_txtFoodSearchKeyPressed
+
+    private void txtFoodSearchInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_txtFoodSearchInputMethodTextChanged
+        
+    }//GEN-LAST:event_txtFoodSearchInputMethodTextChanged
+
+    int index;
+    private void btnViewFoodMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnViewFoodMouseClicked
+        foodTab.setSelectedIndex(4);
+        try {
+             int row = tblFoods.getSelectedRow();
+        
+         String ID=tblFoods.getValueAt(row, 0).toString();
+
+         DBFood dbc=new DBFood();
+         Food us=dbc.getFood(ID);
+         
+                txtfid1.setText(ID);
+                txtfname1.setText(us.getPname());
+                txtprice1.setText(String.valueOf(us.getPrice()));
+                txtquantity1.setText(String.valueOf(us.getQuantity()));
+                cmbStatus1.setSelectedIndex(us.getAvailability());
+                
+                    DBFood dbf=new DBFood();
+                    List<Category> rs=dbf.getCategory();
+
+                    String rw[]=new String[rs.size()];
+
+                    
+                    for(int i=0;i<rs.size();i++)
+                    {
+                        rw[i]=rs.get(i).getcName()+" - "+rs.get(i).getcId();
+                        
+                        if(rs.get(i).getcId().equals(us.getCid()))
+                        {
+                            index=i;
+                        }
+                    }
+
+                    cmbCategory1.setModel(new DefaultComboBoxModel(rw));
+                    cmbCategory1.setSelectedIndex(index);
+                    
+                    Blob aBlob = us.getImg();
+                    byte[] imageByte = aBlob.getBytes(1, (int) aBlob.length());
+                    InputStream is=new ByteArrayInputStream(imageByte);
+                    BufferedImage imag=ImageIO.read(is);
+                    Image image = imag;
+                    Image newImage=image.getScaledInstance(imageView1.getWidth(), imageView1.getHeight(), Image.SCALE_SMOOTH);
+                    ImageIcon foodImage=new ImageIcon(newImage);
+                    imageView1.setIcon(foodImage);
+                    
+                    
+                
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+
+    }//GEN-LAST:event_btnViewFoodMouseClicked
+
+    
+    boolean rs;
+    private void btnPUpdateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPUpdateMouseClicked
+            
+        if(txtfname1.getText().isEmpty())
+        {
+            txtpmsg1.setVisible(true);
+            txtpmsg1.setText("Error : Enter Food Name");
+        }else if(txtprice1.getText().isEmpty())
+        {
+            txtpmsg1.setVisible(true);
+            txtpmsg1.setText("Error : Enter Food Price");      
+        }else if(txtquantity1.getText().isEmpty())
+        {
+            txtpmsg1.setVisible(true);
+            txtpmsg1.setText("Error : Enter Food Quantity");
+        }else{
+            
+
+            String pid=txtfid1.getText();
+            String pname=txtfname1.getText();
+            
+             String item=cmbCategory1.getSelectedItem().toString();
+             int count=item.length();
+             
+            String cid=item.substring(count-4).trim();
+            int price=Integer.parseInt(txtprice1.getText());
+            int quantity=Integer.parseInt(txtquantity1.getText());
+            int availability=cmbStatus1.getSelectedIndex();
+            String image=txtImageurl1.getText();
+            
+            if(image.isEmpty())
+            {
+                 Food fd=new Food();
+                       fd.setPid(pid);
+                       fd.setPname(pname);
+                       fd.setCid(cid);
+                       fd.setPrice(price);
+                       fd.setQuantity(quantity);
+                       fd.setAvailability(availability);
+                       
+                       DBFood dbf=new DBFood();
+                       rs=dbf.updateFoodWithoutImage(fd);
+            }else{
+                Food fd=new Food();
+                       fd.setPid(pid);
+                       fd.setPname(pname);
+                       fd.setCid(cid);
+                       fd.setPrice(price);
+                       fd.setQuantity(quantity);
+                       fd.setAvailability(availability);
+                       fd.setImage(image);
+                       DBFood dbf=new DBFood();
+                       rs=dbf.updateFoodWithImage(fd);
+            }
+                      
+            
+            if(rs)
+            {
+                txtpmsg2.setVisible(true);
+                txtpmsg2.setText("Success : Product Updated Seccessfully");
+                foodTab.setSelectedIndex(3);
+                getAllFoods();
+                
+            }else{
+                txtpmsg1.setVisible(true);
+                txtpmsg1.setText("Error : Please check entered details");
+            }
+        }
+        
+    }//GEN-LAST:event_btnPUpdateMouseClicked
+
+    private void btnImage1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnImage1MouseClicked
+        setimage2();
+    }//GEN-LAST:event_btnImage1MouseClicked
+
+      public void setimage2()
+   {
+       JFileChooser fc=new JFileChooser();
+        fc.setFileFilter(new FileNameExtensionFilter("Image Files", "jpg","png"));
+        fc.showOpenDialog(this);
+        File f=fc.getSelectedFile();
+        String path=f.getAbsolutePath();
+        
+        ImageIcon image = new ImageIcon(path);
+        Image img=image.getImage();
+        Image newImage=img.getScaledInstance(imageView1.getWidth(), imageView1.getHeight(), Image.SCALE_SMOOTH);
+        ImageIcon foodImage=new ImageIcon(newImage);
+        imageView1.setIcon(foodImage); 
+        txtImageurl1.setText(path);
+        
+   }
+    public void setimage()
+   {
+       JFileChooser fc=new JFileChooser();
+        fc.setFileFilter(new FileNameExtensionFilter("Image Files", "jpg","png"));
+        fc.showOpenDialog(this);
+        File f=fc.getSelectedFile();
+        String path=f.getAbsolutePath();
+        
+        ImageIcon image = new ImageIcon(path);
+        Image img=image.getImage();
+        Image newImage=img.getScaledInstance(imageView.getWidth(), imageView.getHeight(), Image.SCALE_SMOOTH);
+        ImageIcon foodImage=new ImageIcon(newImage);
+        imageView.setIcon(foodImage); 
+        txtImageurl.setText(path);
+        
+   }
+     
+    public void getLastFoodId()
+    {
+        DBFood dbc=new DBFood();
+        String ID=dbc.lastID();
+        
+        
+        txtfid.setText(ID);
+    }
+    
+     public void getAllFoods()
+    {
+        
+        
+        DBFood dbu=new DBFood();
+        
+        
+        List<Food> al= dbu.getAllProducts();
+        
+            DefaultTableModel model=(DefaultTableModel)tblFoods.getModel();
+            model.setRowCount(0);
+            Object[] row=new Object[5];
+            
+            for(int i=0;i<al.size();i++)
+                {
+                    row[0]=al.get(i).getPid();
+                    row[1]=al.get(i).getPname();
+                    row[2]=al.get(i).getPrice();
+                    row[3]=al.get(i).getQuantity();
+
+                    if(al.get(i).getAvailability()==0){
+
+                        row[4]="Available";
+                    }else{
+                        
+                        row[4]="Not Available";
+                    }
+                    
+                    
+                    model.addRow(row);
+                }
+            
+            
+    }
+    
+    public void setCategories()
+    {
+        DBFood dbf=new DBFood();
+        List<Category> rs=dbf.getCategory();
+        
+        String row[]=new String[rs.size()];
+
+        
+        for(int i=0;i<rs.size();i++)
+        {
+            row[i]=rs.get(i).getcName()+" - "+rs.get(i).getcId();
+        }
+        
+        cmbCategory.setModel(new DefaultComboBoxModel(row));
+        
+    }
+    
     public void getLastId()
     {
         DBCategory dbc=new DBCategory();
@@ -643,19 +1266,45 @@ public class ManageFood extends javax.swing.JFrame {
     private javax.swing.JLabel Heading;
     private javax.swing.JLabel Heading1;
     private javax.swing.JLabel Heading2;
+    private javax.swing.JPanel UpdateFoods;
+    private javax.swing.JPanel ViewFoods;
     private javax.swing.JPanel addCategory;
     private javax.swing.JPanel addFood;
     private javax.swing.JLabel btnAddFood;
     private javax.swing.JLabel btnAddcategory;
     private javax.swing.JLabel btnCsubmit;
     private javax.swing.JLabel btnExit;
+    private javax.swing.JLabel btnImage;
+    private javax.swing.JLabel btnImage1;
+    private javax.swing.JLabel btnPUpdate;
+    private javax.swing.JLabel btnSubmit;
     private javax.swing.JLabel btnUpdate;
     private javax.swing.JLabel btnUpdateCategory;
     private javax.swing.JLabel btnUpdateFoods;
     private javax.swing.JLabel btnView;
+    private javax.swing.JLabel btnViewFood;
     private javax.swing.JComboBox<String> cmbAvailability;
+    private javax.swing.JComboBox<String> cmbCategory;
+    private javax.swing.JComboBox<String> cmbCategory1;
+    private javax.swing.JComboBox<String> cmbStatus;
+    private javax.swing.JComboBox<String> cmbStatus1;
+    private javax.swing.JTabbedPane foodTab;
+    private javax.swing.JLabel imageView;
+    private javax.swing.JLabel imageView1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -666,10 +1315,15 @@ public class ManageFood extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JTable tblCategory;
+    private javax.swing.JTable tblFoods;
+    private javax.swing.JTextField txtFoodSearch;
     private javax.swing.JLabel txtFooter;
+    private javax.swing.JTextField txtImageurl;
+    private javax.swing.JTextField txtImageurl1;
     private javax.swing.JLabel txtTitle;
     private javax.swing.JLabel txtTitle1;
     private javax.swing.JLabel txtTitle2;
@@ -683,8 +1337,17 @@ public class ManageFood extends javax.swing.JFrame {
     private javax.swing.JLabel txtcmsg1;
     private javax.swing.JTextField txtcname;
     private javax.swing.JTextField txtcname1;
+    private javax.swing.JTextField txtfid;
+    private javax.swing.JTextField txtfid1;
+    private javax.swing.JTextField txtfname;
+    private javax.swing.JTextField txtfname1;
+    private javax.swing.JLabel txtpmsg;
+    private javax.swing.JLabel txtpmsg1;
+    private javax.swing.JLabel txtpmsg2;
+    private javax.swing.JTextField txtprice;
+    private javax.swing.JTextField txtprice1;
+    private javax.swing.JTextField txtquantity;
+    private javax.swing.JTextField txtquantity1;
     private javax.swing.JPanel updateCategory;
-    private javax.swing.JPanel updateFood;
-    private javax.swing.JTabbedPane userTabPane;
     // End of variables declaration//GEN-END:variables
 }
