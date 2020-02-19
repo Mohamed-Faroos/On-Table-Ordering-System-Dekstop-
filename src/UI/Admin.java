@@ -46,7 +46,7 @@ public class Admin extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
-        mainPanel.setBackground(new java.awt.Color(51, 51, 51));
+        mainPanel.setBackground(new java.awt.Color(49, 49, 49));
         mainPanel.setLayout(null);
 
         Heading.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
