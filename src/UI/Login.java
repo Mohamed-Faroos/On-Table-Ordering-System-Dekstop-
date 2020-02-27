@@ -36,12 +36,12 @@ public class Login extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         uType = new javax.swing.JComboBox<>();
         txtUser = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         txtPass = new javax.swing.JPasswordField();
         txtError = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
+        btnLogin = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -84,20 +84,11 @@ public class Login extends javax.swing.JFrame {
 
         uType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "Chef", "Cashier" }));
         jPanel1.add(uType);
-        uType.setBounds(618, 149, 290, 30);
+        uType.setBounds(620, 140, 290, 30);
 
         txtUser.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jPanel1.add(txtUser);
         txtUser.setBounds(618, 215, 290, 30);
-
-        jButton1.setText("Login");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1userLogin(evt);
-            }
-        });
-        jPanel1.add(jButton1);
-        jButton1.setBounds(710, 380, 104, 39);
 
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Designed & Developed by");
@@ -114,7 +105,7 @@ public class Login extends javax.swing.JFrame {
         txtPass.setBounds(618, 285, 290, 30);
 
         txtError.setBackground(new java.awt.Color(255, 255, 255));
-        txtError.setForeground(new java.awt.Color(255, 63, 55));
+        txtError.setForeground(new java.awt.Color(255, 255, 102));
         txtError.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         txtError.setText("Error Message");
         jPanel1.add(txtError);
@@ -124,6 +115,20 @@ public class Login extends javax.swing.JFrame {
         jLabel9.setText("jLabel9");
         jPanel1.add(jLabel9);
         jLabel9.setBounds(70, 150, 370, 210);
+
+        btnLogin.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        btnLogin.setForeground(new java.awt.Color(0, 204, 102));
+        btnLogin.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnLogin.setText("Login");
+        btnLogin.setToolTipText("");
+        btnLogin.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 204, 102)));
+        btnLogin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnLoginMouseClicked(evt);
+            }
+        });
+        jPanel1.add(btnLogin);
+        btnLogin.setBounds(720, 380, 90, 40);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -139,8 +144,8 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1userLogin(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1userLogin
-        String userId=txtUser.getText();
+    private void btnLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoginMouseClicked
+                String userId=txtUser.getText();
         String userPass=txtPass.getText();
 
         if(userId.isEmpty())
@@ -156,7 +161,7 @@ public class Login extends javax.swing.JFrame {
             txtError.setVisible(false);
 
         }
-    }//GEN-LAST:event_jButton1userLogin
+    }//GEN-LAST:event_btnLoginMouseClicked
 
     /**
      * @param args the command line arguments
@@ -194,7 +199,7 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel btnLogin;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
