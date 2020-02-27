@@ -13,6 +13,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Ignore;
 
 /**
  *
@@ -45,7 +46,7 @@ public class DBUserTest {
     @Test
     public void testAddUser() {
         System.out.println("addUser");
-        User ow = new User("U001", "Faroos", "Faroos123", 0,0);
+        User ow = new User("U004", "Faroos", "Faroos123", 0,0);
         DBUser instance = new DBUser();
         boolean expResult = true;
         boolean result = instance.addUser(ow);
@@ -58,24 +59,25 @@ public class DBUserTest {
     @Test
     public void testGetUser() {
         System.out.println("getUser");
-        String id = "U001";
+        String id = "U004";
         DBUser instance = new DBUser(); 
         User result = instance.getUser(id);
-        assertEquals("Admin", result.getUsername());
-        assertEquals("admin123", result.getPassword());
+        assertEquals("Faroos", result.getUsername());
+        assertEquals("Faroos124", result.getPassword());
     }
 
     /**
      * Test of getAllUser method, of class DBUser.
      */
-//    @Test
-//    public void testGetAllUser() {
-//        System.out.println("getAllUser");
-//        DBUser instance = new DBUser();
-//        List<User> expResult = null;
-//        List<User> result = instance.getAllUser();
-//        assertEquals(expResult, result);
-//    }
+    @Test
+    @Ignore
+    public void testGetAllUser() {
+        System.out.println("getAllUser");
+        DBUser instance = new DBUser();
+        List<User> expResult = null;
+        List<User> result = instance.getAllUser();
+        assertEquals(expResult, result);
+    }
 
     /**
      * Test of updateUser method, of class DBUser.
@@ -83,7 +85,7 @@ public class DBUserTest {
     @Test
     public void testUpdateUser() {
         System.out.println("updateUser");
-        User us = new User("U001", "Admin", "admin123", 0, 0);
+        User us = new User("U004", "Faroos", "Faroos124", 0, 0);
         DBUser instance = new DBUser();
         boolean expResult = true;
         boolean result = instance.updateUser(us);
@@ -96,7 +98,7 @@ public class DBUserTest {
         System.out.println("testLastID");   
         DBUser instance = new DBUser(); 
         String result = instance.lastID();
-        assertEquals("U001", result);
+        assertEquals("U005", result);
     }
     
 }
