@@ -6,6 +6,7 @@
 package DB;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import main.User;
 
 /**
@@ -24,21 +25,27 @@ public class DBLogin {
     public User login(User us)
     {
         try{
-        String sql="Select * From User where uid='"+us.getUid()+"' and password='"+us.getPassword()+"' and status = 0";
+        String sql="Select * From User where uid='"+us.getUid()+"' and password='"+us.getPassword()+"' and userType="+us.getUserType()+" and status = 0";
         rs=util.DBData(sql);
             
             if(rs.next())
             {
+                
+               String id=rs.getString("uid");  
+               String username =rs.getString("username");
+               String password=rs.getString("password");
+               int userType=rs.getInt("usertype");
+               
                 user=new User();
-                user.setUid(rs.getString("uid"));
-                user.setUsername(rs.getString("username"));
-                user.setPassword(rs.getString("password"));
-                user.setUserType(rs.getInt("usertype"));
+                user.setUid(id);
+                user.setUsername(username);
+                user.setPassword(password);
+                user.setUserType(userType);
 
                 
 
             }
-        }catch(Exception e)
+        }catch(SQLException e)
         {
             e.printStackTrace();
         }

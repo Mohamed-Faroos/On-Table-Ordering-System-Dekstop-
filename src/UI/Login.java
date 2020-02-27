@@ -5,6 +5,10 @@
  */
 package UI;
 
+import DB.DBLogin;
+import java.sql.ResultSet;
+import main.User;
+
 /**
  *
  * @author Faroos
@@ -16,6 +20,8 @@ public class Login extends javax.swing.JFrame {
      */
     public Login() {
         initComponents();
+                    txtError.setVisible(false);
+
     }
 
     /**
@@ -44,6 +50,7 @@ public class Login extends javax.swing.JFrame {
         btnLogin = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(49, 49, 49));
         jPanel1.setLayout(null);
@@ -83,6 +90,11 @@ public class Login extends javax.swing.JFrame {
         jLabel6.setBounds(618, 262, 69, 17);
 
         uType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "Chef", "Cashier" }));
+        uType.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                uTypeActionPerformed(evt);
+            }
+        });
         jPanel1.add(uType);
         uType.setBounds(620, 140, 290, 30);
 
@@ -142,11 +154,13 @@ public class Login extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoginMouseClicked
                 String userId=txtUser.getText();
-        String userPass=txtPass.getText();
+                String userPass=txtPass.getText();
+                int type=uType.getSelectedIndex();
 
         if(userId.isEmpty())
         {
@@ -158,10 +172,63 @@ public class Login extends javax.swing.JFrame {
             txtError.setText("Please Enter User Password");
         }else {
 
-            txtError.setVisible(false);
+            try
+            {
+               User user=new User();
+               user.setUid(userId);
+               user.setPassword(userPass);
+               user.setUserType(type);
+               
+               DBLogin dbl=new  DBLogin();
+               User us=dbl.login(user);
+               String id=us.getUid();
+               String password=us.getPassword();
+               int userType=us.getUserType();
+               String username=us.getUsername();
+               
+               String info[]=new String[2];  //creates an array to store  variable values. You can increase the size when needed
+               info[0]=id;
+               info[1]=username;
+               
+               
+               
+               if(userId.equalsIgnoreCase(id) && userPass.equalsIgnoreCase(password))
+               {
+                   if(userType==0)
+                   {
+                       Admin ad=new Admin();
+                       ad.setVisible(true);
+                       this.setVisible(false);
+                       
+                   }else if(userType==1)
+                   {
+                       Chef cf=new Chef();
+                       cf.main(info);
+                       cf.setVisible(true);
+                       this.setVisible(false);
+                   }else{
+                       Cashier cash=new Cashier();
+                       cash.main(info);
+                       cash.setVisible(true);
+                       this.setVisible(false);
+                   }
+               }else{
+                    txtError.setVisible(true);
+                    txtError.setText("Please Check the Your Login Details");
+               }
+            }catch(Exception e)
+            {
+                    e.printStackTrace();
+                    txtError.setVisible(true);
+                    txtError.setText("Please Check the Your Login Details");
+            }
 
         }
     }//GEN-LAST:event_btnLoginMouseClicked
+
+    private void uTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_uTypeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_uTypeActionPerformed
 
     /**
      * @param args the command line arguments
