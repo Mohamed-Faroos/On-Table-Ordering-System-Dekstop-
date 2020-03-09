@@ -204,12 +204,10 @@ public class Login extends javax.swing.JFrame {
                    {
                        Chef cf=new Chef();
                        cf.main(info);
-                       cf.setVisible(true);
                        this.setVisible(false);
                    }else{
                        Cashier cash=new Cashier();
                        cash.main(info);
-                       cash.setVisible(true);
                        this.setVisible(false);
                    }
                }else{

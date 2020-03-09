@@ -129,6 +129,11 @@ public class Admin extends javax.swing.JFrame {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Logout");
         jLabel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 51)));
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+        });
         mainPanel.add(jLabel2);
         jLabel2.setBounds(150, 460, 90, 30);
 
@@ -161,6 +166,13 @@ public class Admin extends javax.swing.JFrame {
         ManageTablet mf=new ManageTablet();
         mf.setVisible(true);
     }//GEN-LAST:event_btnTabMouseClicked
+
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        Login lg=new Login();
+        lg.setVisible(true);
+        this.setVisible(false);
+
+    }//GEN-LAST:event_jLabel2MouseClicked
 
     /**
      * @param args the command line arguments

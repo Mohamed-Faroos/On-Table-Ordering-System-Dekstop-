@@ -5,6 +5,7 @@
  */
 package UI;
 
+import javax.swing.JFrame;
 import main.User;
 
 /**
@@ -19,17 +20,13 @@ public class Chef extends javax.swing.JFrame {
      */
     public Chef() {
         initComponents();
-        getLogDetails();
+       
     }
 
     
     
 
-    public void getLogDetails()
-    {
-        jLabel1.setText(userId);
-        jLabel2.setText(username);
-    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -39,38 +36,192 @@ public class Chef extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        mainPanel = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        Heading = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jPanel1 = new javax.swing.JPanel();
+        btnViewOrder = new javax.swing.JLabel();
+        btnPrepared = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+        txtFooter = new javax.swing.JLabel();
+        txtTitle = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        txtTitle1 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        btnAddTablet = new javax.swing.JLabel();
+        btnRefresh = new javax.swing.JLabel();
+        btnAddTablet2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("jLabel1");
+        mainPanel.setBackground(new java.awt.Color(51, 51, 51));
+        mainPanel.setLayout(null);
 
-        jLabel2.setText("jLabel2");
+        jLabel3.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel3.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("Logout");
+        jLabel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 51)));
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
+            }
+        });
+        mainPanel.add(jLabel3);
+        jLabel3.setBounds(850, 20, 90, 30);
+
+        Heading.setFont(new java.awt.Font("Malayalam MN", 1, 24)); // NOI18N
+        Heading.setForeground(new java.awt.Color(255, 255, 255));
+        Heading.setText("Chef Panel");
+        mainPanel.add(Heading);
+        Heading.setBounds(110, 20, 140, 29);
+
+        jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        mainPanel.add(jSeparator1);
+        jSeparator1.setBounds(300, 20, 12, 30);
+
+        jPanel1.setBackground(new java.awt.Color(51, 51, 51));
+
+        btnViewOrder.setBackground(new java.awt.Color(255, 255, 255));
+        btnViewOrder.setForeground(new java.awt.Color(255, 255, 51));
+        btnViewOrder.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnViewOrder.setText("View Order >>");
+        btnViewOrder.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 51)));
+        btnViewOrder.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btnViewOrder, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btnViewOrder, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+        );
+
+        mainPanel.add(jPanel1);
+        jPanel1.setBounds(260, 130, 110, 40);
+
+        btnPrepared.setBackground(new java.awt.Color(255, 255, 255));
+        btnPrepared.setForeground(new java.awt.Color(0, 204, 51));
+        btnPrepared.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnPrepared.setText("Order Prepared ");
+        btnPrepared.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 204, 0)));
+        btnPrepared.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        mainPanel.add(btnPrepared);
+        btnPrepared.setBounds(580, 480, 120, 40);
+
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Item Name", "Quantity", "Order Type"
+            }
+        ));
+        jScrollPane2.setViewportView(jTable2);
+
+        mainPanel.add(jScrollPane2);
+        jScrollPane2.setBounds(380, 130, 540, 330);
+
+        txtFooter.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
+        txtFooter.setForeground(new java.awt.Color(255, 255, 255));
+        txtFooter.setText("Designed & Developed by Mohamed Faroos");
+        mainPanel.add(txtFooter);
+        txtFooter.setBounds(410, 570, 209, 21);
+
+        txtTitle.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+        txtTitle.setForeground(new java.awt.Color(255, 255, 255));
+        txtTitle.setText("On-Table Ordering System");
+        mainPanel.add(txtTitle);
+        txtTitle.setBounds(500, 20, 251, 30);
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Order ID", "Table ID"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        mainPanel.add(jScrollPane1);
+        jScrollPane1.setBounds(60, 100, 190, 410);
+
+        txtTitle1.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+        txtTitle1.setForeground(new java.awt.Color(255, 255, 255));
+        txtTitle1.setText("On-Table Ordering System");
+        mainPanel.add(txtTitle1);
+        txtTitle1.setBounds(500, 20, 251, 30);
+
+        jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Table ID : T001");
+        mainPanel.add(jLabel1);
+        jLabel1.setBounds(570, 90, 150, 30);
+
+        btnAddTablet.setBackground(new java.awt.Color(255, 255, 255));
+        btnAddTablet.setForeground(new java.awt.Color(255, 255, 51));
+        btnAddTablet.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnAddTablet.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 51)));
+        btnAddTablet.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        mainPanel.add(btnAddTablet);
+        btnAddTablet.setBounds(320, 70, 620, 490);
+
+        btnRefresh.setBackground(new java.awt.Color(255, 255, 255));
+        btnRefresh.setForeground(new java.awt.Color(0, 204, 204));
+        btnRefresh.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnRefresh.setText("Refresh");
+        btnRefresh.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 204, 204)));
+        btnRefresh.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        mainPanel.add(btnRefresh);
+        btnRefresh.setBounds(120, 520, 70, 30);
+
+        btnAddTablet2.setBackground(new java.awt.Color(255, 255, 255));
+        btnAddTablet2.setForeground(new java.awt.Color(255, 255, 51));
+        btnAddTablet2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnAddTablet2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 51)));
+        btnAddTablet2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        mainPanel.add(btnAddTablet2);
+        btnAddTablet2.setBounds(30, 70, 260, 490);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(168, 168, 168)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1))
-                .addContainerGap(187, Short.MAX_VALUE))
+                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 966, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(84, 84, 84)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
-                .addContainerGap(172, Short.MAX_VALUE))
+            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 601, Short.MAX_VALUE)
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+        Login lg=new Login();
+        lg.setVisible(true);
+        dispose();
+                
+
+
+    }//GEN-LAST:event_jLabel3MouseClicked
 
     /**
      * @param args the command line arguments
@@ -100,8 +251,7 @@ public class Chef extends javax.swing.JFrame {
         //</editor-fold>
 
         
-        userId=args[0];
-        username=args[1];
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -111,7 +261,23 @@ public class Chef extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Heading;
+    private javax.swing.JLabel btnAddTablet;
+    private javax.swing.JLabel btnAddTablet2;
+    private javax.swing.JLabel btnPrepared;
+    private javax.swing.JLabel btnRefresh;
+    private javax.swing.JLabel btnViewOrder;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
+    private javax.swing.JPanel mainPanel;
+    private javax.swing.JLabel txtFooter;
+    private javax.swing.JLabel txtTitle;
+    private javax.swing.JLabel txtTitle1;
     // End of variables declaration//GEN-END:variables
 }
