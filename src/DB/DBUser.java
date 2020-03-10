@@ -5,6 +5,8 @@
  */
 package DB;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.List;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -17,6 +19,8 @@ import main.User;
 public class DBUser {
     
     DBUtil util;
+    PreparedStatement ps;
+    Connection con;
     ResultSet rs;
     User user;
     ArrayList<User> userl;
@@ -24,14 +28,29 @@ public class DBUser {
     public DBUser()
     {
         util=DBUtil.getIntence();
+        con=util.getConnection();
     }
     
     public boolean addUser(User ow)
     {
-        String sql="INSERT INTO `User`(`uid`, `username`, `password`, `userType`,`status`) VALUES"
-                + " ('"+ow.getUid()+"','"+ow.getUsername()+"','"+ow.getPassword()+"',"+ow.getUserType()+","+ow.getStaus()+")";
+        try{
+            
+        String sql="INSERT INTO `User`(`uid`, `username`, `password`, `userType`,`status`) VALUES (?,?,?,?,?)";
         
-        return util.DBUpdate(sql);
+         ps=con.prepareStatement(sql);
+         ps.setString(1, ow.getUid());
+         ps.setString(2, ow.getUsername());
+         ps.setString(3, ow.getPassword());
+         ps.setInt(4, ow.getUserType());
+         ps.setInt(5, ow.getStaus());
+        
+        
+        }catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        
+        return util.DBEUpdate(ps);
     }
     
     public User getUser(String id)
@@ -39,9 +58,11 @@ public class DBUser {
     
         try {
             
-            String sql="Select * From User Where uid='"+id+"'";
+            String sql="Select * From User Where uid=?";
+            ps=con.prepareStatement(sql);
+            ps.setString(1, id);
             
-            rs=util.DBData(sql);
+            rs=util.DBEData(ps);
             
             if(rs.next())
             {
@@ -72,8 +93,8 @@ public class DBUser {
         try {
             
             String sql="Select * From User";
-            
-            rs=util.DBData(sql);
+            ps=con.prepareStatement(sql);
+            rs=util.DBEData(ps);
             
             while(rs.next())
             {
@@ -96,10 +117,24 @@ public class DBUser {
 
     }
     
-    public boolean updateUser(User us)
+    public boolean updateUser(User ow)
     {
-        String sql="UPDATE User set username='"+us.getUsername()+"',password='"+us.getPassword()+"',status="+us.getStaus()+" where uid='"+us.getUid()+"'";
-        return util.DBUpdate(sql);
+        try{
+            
+        String sql="UPDATE User set username=?,password=?,status=? where uid=?";
+         ps=con.prepareStatement(sql);
+         
+         ps.setString(1, ow.getUsername());
+         ps.setString(2, ow.getPassword());
+         ps.setInt(3, ow.getStaus());
+         ps.setString(4, ow.getUid());
+        
+        }catch (Exception e){
+            
+        } 
+        
+        return util.DBEUpdate(ps);
+        
     }
     
     
@@ -113,7 +148,8 @@ public class DBUser {
             try
         {
             String sql="Select * from User";
-            rs = util.DBData(sql);
+            ps=con.prepareStatement(sql);
+            rs = util.DBEData(ps);
            
             
             

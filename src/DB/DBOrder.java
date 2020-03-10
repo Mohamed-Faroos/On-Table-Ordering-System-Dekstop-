@@ -5,6 +5,9 @@
  */
 package DB;
 
+import java.rmi.ConnectIOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,12 +20,15 @@ import main.Order;
 public class DBOrder {
 
     DBUtil util;
+    PreparedStatement ps;
+    Connection con;
     ResultSet rs;
     ArrayList <Order> order;
     
     public DBOrder() {
         
         util=DBUtil.getIntence();
+        con=util.getConnection();
     }
     
     
@@ -30,7 +36,8 @@ public class DBOrder {
     {
         try{
         String sql="SELECT * FROM `orders` WHERE `status`=0";
-        rs=util.DBData(sql);
+        ps=con.prepareStatement(sql);
+        rs=util.DBEData(ps);
         
         while(rs.next())
         {
@@ -49,11 +56,12 @@ public class DBOrder {
     {
         try{
         String sql="SELECT * FROM `orders` WHERE `status`=1";
-        rs=util.DBData(sql);
+        ps=con.prepareStatement(sql);
+        rs=util.DBEData(ps);
         
         while(rs.next())
         {
-            Order or=new Order(rs.getString("oid"), rs.getString("ptid"), 0);
+            Order or=new Order(rs.getString("oid"), rs.getString("ptid"), 1);
             order.add(or);
             
         }
