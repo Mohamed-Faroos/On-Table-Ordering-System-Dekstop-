@@ -7,6 +7,7 @@ package DB;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -63,12 +64,45 @@ public class DBUtil {
         
     }
      
+      public boolean DBEUpdate(PreparedStatement ps)
+    {
+        try {
+            int res=ps.executeUpdate();
+            ps.close();
+            
+            if(res>0){
+                
+                return true;
+            }else{
+                
+                return true;
+            }
+        } catch (SQLException se) {
+            se.printStackTrace(); 
+            return false;
+        } 
+        
+    }
+     
     public ResultSet DBData(String query)
     {
         try {   
             stmt = conn.createStatement();
             rs = stmt.executeQuery(query);
         } catch (SQLException e) {
+            e.printStackTrace(); 
+        }
+        return rs; 
+    }
+    
+    public ResultSet DBEData(PreparedStatement ps)
+    {
+        try {   
+            
+            rs = ps.executeQuery();
+            
+        } catch (SQLException e) {
+            
             e.printStackTrace(); 
         }
         return rs; 

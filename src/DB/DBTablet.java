@@ -5,6 +5,8 @@
  */
 package DB;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,18 +19,33 @@ import main.Tablet;
  */
 public class DBTablet {
     DBUtil util;
+    PreparedStatement ps;
+    Connection con;
     ArrayList<Tablet> tbl;
     ResultSet rs;
     Tablet tablet;
     
     public DBTablet() {
         util=DBUtil.getIntence();
+        con=util.getConnection();
     }
     
     public boolean addTablet(Tablet tb)
     {
-        String sql="INSERT INTO `Tablet`(`tid`, `Password`, `status`,`customerUsage`) VALUES ('"+tb.getTid()+"','"+tb.getPassword()+"',"+tb.getStatus()+",0)";
-        return util.DBUpdate(sql);
+        try{
+            
+        String sql="INSERT INTO `Tablet`(`tid`, `Password`, `status`,`customerUsage`) VALUES (?,?,?,0)";
+       
+        ps=con.prepareStatement(sql);
+        ps.setString(1, tb.getTid());
+        ps.setString(2, tb.getPassword());
+        ps.setInt(3, tb.getStatus());
+        
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return util.DBEUpdate(ps);
     }
     
     public List<Tablet> getAllTablets()
@@ -37,8 +54,8 @@ public class DBTablet {
         try {
             
             String sql="Select * From Tablet";
-            
-            rs=util.DBData(sql);
+            ps=con.prepareStatement(sql);
+            rs=util.DBEData(ps);
             
             while(rs.next())
             {
@@ -64,9 +81,10 @@ public class DBTablet {
     
         try {
             
-            String sql="Select * From tablet Where tid='"+id+"'";
-            
-            rs=util.DBData(sql);
+            String sql="Select * From tablet Where tid=?";
+            ps=con.prepareStatement(sql);
+            ps.setString(1, id);
+            rs=util.DBEData(ps);
             
             if(rs.next())
             {
@@ -88,8 +106,21 @@ public class DBTablet {
      
      public boolean updateTablet(Tablet tb)
     {
-        String sql="UPDATE `Tablet` SET `Password`='"+tb.getPassword()+"',`status`="+tb.getStatus()+" WHERE `tid`='"+tb.getTid()+"'";
-        return util.DBUpdate(sql);
+        try{
+            
+        String sql="UPDATE `Tablet` SET `Password`=?,`status`=? WHERE `tid`=?";
+       
+        ps=con.prepareStatement(sql);
+        ps.setString(1, tb.getPassword());
+        ps.setInt(2, tb.getStatus());
+        ps.setString(3, tb.getTid());
+
+        
+        }catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        return util.DBEUpdate(ps);
     }
      
      public String lastID()
@@ -100,7 +131,8 @@ public class DBTablet {
             try
         {
             String sql="Select * from tablet";
-            rs = util.DBData(sql);
+            ps=con.prepareStatement(sql);
+            rs = util.DBEData(ps);
            
             
             

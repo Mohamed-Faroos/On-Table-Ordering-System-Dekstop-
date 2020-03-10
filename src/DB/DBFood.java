@@ -5,10 +5,10 @@
  */
 package DB;
 
-import com.mysql.jdbc.Connection;
 import java.io.File;
 import java.io.FileInputStream;
 import java.sql.Blob;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -23,14 +23,19 @@ import main.Food;
 public class DBFood {
 
     DBUtil util;
+    PreparedStatement ps;
+    Connection con;
     String sql;
     boolean rs;
     ArrayList<Category> cate;
     ArrayList<Food> foodl;
     ResultSet res;
     Food fd;
+    
     public DBFood() {
+        
         util=DBUtil.getIntence();
+        con=util.getConnection();
     }
     
     public boolean addFood(Food fd)
@@ -40,12 +45,11 @@ public class DBFood {
 
             File imgfile = new File(fd.getImage());
             FileInputStream fin = new FileInputStream(imgfile);
-            Connection con= (Connection) util.getConnection();
             
       
            sql="INSERT INTO `Product`(`pid`, `pname`, `cid`, `price`, `quantity`, `availability`, `image`) VALUES (?,?,?,?,?,?,?)"; 
             
-           PreparedStatement ps=con.prepareStatement(sql);
+           ps=con.prepareStatement(sql);
            ps.setString(1, fd.getPid());
            ps.setString(2, fd.getPname());
            ps.setString(3, fd.getCid());
@@ -53,21 +57,14 @@ public class DBFood {
            ps.setInt(5, fd.getQuantity());
            ps.setInt(6, fd.getAvailability());
            ps.setBinaryStream(7, fin,imgfile.length());
-           int row=ps.executeUpdate();
            
-           if(row>0)
-           {
-               rs=true;
-           }else{
-               rs=false;            
-           }
            
          
         } catch (Exception e) {
             
             e.printStackTrace();
         }
-        return rs;
+        return util.DBEUpdate(ps);
     }
     
     //get Available Category
@@ -79,11 +76,12 @@ public class DBFood {
         try {
             
          sql="Select * From Category Where status = 0";
-         ResultSet rs= util.DBData(sql);
+         ps=con.prepareStatement(sql);
+         res= util.DBEData(ps);
          
-         while(rs.next()){
-            String ID=rs.getString("cid");
-            String category=rs.getString("category");
+         while(res.next()){
+            String ID=res.getString("cid");
+            String category=res.getString("category");
             
 
             ct=new Category();
@@ -110,7 +108,8 @@ public class DBFood {
             try
         {
             String sql="Select * from Product";
-            res = util.DBData(sql);
+            ps=con.prepareStatement(sql);
+            res = util.DBEData(ps);
            
             
             
@@ -156,8 +155,8 @@ public class DBFood {
         try {
             
             String sql="Select * From Product";
-            
-            res=util.DBData(sql);
+            ps=con.prepareStatement(sql);
+            res = util.DBEData(ps);
             
             while(res.next())
             {
@@ -198,9 +197,10 @@ public class DBFood {
               foodl= new ArrayList<>();
                 try {
 
-                    String sql="SELECT * FROM product WHERE MATCH (pname) AGAINST ('"+word+"')";
-
-                    res=util.DBData(sql);
+                    String sql="SELECT * FROM product WHERE MATCH (pname) AGAINST (?)";
+                    ps=con.prepareStatement(sql);
+                    ps.setString(1, word);
+                    res = util.DBEData(ps);
 
                     while(res.next())
                     {
@@ -234,9 +234,10 @@ public class DBFood {
     
         try {
             
-            String sql="Select * From product Where pid='"+id+"'";
-            
-            res=util.DBData(sql);
+            String sql="Select * From product Where pid=?";
+            ps=con.prepareStatement(sql);
+            ps.setString(1, id);
+            res = util.DBEData(ps);
             
             if(res.next())
             {
@@ -273,12 +274,11 @@ public class DBFood {
 
             File imgfile = new File(fd.getImage());
             FileInputStream fin = new FileInputStream(imgfile);
-            Connection con= (Connection) util.getConnection();
             
       
            sql="UPDATE `Product` SET `pname`=?,`cid`=?,`price`=?,`quantity`=?,`availability`=?,`image`=? WHERE `pid`=?"; 
             
-           PreparedStatement ps=con.prepareStatement(sql);
+           ps=con.prepareStatement(sql);
            ps.setString(1, fd.getPname());
            ps.setString(2, fd.getCid());
            ps.setInt(3, fd.getPrice());
@@ -286,21 +286,14 @@ public class DBFood {
            ps.setInt(5, fd.getAvailability());
            ps.setBinaryStream(6, fin,imgfile.length());
            ps.setString(7, fd.getPid());
-           int row=ps.executeUpdate();
            
-           if(row>0)
-           {
-               rs=true;
-           }else{
-               rs=false;            
-           }
            
          
         } catch (Exception e) {
             
             e.printStackTrace();
         }
-        return rs;
+        return util.DBEUpdate(ps);
     }
     
     public boolean updateFoodWithoutImage(Food fd)
@@ -308,11 +301,10 @@ public class DBFood {
          try {
 
             
-           Connection con= (Connection) util.getConnection();
 
            sql="UPDATE `Product` SET `pname`=?,`cid`=?,`price`=?,`quantity`=?,`availability`=? WHERE `pid`=?"; 
             
-           PreparedStatement ps=con.prepareStatement(sql);
+           ps=con.prepareStatement(sql);
            ps.setString(1, fd.getPname());
            ps.setString(2, fd.getCid());
            ps.setInt(3, fd.getPrice());
@@ -320,21 +312,13 @@ public class DBFood {
            ps.setInt(5, fd.getAvailability());
            ps.setString(6, fd.getPid());
 
-           int row=ps.executeUpdate();
-           
-           if(row>0)
-           {
-               rs=true;
-           }else{
-               rs=false;            
-           }
            
          
         } catch (Exception e) {
             
             e.printStackTrace();
         }
-        return rs;
+        return util.DBEUpdate(ps);
     }
     
 }

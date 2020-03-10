@@ -727,7 +727,8 @@ public class ManageFood extends javax.swing.JFrame {
 
     private void btnUpdateCategoryMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUpdateCategoryMouseClicked
         foodTab.setSelectedIndex(1);
-        
+        getAllCategories();
+
     }//GEN-LAST:event_btnUpdateCategoryMouseClicked
 
     private void btnAddcategoryMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddcategoryMouseClicked
@@ -736,6 +737,8 @@ public class ManageFood extends javax.swing.JFrame {
 
     private void btnAddFoodMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddFoodMouseClicked
         foodTab.setSelectedIndex(2);
+                setCategories();
+
     }//GEN-LAST:event_btnAddFoodMouseClicked
 
     private void btnUpdateFoodsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUpdateFoodsMouseClicked

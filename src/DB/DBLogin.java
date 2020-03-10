@@ -5,6 +5,8 @@
  */
 package DB;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import main.User;
@@ -16,17 +18,23 @@ import main.User;
 public class DBLogin {
     DBUtil util;
     User user;
+    Connection con;
     ResultSet rs;
 
     public DBLogin() {
         util=DBUtil.getIntence();
+        con=util.getConnection();
     }
     
     public User login(User us)
     {
         try{
-        String sql="Select * From User where uid='"+us.getUid()+"' and password='"+us.getPassword()+"' and userType="+us.getUserType()+" and status = 0";
-        rs=util.DBData(sql);
+        String sql="Select * From User where uid=? and password=? and userType=? and status = 0";
+        PreparedStatement ps=con.prepareStatement(sql);
+        ps.setString(1, us.getUid());
+        ps.setString(2, us.getPassword());
+        ps.setInt(3, us.getUserType());
+        rs=util.DBEData(ps);
             
             if(rs.next())
             {
