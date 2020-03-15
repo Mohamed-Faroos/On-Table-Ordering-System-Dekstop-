@@ -47,6 +47,7 @@ public class DBLoginTest {
         User us = new User();
         us.setUid("U001");
         us.setPassword("admin123");
+        us.setUserType(0);
         DBLogin instance = new DBLogin();
         
         User result = instance.login(us);

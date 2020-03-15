@@ -5,6 +5,8 @@
  */
 package DB;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,17 +22,31 @@ public class DBCategory {
     ResultSet rs;
     Category cate;
     ArrayList<Category> cateL;
+    PreparedStatement ps;
+    Connection con;
 
     public DBCategory()
     {
         util=DBUtil.getIntence();
+        con=util.getConnection();
     }
     
     public boolean addCategory(Category ct)
     {
-        String sql="INSERT INTO `category`(`cid`, `category`, `description`, `status`) VALUES"
-                + " ('"+ct.getcId()+"','"+ct.getcName()+"','"+ct.getDiscription()+"',"+ct.getStatus()+")";
-        return util.DBUpdate(sql);
+        try{
+        String sql="INSERT INTO `category`(`cid`, `category`, `description`, `status`) VALUES (?,?,?,?)";
+        
+        ps=con.prepareStatement(sql);
+        ps.setString(1, ct.getcId());
+        ps.setString(2, ct.getcName());
+        ps.setString(3, ct.getDiscription());
+        ps.setInt(4, ct.getStatus());
+        }catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        
+        return util.DBEUpdate(ps);
     }
     
      public Category getCategory(String id)
@@ -38,9 +54,10 @@ public class DBCategory {
     
         try {
             
-            String sql="Select * From category Where cid='"+id+"'";
-            
-            rs=util.DBData(sql);
+            String sql="Select * From category Where cid=?";
+            ps=con.prepareStatement(sql);
+            ps.setString(1, id);
+            rs=util.DBEData(ps);
             
             if(rs.next())
             {
@@ -70,8 +87,8 @@ public class DBCategory {
         try {
             
             String sql="Select * From category";
-            
-            rs=util.DBData(sql);
+            ps=con.prepareStatement(sql);
+            rs=util.DBEData(ps);
             
             while(rs.next())
             {
@@ -95,8 +112,20 @@ public class DBCategory {
     
     public boolean updateCategory(Category ct)
     {
-        String sql="UPDATE `category` SET `description`='"+ct.getDiscription()+"',`status`="+ct.getStatus()+" WHERE `cid`='"+ct.getcId()+"'";
-        return util.DBUpdate(sql);
+        try{
+        String sql="UPDATE `category` SET `description`=?,`status`=? WHERE `cid`=?";
+        
+        ps=con.prepareStatement(sql);
+        ps.setString(1, ct.getDiscription());
+        ps.setInt(2, ct.getStatus());
+        ps.setString(3, ct.getcId());
+
+        }catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        
+        return util.DBEUpdate(ps);
     }
     
     
@@ -110,7 +139,8 @@ public class DBCategory {
             try
         {
             String sql="Select * from Category";
-            rs = util.DBData(sql);
+            ps=con.prepareStatement(sql);
+            rs = util.DBEData(ps);
            
             
             

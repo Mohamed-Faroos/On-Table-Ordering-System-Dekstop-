@@ -13,17 +13,20 @@ public class Tablet {
     private String tid;
     private String password;
     private int status;
+    private int customerUsage;
 
-    public Tablet(String tid, String password, int status) {
+    public Tablet(String tid, String password, int status,int customerUsage) {
         this.tid = tid;
         this.password = password;
         this.status = status;
+        this.customerUsage=customerUsage;
     }
 
     public Tablet() {
         this.tid = "";
         this.password = "";
         this.status = 0;
+        this.customerUsage=0;
     }
 
     /**
@@ -66,6 +69,20 @@ public class Tablet {
      */
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    /**
+     * @return the customerUsage
+     */
+    public int getCustomerUsage() {
+        return customerUsage;
+    }
+
+    /**
+     * @param customerUsage the customerUsage to set
+     */
+    public void setCustomerUsage(int customerUsage) {
+        this.customerUsage = customerUsage;
     }
     
     
