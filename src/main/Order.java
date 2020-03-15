@@ -9,7 +9,7 @@ package main;
  *
  * @author Faroos
  */
-public class Order {
+public class Order extends User{
     
     private String orderId;
     private String tid;

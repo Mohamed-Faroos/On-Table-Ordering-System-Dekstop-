@@ -321,4 +321,38 @@ public class DBFood {
         return util.DBEUpdate(ps);
     }
     
+    
+    public boolean updateQuantity(Food fd)
+    {
+         try {
+
+           sql="UPDATE `Product` SET `quantity`=? WHERE `pid`=?"; 
+            
+           ps=con.prepareStatement(sql);
+           
+           ps.setInt(1, fd.getQuantity());
+           ps.setString(2, fd.getPid());
+
+
+        } catch (Exception e) {
+            
+            e.printStackTrace();
+        }
+        return util.DBEUpdate(ps);
+    }
+    
+     public boolean updateAllQuantity()
+    {
+         try {
+
+           sql="UPDATE `Product` SET `quantity`=30"; 
+           ps=con.prepareStatement(sql);
+
+        } catch (Exception e) {
+            
+            e.printStackTrace();
+        }
+        return util.DBEUpdate(ps);
+    }
+    
 }

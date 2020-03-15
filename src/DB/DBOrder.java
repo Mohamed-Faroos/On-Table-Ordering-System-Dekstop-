@@ -34,6 +34,7 @@ public class DBOrder {
     
     public List<Order> getNewOrders()
     {
+        order=new ArrayList<>();
         try{
         String sql="SELECT * FROM `orders` WHERE `status`=0";
         ps=con.prepareStatement(sql);
@@ -41,7 +42,7 @@ public class DBOrder {
         
         while(rs.next())
         {
-            Order or=new Order(rs.getString("oid"), rs.getString("ptid"), 0);
+            Order or=new Order(rs.getString("oid"), rs.getString("tid"), 0);
             order.add(or);
             
         }
@@ -52,8 +53,11 @@ public class DBOrder {
         return order;
     }
     
+    
      public List<Order> getPreparedOrders()
     {
+        order=new ArrayList<>();
+
         try{
         String sql="SELECT * FROM `orders` WHERE `status`=1";
         ps=con.prepareStatement(sql);
@@ -61,7 +65,7 @@ public class DBOrder {
         
         while(rs.next())
         {
-            Order or=new Order(rs.getString("oid"), rs.getString("ptid"), 1);
+            Order or=new Order(rs.getString("oid"), rs.getString("tid"), 1);
             order.add(or);
             
         }
@@ -71,6 +75,56 @@ public class DBOrder {
         }
         return order;
     }
+     
+      public List<Order> getBilledOrders()
+    {
+        order=new ArrayList<>();
+
+        try{
+        String sql="SELECT * FROM `orders` WHERE `status`=2";
+        ps=con.prepareStatement(sql);
+        rs=util.DBEData(ps);
+        
+        while(rs.next())
+        {
+            Order or=new Order(rs.getString("oid"), rs.getString("tid"), 1);
+            order.add(or);
+            
+        }
+        }catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        return order;
+    }
+     
+     
+    public boolean prepareOrder(int oid)
+    {
+        try {
+            String sql="UPDATE `orders` SET `status`= 1 WHERE `oid`=?";
+            ps=con.prepareStatement(sql);
+            ps.setInt(1,oid);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return util.DBEUpdate(ps);
+    }
     
+     public boolean BillOrder(int oid)
+    {
+        try {
+            String sql="UPDATE `orders` SET `status`= 2 WHERE `oid`=?";
+            ps=con.prepareStatement(sql);
+            ps.setInt(1,oid);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return util.DBEUpdate(ps);
+    }
     
 }
