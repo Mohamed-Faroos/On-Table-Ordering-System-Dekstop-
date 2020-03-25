@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 import main.Category;
 import main.Food;
+import main.PredictedList;
+import main.Prediction;
 
 /**
  *
@@ -345,7 +347,7 @@ public class DBFood {
     {
          try {
 
-           sql="UPDATE `Product` SET `quantity`=30"; 
+           sql="UPDATE `Product` SET `quantity`=20"; 
            ps=con.prepareStatement(sql);
 
         } catch (Exception e) {
@@ -353,6 +355,31 @@ public class DBFood {
             e.printStackTrace();
         }
         return util.DBEUpdate(ps);
+    }
+     
+         public boolean updateQuantityByPrediction()
+    {
+        boolean res = false;
+         try {
+          
+             ArrayList<Prediction> pred=(ArrayList<Prediction>) PredictedList.getData();
+              
+             for(int i=0;i<pred.size();i++)
+             {
+                    sql="UPDATE `Product` SET `quantity`=? WHERE `pid`=?"; 
+            
+                    ps=con.prepareStatement(sql);
+
+                    ps.setInt(1, pred.get(i).getPrediction());
+                    ps.setString(2, pred.get(i).getPid());
+                    res=util.DBEUpdate(ps);
+             }
+           
+        } catch (Exception e) {
+            
+            e.printStackTrace();
+        }
+        return res;
     }
     
 }

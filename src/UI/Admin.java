@@ -42,6 +42,7 @@ public class Admin extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        btnTab2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -70,7 +71,7 @@ public class Admin extends javax.swing.JFrame {
             }
         });
         mainPanel.add(btnUser);
-        btnUser.setBounds(480, 130, 127, 139);
+        btnUser.setBounds(520, 130, 127, 139);
 
         btnProducts.setForeground(new java.awt.Color(255, 255, 255));
         btnProducts.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -83,7 +84,7 @@ public class Admin extends javax.swing.JFrame {
             }
         });
         mainPanel.add(btnProducts);
-        btnProducts.setBounds(730, 130, 125, 139);
+        btnProducts.setBounds(690, 130, 125, 139);
 
         btnTab.setForeground(new java.awt.Color(255, 255, 255));
         btnTab.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -96,7 +97,7 @@ public class Admin extends javax.swing.JFrame {
             }
         });
         mainPanel.add(btnTab);
-        btnTab.setBounds(480, 330, 122, 139);
+        btnTab.setBounds(450, 330, 122, 139);
 
         jLabel7.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
@@ -109,8 +110,13 @@ public class Admin extends javax.swing.JFrame {
         btnTab1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/prediction.png"))); // NOI18N
         btnTab1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         btnTab1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnTab1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnTab1MouseClicked(evt);
+            }
+        });
         mainPanel.add(btnTab1);
-        btnTab1.setBounds(730, 330, 122, 139);
+        btnTab1.setBounds(770, 330, 122, 139);
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -136,6 +142,19 @@ public class Admin extends javax.swing.JFrame {
         });
         mainPanel.add(jLabel2);
         jLabel2.setBounds(150, 460, 90, 30);
+
+        btnTab2.setForeground(new java.awt.Color(255, 255, 255));
+        btnTab2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnTab2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/report.png"))); // NOI18N
+        btnTab2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        btnTab2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnTab2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnTab2MouseClicked(evt);
+            }
+        });
+        mainPanel.add(btnTab2);
+        btnTab2.setBounds(610, 330, 122, 139);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -173,6 +192,16 @@ public class Admin extends javax.swing.JFrame {
         this.setVisible(false);
 
     }//GEN-LAST:event_jLabel2MouseClicked
+
+    private void btnTab1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTab1MouseClicked
+        Prediction mf=new Prediction();
+        mf.setVisible(true);
+    }//GEN-LAST:event_btnTab1MouseClicked
+
+    private void btnTab2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTab2MouseClicked
+        Report mf=new Report();
+        mf.setVisible(true);
+    }//GEN-LAST:event_btnTab2MouseClicked
 
     /**
      * @param args the command line arguments
@@ -214,6 +243,7 @@ public class Admin extends javax.swing.JFrame {
     private javax.swing.JLabel btnProducts;
     private javax.swing.JLabel btnTab;
     private javax.swing.JLabel btnTab1;
+    private javax.swing.JLabel btnTab2;
     private javax.swing.JLabel btnUser;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
