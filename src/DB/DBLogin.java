@@ -52,6 +52,8 @@ public class DBLogin {
 
                 
 
+            }else{
+                user=null;
             }
         }catch(SQLException e)
         {
