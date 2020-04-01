@@ -45,7 +45,7 @@ public class DBPrediction {
         op=new ArrayList<>();
         try {
             
-            String sql="SELECT * FROM OrderedProduct WHERE order_date >= NOW()-INTERVAL 10 DAY AND order_date <= NOW()+INTERVAL 1 DAY group by pid";
+            String sql="SELECT * FROM OrderedProduct WHERE order_date >= NOW()-INTERVAL 16 DAY AND order_date <= NOW()+INTERVAL 1 DAY group by pid";
             ps=con.prepareStatement(sql);
             
             rs=util.DBEData(ps);
@@ -53,7 +53,7 @@ public class DBPrediction {
             while(rs.next())
             {
                 
-                String sql1="SELECT sum(quantity) as Qty,order_date as Date FROM OrderedProduct WHERE order_date >= NOW()-INTERVAL 10 DAY "
+                String sql1="SELECT sum(quantity) as Qty,order_date as Date FROM OrderedProduct WHERE order_date >= NOW()-INTERVAL 16 DAY "
                                     + "AND order_date <= NOW()+INTERVAL 1 DAY and pid='"+rs.getString("pid")+"' group by date(order_date)";
                 ps1=con.prepareStatement(sql1);
                 rs1=util.DBEData(ps1);
