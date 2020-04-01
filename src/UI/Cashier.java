@@ -11,13 +11,32 @@ import DB.DBOrder;
 import DB.DBOrderProduct;
 import static UI.Chef.userId;
 import static UI.Chef.username;
+import java.awt.BorderLayout;
+import static java.awt.Component.CENTER_ALIGNMENT;
+import java.awt.Container;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import main.Bill;
 import main.Order;
 import main.User;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperPrintManager;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JRDesignQuery;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -30,8 +49,9 @@ public class Cashier extends javax.swing.JFrame {
     public static double total1;
     public static double sCharge;
     public static double NetTotal;
-    
+    public static String TID;
     public static String billNo;
+    JasperPrint print;
 
     /**
      * Creates new form Cashier
@@ -42,6 +62,7 @@ public class Cashier extends javax.swing.JFrame {
         getPreparedOrders();
         getBillNo();
         txtError.setVisible(false);
+        jScrollPane1.setVisible(false);
     }
 
     
@@ -86,6 +107,7 @@ public class Cashier extends javax.swing.JFrame {
         txtoid = new javax.swing.JTextField();
         txtTableID = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        billPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -177,7 +199,7 @@ public class Cashier extends javax.swing.JFrame {
         jScrollPane1.setViewportView(billFrame);
 
         jPanel1.add(jScrollPane1);
-        jScrollPane1.setBounds(800, 60, 350, 570);
+        jScrollPane1.setBounds(1010, 20, 20, 30);
 
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText(":");
@@ -318,6 +340,22 @@ public class Cashier extends javax.swing.JFrame {
         jPanel1.add(jLabel4);
         jLabel4.setBounds(290, 60, 490, 570);
 
+        billPanel.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout billPanelLayout = new javax.swing.GroupLayout(billPanel);
+        billPanel.setLayout(billPanelLayout);
+        billPanelLayout.setHorizontalGroup(
+            billPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 370, Short.MAX_VALUE)
+        );
+        billPanelLayout.setVerticalGroup(
+            billPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 570, Short.MAX_VALUE)
+        );
+
+        jPanel1.add(billPanel);
+        billPanel.setBounds(790, 60, 370, 570);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -377,8 +415,8 @@ public class Cashier extends javax.swing.JFrame {
                 txtError.setText("Error : Please Generate Bill");
             }else{
                 
-            billFrame.print();
-            int oid=Integer.parseInt(txtoid.getText());
+                JasperPrintManager.printReport(print, true);
+                int oid=Integer.parseInt(txtoid.getText());
             
             DBOrder dbo=new DBOrder();
             boolean res=dbo.BillOrder(oid);
@@ -402,6 +440,7 @@ public class Cashier extends javax.swing.JFrame {
                           txtError.setText("Success : Bill Added Successfully");
 
                           billFrame.setText("");
+                          billPanel.removeAll();
 
                           DefaultTableModel model=(DefaultTableModel)tblOrderProducts.getModel();
                           model.setRowCount(0);
@@ -480,37 +519,52 @@ public class Cashier extends javax.swing.JFrame {
             LocalDateTime now = LocalDateTime.now();  
             
 
-          billFrame.setText(" ____________________________________________________\n" +
-                            "	     QC Restaurent                   \n" +
-                            "	       Since 1996       \n" +
-                            "        66/18,Kammala Road, Henamulla,Panadura. \n" +
-                            "	Hotline : 0774243525              \n" +
-                            " ____________________________________________________\n" +
-                            "  Invoice No: "+billNo+"\tCashier : "+username+"\n" +
-                            "  Date : "+dtf.format(now)+"\t"+txtTableID.getText()+"\n" +
-                            "  Time: "+dtf2.format(now)+"\t\tOrder Id : "+txtoid.getText()+"\n" +
-                            " ____________________________________________________\n" +
-                            "\n" +
-                            "  Items	Qty	Price	Total\n" +
-                            "  ----------------------------------------------\n" +
-                            items
-                            +
-                            "\n" +
-                            " ----------------------------------------------\n" +
-                            " Gross\t\t"+total1+" (Rs)\n" +       
-                            " Service Charge\t"+sCharge+" (Rs)\n" +
-                            " ----------------------------------------------\n" +
-                            " Net Total\t\t"+NetTotal+" (Rs)	\n" +
-                            "-----------------------------------------------\n" +
-                            " Paid Amount		"+txtPaid.getText()+" (Rs)\n" +
-                            " Balance Amount	"+balance+" (Rs)\n" +
-                            "-----------------------------------------------\n" +
-                            "	           Thank You!\n" +
-                            "	          Come Again!");
+          billFrame.setText(" ____________________________________________________");
+          
+            try {
+                getReport();
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Cashier.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(Cashier.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (JRException ex) {
+                Logger.getLogger(Cashier.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_btnGenerateMouseClicked
 
     
+    public void getReport() throws ClassNotFoundException, SQLException, JRException
+    {
+        billPanel.removeAll();
+         Class.forName("com.mysql.jdbc.Driver");
+               Connection    con = DriverManager.getConnection("jdbc:mysql://localhost/OTOS", "root", "");
+               JasperDesign jd=JRXmlLoader.load("/Users/Faroos/Documents/Course/Final/Dekstop System/OTOS-Desktop/src/Reports/bill.jrxml");
+               String Sql="Select * From OrderedProduct where oid="+txtoid.getText();
+               
+               HashMap map = new HashMap();
+               map.put("invoiceNo", billNo);
+               map.put("cashier", username);
+               map.put("oid", txtoid.getText());
+               map.put("tid", TID);
+               map.put("paidA", Integer.parseInt(txtPaid.getText()));
+               
+               JRDesignQuery jrq=new JRDesignQuery();
+               jrq.setText(Sql);
+               jd.setQuery(jrq);
+               JasperReport jrep=JasperCompileManager.compileReport(jd);
+               print=JasperFillManager.fillReport(jrep, map, con) ;
+               con.close();
+               //JasperViewer.viewReport(print);
+               
+               JasperViewer viewer =new JasperViewer(print);
+               Container cont=viewer.getContentPane();
+             
+               billPanel.setLayout(new BorderLayout());
+               billPanel.repaint();
+               billPanel.add(cont);
+               billPanel.revalidate();
+    }
     
     private void btnViewOrderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnViewOrderMouseClicked
             txtError.setVisible(false);
@@ -519,7 +573,7 @@ public class Cashier extends javax.swing.JFrame {
             NetTotal=0;
             int row1 = tblOrders.getSelectedRow();
             String ID=tblOrders.getValueAt(row1, 0).toString();
-            String TID=tblOrders.getValueAt(row1, 1).toString();
+            TID=tblOrders.getValueAt(row1, 1).toString();
             txtTableID.setText("Table ID: "+TID);
             txtoid.setText(ID);
             
@@ -613,6 +667,7 @@ public class Cashier extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea billFrame;
+    private javax.swing.JPanel billPanel;
     private javax.swing.JLabel btnGenerate;
     private javax.swing.JLabel btnPrint;
     private javax.swing.JLabel btnRefresh;
