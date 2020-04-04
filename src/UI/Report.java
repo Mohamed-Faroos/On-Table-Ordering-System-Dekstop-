@@ -7,6 +7,12 @@ package UI;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -15,6 +21,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.text.DateFormatter;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -189,7 +197,8 @@ public class Report extends javax.swing.JFrame {
 
                Class.forName("com.mysql.jdbc.Driver");
                Connection    con = DriverManager.getConnection("jdbc:mysql://localhost/OTOS", "root", "");
-               JasperDesign jd=JRXmlLoader.load("/Users/Faroos/Documents/Course/Final/Dekstop System/OTOS-Desktop/src/Reports/sales.jrxml");
+               InputStream in = getClass().getResourceAsStream("/Reports/sales.jrxml");
+               JasperDesign jd=JRXmlLoader.load(in);
                String Sql="SELECT id,oid,pid,pname,sum(quantity) as quantity,sum(price) as price,order_date,type FROM OrderedProduct"
                        + " where order_date >= date('"+sdate+"') AND order_date <= date('"+edate+"') "
                        + "group by pname";

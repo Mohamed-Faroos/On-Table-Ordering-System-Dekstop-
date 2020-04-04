@@ -5,11 +5,18 @@
  */
 package DB;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import main.OrderProduct;
 import main.PredictedList;
 import main.Prediction;
@@ -17,6 +24,7 @@ import weka.classifiers.evaluation.NumericPrediction;
 import weka.classifiers.timeseries.WekaForecaster;
 import weka.core.Instances;
 import weka.core.SerializationHelper;
+import weka.core.converters.ConverterUtils.DataSource;
 import weka.experiment.InstanceQuery;
 
 /**
@@ -45,7 +53,7 @@ public class DBPrediction {
         op=new ArrayList<>();
         try {
             
-            String sql="SELECT * FROM OrderedProduct WHERE order_date >= NOW()-INTERVAL 16 DAY AND order_date <= NOW()+INTERVAL 1 DAY group by pid";
+            String sql="SELECT * FROM OrderedProduct WHERE order_date >= NOW()-INTERVAL 30 DAY AND order_date <= NOW()+INTERVAL 1 DAY group by pid";
             ps=con.prepareStatement(sql);
             
             rs=util.DBEData(ps);
@@ -53,7 +61,7 @@ public class DBPrediction {
             while(rs.next())
             {
                 
-                String sql1="SELECT sum(quantity) as Qty,order_date as Date FROM OrderedProduct WHERE order_date >= NOW()-INTERVAL 16 DAY "
+                String sql1="SELECT sum(quantity) as Qty,order_date as Date FROM OrderedProduct WHERE order_date >= NOW()-INTERVAL 30 DAY "
                                     + "AND order_date <= NOW()+INTERVAL 1 DAY and pid='"+rs.getString("pid")+"' group by date(order_date)";
                 ps1=con.prepareStatement(sql1);
                 rs1=util.DBEData(ps1);
@@ -100,12 +108,14 @@ public class DBPrediction {
                     query.setDatabaseURL("jdbc:mysql://localhost/OTOS");
                     query.setUsername("root");
                     query.setPassword("");
-                    query.setQuery("SELECT sum(quantity) as Qty,order_date as Date FROM OrderedProduct WHERE order_date >= NOW()-INTERVAL 10 DAY "
+                    query.setQuery("SELECT sum(quantity) as Qty,order_date as Date FROM OrderedProduct WHERE order_date >= NOW()-INTERVAL 30 DAY "
                                     + "AND order_date <= NOW()+INTERVAL 1 DAY and pid='"+pid+"' group by date(order_date)"); //Read table
                     Instances dataset = query.retrieveInstances(); //into data
 
                     // new forecaster
-                    WekaForecaster forecaster=(WekaForecaster) SerializationHelper.read("/Users/Faroos/Desktop/FoodPrediction.model");
+                    //InputStream targetStream = new FileInputStream(new File(getClass().getResourceAsStream("/Assets/FoodPrediction.model").toS));
+                    InputStream in =getClass().getResourceAsStream("/Assets/FoodPrediction.model");
+                    WekaForecaster forecaster=(WekaForecaster) SerializationHelper.read(in);
 
 
                      forecaster.buildForecaster(dataset, System.out);
@@ -126,7 +136,7 @@ public class DBPrediction {
 
                       NumericPrediction predForTarget = predsAtStep.get(0);
 
-                    //  System.out.println(" "+pname+" Quantity :" + predForTarget.predicted() + " ");
+                      System.out.println(dataset);
                       
                       double prediction= predForTarget.predicted();
 
@@ -141,7 +151,8 @@ public class DBPrediction {
                 }
         }catch(Exception e)
         {
-            
+            JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), e);
+
         }
     }
 }
