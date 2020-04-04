@@ -13,6 +13,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Ignore;
 
 /**
  *
@@ -68,16 +69,17 @@ public class DBCategoryTest {
     /**
      * Test of getAllCategory method, of class DBCategory.
      */
-//    @Test
-//    public void testGetAllCategory() {
-//        System.out.println("getAllCategory");
-//        DBCategory instance = new DBCategory();
-//        List<Category> expResult = null;
-//        List<Category> result = instance.getAllCategory();
-//        assertEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
+    @Test
+    @Ignore
+    public void testGetAllCategory() {
+        System.out.println("getAllCategory");
+        DBCategory instance = new DBCategory();
+        List<Category> expResult = null;
+        List<Category> result = instance.getAllCategory();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 
     /**
      * Test of updateCategory method, of class DBCategory.

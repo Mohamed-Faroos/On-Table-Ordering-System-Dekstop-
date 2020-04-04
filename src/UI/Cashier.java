@@ -5,9 +5,43 @@
  */
 package UI;
 
+import main.OrderProduct;
+import DB.DBBill;
+import DB.DBOrder;
+import DB.DBOrderProduct;
 import static UI.Chef.userId;
 import static UI.Chef.username;
+import java.awt.BorderLayout;
+import static java.awt.Component.CENTER_ALIGNMENT;
+import java.awt.Container;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import main.Bill;
+import main.Order;
 import main.User;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperPrintManager;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JRDesignQuery;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -17,6 +51,12 @@ public class Cashier extends javax.swing.JFrame {
 
     public static String userId;
     public static String username;
+    public static double total1;
+    public static double sCharge;
+    public static double NetTotal;
+    public static String TID;
+    public static String billNo;
+    JasperPrint print;
 
     /**
      * Creates new form Cashier
@@ -24,6 +64,10 @@ public class Cashier extends javax.swing.JFrame {
     public Cashier() {
         initComponents();
         getLogDetails();
+        getPreparedOrders();
+        getBillNo();
+        txtError.setVisible(false);
+        jScrollPane1.setVisible(false);
     }
 
     
@@ -42,38 +86,558 @@ public class Cashier extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        btnViewOrder = new javax.swing.JLabel();
+        btnRefresh1 = new javax.swing.JLabel();
+        txtError = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        txtTitle1 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        txtPaid = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        billFrame = new javax.swing.JTextArea();
+        jLabel3 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblOrders = new javax.swing.JTable();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tblOrderProducts = new javax.swing.JTable();
+        jLabel6 = new javax.swing.JLabel();
+        btnPrint = new javax.swing.JLabel();
+        btnGenerate = new javax.swing.JLabel();
+        btnRefresh = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        txtTotal = new javax.swing.JLabel();
+        txtoid = new javax.swing.JTextField();
+        txtTableID = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        billPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
-        jLabel1.setText("jLabel1");
+        jPanel1.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel1.setLayout(null);
 
+        jPanel2.setBackground(new java.awt.Color(51, 51, 51));
+
+        btnViewOrder.setBackground(new java.awt.Color(255, 255, 255));
+        btnViewOrder.setForeground(new java.awt.Color(255, 255, 51));
+        btnViewOrder.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnViewOrder.setText(">>>");
+        btnViewOrder.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 51)));
+        btnViewOrder.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnViewOrder.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnViewOrderMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(btnViewOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 1, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(btnViewOrder, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jPanel1.add(jPanel2);
+        jPanel2.setBounds(240, 130, 60, 30);
+
+        btnRefresh1.setBackground(new java.awt.Color(255, 255, 255));
+        btnRefresh1.setForeground(new java.awt.Color(255, 0, 255));
+        btnRefresh1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnRefresh1.setText("View Billed Orders");
+        btnRefresh1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 255)));
+        btnRefresh1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnRefresh1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnRefresh1MouseClicked(evt);
+            }
+        });
+        jPanel1.add(btnRefresh1);
+        btnRefresh1.setBounds(50, 550, 180, 40);
+
+        txtError.setForeground(new java.awt.Color(255, 255, 0));
+        txtError.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtError.setText("jLabel8");
+        jPanel1.add(txtError);
+        txtError.setBounds(370, 530, 300, 16);
+
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("jLabel2");
+        jPanel1.add(jLabel2);
+        jLabel2.setBounds(110, 20, 45, 16);
+
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("jLabel1");
+        jPanel1.add(jLabel1);
+        jLabel1.setBounds(50, 20, 45, 16);
+
+        txtTitle1.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+        txtTitle1.setForeground(new java.awt.Color(255, 255, 255));
+        txtTitle1.setText("On-Table Ordering System");
+        jPanel1.add(txtTitle1);
+        txtTitle1.setBounds(430, 10, 251, 30);
+
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("Enter Paid Amount");
+        jPanel1.add(jLabel7);
+        jLabel7.setBounds(550, 460, 120, 20);
+
+        txtPaid.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        txtPaid.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jPanel1.add(txtPaid);
+        txtPaid.setBounds(550, 480, 210, 40);
+
+        billFrame.setEditable(false);
+        billFrame.setColumns(20);
+        billFrame.setRows(5);
+        jScrollPane1.setViewportView(billFrame);
+
+        jPanel1.add(jScrollPane1);
+        jScrollPane1.setBounds(1010, 20, 20, 30);
+
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText(":");
+        jPanel1.add(jLabel3);
+        jLabel3.setBounds(100, 20, 10, 16);
+
+        tblOrders.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Order ID", "Table ID"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(tblOrders);
+
+        jPanel1.add(jScrollPane2);
+        jScrollPane2.setBounds(50, 110, 180, 350);
+
+        tblOrderProducts.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Item Name", "Quantity", "Order Type", "Total"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane3.setViewportView(tblOrderProducts);
+        if (tblOrderProducts.getColumnModel().getColumnCount() > 0) {
+            tblOrderProducts.getColumnModel().getColumn(0).setMinWidth(200);
+            tblOrderProducts.getColumnModel().getColumn(1).setMinWidth(30);
+        }
+
+        jPanel1.add(jScrollPane3);
+        jScrollPane3.setBounds(310, 110, 450, 340);
+
+        jLabel6.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel6.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setText("Logout");
+        jLabel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 51)));
+        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel6MouseClicked(evt);
+            }
+        });
+        jPanel1.add(jLabel6);
+        jLabel6.setBounds(1040, 20, 90, 30);
+
+        btnPrint.setBackground(new java.awt.Color(255, 255, 255));
+        btnPrint.setForeground(new java.awt.Color(51, 153, 255));
+        btnPrint.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnPrint.setText("Print Bill");
+        btnPrint.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 153, 255)));
+        btnPrint.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnPrint.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnPrintMouseClicked(evt);
+            }
+        });
+        jPanel1.add(btnPrint);
+        btnPrint.setBounds(560, 560, 120, 40);
+
+        btnGenerate.setBackground(new java.awt.Color(255, 255, 255));
+        btnGenerate.setForeground(new java.awt.Color(0, 204, 51));
+        btnGenerate.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnGenerate.setText("Generate Bill");
+        btnGenerate.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 204, 0)));
+        btnGenerate.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnGenerate.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnGenerateMouseClicked(evt);
+            }
+        });
+        jPanel1.add(btnGenerate);
+        btnGenerate.setBounds(380, 560, 120, 40);
+
+        btnRefresh.setBackground(new java.awt.Color(255, 255, 255));
+        btnRefresh.setForeground(new java.awt.Color(51, 153, 255));
+        btnRefresh.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnRefresh.setText("Refresh");
+        btnRefresh.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 153, 255)));
+        btnRefresh.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnRefresh.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnRefreshMouseClicked(evt);
+            }
+        });
+        jPanel1.add(btnRefresh);
+        btnRefresh.setBounds(50, 480, 180, 30);
+
+        jLabel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        jPanel1.add(jLabel5);
+        jLabel5.setBounds(30, 60, 240, 570);
+
+        txtTotal.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        txtTotal.setForeground(new java.awt.Color(255, 255, 255));
+        txtTotal.setText("Total Amount : ");
+        jPanel1.add(txtTotal);
+        txtTotal.setBounds(310, 480, 160, 30);
+
+        txtoid.setBackground(new java.awt.Color(51, 51, 51));
+        txtoid.setForeground(new java.awt.Color(51, 51, 51));
+        txtoid.setBorder(null);
+        jPanel1.add(txtoid);
+        txtoid.setBounds(630, 76, 90, 20);
+
+        txtTableID.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        txtTableID.setForeground(new java.awt.Color(255, 255, 255));
+        txtTableID.setText("Table ID : ");
+        jPanel1.add(txtTableID);
+        txtTableID.setBounds(430, 70, 160, 30);
+
+        jLabel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        jPanel1.add(jLabel4);
+        jLabel4.setBounds(290, 60, 490, 570);
+
+        billPanel.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout billPanelLayout = new javax.swing.GroupLayout(billPanel);
+        billPanel.setLayout(billPanelLayout);
+        billPanelLayout.setHorizontalGroup(
+            billPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 370, Short.MAX_VALUE)
+        );
+        billPanelLayout.setVerticalGroup(
+            billPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 570, Short.MAX_VALUE)
+        );
+
+        jPanel1.add(billPanel);
+        billPanel.setBounds(790, 60, 370, 570);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(157, 157, 157)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1))
-                .addContainerGap(198, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1169, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(91, 91, 91)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel2)
-                .addContainerGap(159, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 656, Short.MAX_VALUE)
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
+        Login lg=new Login();
+        lg.setVisible(true);
+        dispose();
+
+    }//GEN-LAST:event_jLabel6MouseClicked
+
+       public void getPreparedOrders()
+    {
+        DBOrder dbu=new DBOrder();
+        
+        
+        List<Order> al= dbu.getPreparedOrders();
+        
+            DefaultTableModel model=(DefaultTableModel)tblOrders.getModel();
+            model.setRowCount(0);
+            Object[] row=new Object[2];
+            
+            for(int i=0;i<al.size();i++)
+                {
+                    row[0]=al.get(i).getOrderId();
+                    row[1]=al.get(i).getTid();
+                    
+                    
+                    
+                    model.addRow(row);
+                }
+    }
+       
+       
+     public void getBillNo()
+     {
+         DBBill dbb=new DBBill();
+         billNo=dbb.lastID();
+     }
+       
+    private void btnPrintMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPrintMouseClicked
+        try {
+            if(billFrame.getText().isEmpty())
+            {
+                txtError.setVisible(true);
+                txtError.setText("Error : Please Generate Bill");
+            }else{
+                
+                JasperPrintManager.printReport(print, true);
+                int oid=Integer.parseInt(txtoid.getText());
+            
+            DBOrder dbo=new DBOrder();
+            boolean res=dbo.BillOrder(oid);
+            
+                    if(res)
+                    {
+                        Bill bill=new Bill();
+                        bill.setBid(billNo);
+                        bill.setPaidAmount(Float.parseFloat(txtPaid.getText()));
+                        bill.setNetTotal(NetTotal);
+                        bill.setServiceCharge(sCharge);
+                        bill.setOrderId(txtoid.getText());
+                        bill.setUid(userId);
+
+                      DBBill dbb=new DBBill();
+                      boolean res2=dbb.addBill(bill);
+
+                      if(res2)
+                      {
+                          txtError.setVisible(true);
+                          txtError.setText("Success : Bill Added Successfully");
+
+                          billFrame.setText("");
+                          billPanel.removeAll();
+
+                          DefaultTableModel model=(DefaultTableModel)tblOrderProducts.getModel();
+                          model.setRowCount(0);
+
+                          getPreparedOrders();
+
+                          getBillNo();
+
+                          txtTableID.setText("Tablet ID:");
+                          txtTotal.setText("Net Total");
+                          txtPaid.setText("");
+
+                      }else{
+                          txtError.setVisible(true);
+                          txtError.setText("Error : Please Check entered details");
+                      }
+
+                    }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+     
+    }//GEN-LAST:event_btnPrintMouseClicked
+
+    private void btnGenerateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGenerateMouseClicked
+     
+        float paidamount=0;
+        
+        if(txtoid.getText().isEmpty())
+        {
+            txtError.setVisible(true);
+            txtError.setText("Error : Please Select an Order");
+            billFrame.setText("");
+        }else if(txtPaid.getText().isEmpty())
+        {
+            txtError.setVisible(true);
+            txtError.setText("Error : Please Enter Paid Amount");
+            billFrame.setText("");
+
+        }else if(Float.parseFloat(txtPaid.getText())<total1)
+        {
+            txtError.setVisible(true);
+            txtError.setText("Error : Please Check the Entered Paid Amount");
+            billFrame.setText("");
+        }else{
+            
+            txtError.setVisible(false);
+            
+            DBOrderProduct dbu=new DBOrderProduct();
+
+            Order or=new Order();
+            or.setOrderId(txtoid.getText());
+
+            List<OrderProduct> al= dbu.getOrderedItems(or);
+            String items="";
+
+ 
+
+                     for(int i=0;i<al.size();i++)
+                    {
+                        double total=al.get(i).getQuantity()*al.get(i).getPrice();
+
+                        items=items+" "+al.get(i).getName()+"\n" +
+                                   " "+al.get(i).getPid()+"	"+al.get(i).getQuantity()+"	Rs."+al.get(i).getPrice()+"	Rs."+total+"\n" ;                              
+                    }
+
+            paidamount=Float.parseFloat(txtPaid.getText());
+            double balance=paidamount-NetTotal;
+            
+            
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd"); 
+            DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("HH:mm");
+            LocalDateTime now = LocalDateTime.now();  
+            
+
+          billFrame.setText(" ____________________________________________________");
+          
+            try {
+                getReport();
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Cashier.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(Cashier.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (JRException ex) {
+                Logger.getLogger(Cashier.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (URISyntaxException ex) {
+                Logger.getLogger(Cashier.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(Cashier.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_btnGenerateMouseClicked
+
+    
+    public void getReport() throws ClassNotFoundException, SQLException, JRException, URISyntaxException, FileNotFoundException
+    {
+        billPanel.removeAll();
+         Class.forName("com.mysql.jdbc.Driver");
+               Connection    con = DriverManager.getConnection("jdbc:mysql://localhost/OTOS", "root", "");
+               InputStream targetStream = getClass().getResourceAsStream("/Reports/bill.jrxml");
+               JasperDesign jd=JRXmlLoader.load(targetStream);
+               String Sql="Select * From OrderedProduct where oid="+txtoid.getText();
+               
+               HashMap map = new HashMap();
+               map.put("invoiceNo", billNo);
+               map.put("cashier", username);
+               map.put("oid", txtoid.getText());
+               map.put("tid", TID);
+               map.put("paidA", Integer.parseInt(txtPaid.getText()));
+               
+               JRDesignQuery jrq=new JRDesignQuery();
+               jrq.setText(Sql);
+               jd.setQuery(jrq);
+               JasperReport jrep=JasperCompileManager.compileReport(jd);
+               print=JasperFillManager.fillReport(jrep, map, con) ;
+               con.close();
+               //JasperViewer.viewReport(print);
+               
+               JasperViewer viewer =new JasperViewer(print);
+               Container cont=viewer.getContentPane();
+             
+               billPanel.setLayout(new BorderLayout());
+               billPanel.repaint();
+               billPanel.add(cont);
+               billPanel.revalidate();
+    }
+    
+    private void btnViewOrderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnViewOrderMouseClicked
+            txtError.setVisible(false);
+            total1=0;
+            sCharge=0;
+            NetTotal=0;
+            int row1 = tblOrders.getSelectedRow();
+            String ID=tblOrders.getValueAt(row1, 0).toString();
+            TID=tblOrders.getValueAt(row1, 1).toString();
+            txtTableID.setText("Table ID: "+TID);
+            txtoid.setText(ID);
+            
+            
+            
+            Order or=new Order();
+            or.setOrderId(ID);
+            
+            DBOrderProduct dbu=new DBOrderProduct();
+        
+        
+            List<OrderProduct> al= dbu.getOrderedItems(or);
+        
+            DefaultTableModel model=(DefaultTableModel)tblOrderProducts.getModel();
+            model.setRowCount(0);
+            Object[] row=new Object[4];
+            
+            for(int i=0;i<al.size();i++)
+                {
+                    double total=al.get(i).getQuantity()*al.get(i).getPrice();
+                    total1=total1+total;
+
+                    row[0]=al.get(i).getName();
+                    row[1]=al.get(i).getQuantity();
+                    int type=al.get(i).getType();
+                    
+                    if(type==0)
+                    {
+                      row[2]="Dine In";  
+                    }else{
+                        row[2]="Take Away";
+                    }
+                    
+                    row[3]="Rs."+al.get(i).getQuantity()*al.get(i).getPrice();
+                    
+                    
+                    
+                    model.addRow(row);
+                }
+            
+            
+            sCharge=(total1*10)/100;
+            NetTotal=total1+sCharge;
+            txtTotal.setText("Net Total: "+NetTotal);
+    }//GEN-LAST:event_btnViewOrderMouseClicked
+
+    private void btnRefreshMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRefreshMouseClicked
+        getPreparedOrders();
+    }//GEN-LAST:event_btnRefreshMouseClicked
+
+    private void btnRefresh1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRefresh1MouseClicked
+       PreviousBill pb=new PreviousBill();
+       pb.setVisible(true);
+    }//GEN-LAST:event_btnRefresh1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -112,7 +676,32 @@ public class Cashier extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextArea billFrame;
+    private javax.swing.JPanel billPanel;
+    private javax.swing.JLabel btnGenerate;
+    private javax.swing.JLabel btnPrint;
+    private javax.swing.JLabel btnRefresh;
+    private javax.swing.JLabel btnRefresh1;
+    private javax.swing.JLabel btnViewOrder;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTable tblOrderProducts;
+    private javax.swing.JTable tblOrders;
+    private javax.swing.JLabel txtError;
+    private javax.swing.JTextField txtPaid;
+    private javax.swing.JLabel txtTableID;
+    private javax.swing.JLabel txtTitle1;
+    private javax.swing.JLabel txtTotal;
+    private javax.swing.JTextField txtoid;
     // End of variables declaration//GEN-END:variables
 }

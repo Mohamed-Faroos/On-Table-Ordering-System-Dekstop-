@@ -127,6 +127,7 @@ public class ManageFood extends javax.swing.JFrame {
         txtFoodSearch = new javax.swing.JTextField();
         btnViewFood = new javax.swing.JLabel();
         txtpmsg2 = new javax.swing.JLabel();
+        btnUpdateAll = new javax.swing.JLabel();
         UpdateFoods = new javax.swing.JPanel();
         jLabel18 = new javax.swing.JLabel();
         txtfid1 = new javax.swing.JTextField();
@@ -152,6 +153,7 @@ public class ManageFood extends javax.swing.JFrame {
         txtTitle1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
         setResizable(false);
 
         mainPanel.setBackground(new java.awt.Color(51, 51, 51));
@@ -513,6 +515,9 @@ public class ManageFood extends javax.swing.JFrame {
             }
         ));
         jScrollPane4.setViewportView(tblFoods);
+        if (tblFoods.getColumnModel().getColumnCount() > 0) {
+            tblFoods.getColumnModel().getColumn(1).setMinWidth(250);
+        }
 
         ViewFoods.add(jScrollPane4);
         jScrollPane4.setBounds(10, 100, 640, 340);
@@ -552,13 +557,25 @@ public class ManageFood extends javax.swing.JFrame {
             }
         });
         ViewFoods.add(btnViewFood);
-        btnViewFood.setBounds(290, 480, 120, 40);
+        btnViewFood.setBounds(280, 480, 120, 40);
 
         txtpmsg2.setForeground(new java.awt.Color(255, 255, 255));
         txtpmsg2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         txtpmsg2.setText("Msg");
         ViewFoods.add(txtpmsg2);
-        txtpmsg2.setBounds(170, 450, 370, 20);
+        txtpmsg2.setBounds(150, 450, 370, 20);
+
+        btnUpdateAll.setForeground(new java.awt.Color(0, 255, 102));
+        btnUpdateAll.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnUpdateAll.setText("Update All");
+        btnUpdateAll.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 102)));
+        btnUpdateAll.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnUpdateAllMouseClicked(evt);
+            }
+        });
+        ViewFoods.add(btnUpdateAll);
+        btnUpdateAll.setBounds(530, 40, 110, 40);
 
         foodTab.addTab("tab4", ViewFoods);
 
@@ -968,7 +985,7 @@ public class ManageFood extends javax.swing.JFrame {
     private void btnViewFoodMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnViewFoodMouseClicked
         foodTab.setSelectedIndex(4);
         try {
-             int row = tblFoods.getSelectedRow();
+         int row = tblFoods.getSelectedRow();
         
          String ID=tblFoods.getValueAt(row, 0).toString();
 
@@ -1093,6 +1110,11 @@ public class ManageFood extends javax.swing.JFrame {
     private void btnImage1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnImage1MouseClicked
         setimage2();
     }//GEN-LAST:event_btnImage1MouseClicked
+
+    private void btnUpdateAllMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUpdateAllMouseClicked
+        allProductUpdate apu=new allProductUpdate();
+        apu.setVisible(true);
+    }//GEN-LAST:event_btnUpdateAllMouseClicked
 
       public void setimage2()
    {
@@ -1282,6 +1304,7 @@ public class ManageFood extends javax.swing.JFrame {
     private javax.swing.JLabel btnPUpdate;
     private javax.swing.JLabel btnSubmit;
     private javax.swing.JLabel btnUpdate;
+    private javax.swing.JLabel btnUpdateAll;
     private javax.swing.JLabel btnUpdateCategory;
     private javax.swing.JLabel btnUpdateFoods;
     private javax.swing.JLabel btnView;

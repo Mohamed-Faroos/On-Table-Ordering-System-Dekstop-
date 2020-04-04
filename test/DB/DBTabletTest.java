@@ -13,6 +13,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Ignore;
 
 /**
  *
@@ -55,16 +56,17 @@ public class DBTabletTest {
     /**
      * Test of getAllCategory method, of class DBTablet.
      */
-//    @Test
-//    public void testGetAllCategory() {
-//        System.out.println("getAllCategory");
-//        DBTablet instance = new DBTablet();
-//        List<Tablet> expResult = null;
-//        List<Tablet> result = instance.getAllCategory();
-//        assertEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
+    @Test
+    @Ignore
+    public void testGetAllCategory() {
+        System.out.println("getAllCategory");
+        DBTablet instance = new DBTablet();
+        List<Tablet> expResult = null;
+        List<Tablet> result = instance.getAllTablets();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 
     /**
      * Test of getTablet method, of class DBTablet.

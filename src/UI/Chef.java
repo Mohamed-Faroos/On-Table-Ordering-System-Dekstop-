@@ -5,7 +5,13 @@
  */
 package UI;
 
+import main.OrderProduct;
+import DB.DBOrder;
+import DB.DBOrderProduct;
+import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.table.DefaultTableModel;
+import main.Order;
 import main.User;
 
 /**
@@ -20,11 +26,33 @@ public class Chef extends javax.swing.JFrame {
      */
     public Chef() {
         initComponents();
+        txtError.setVisible(false);
+        getNewOrders();
        
     }
 
     
-    
+    public void getNewOrders()
+    {
+        DBOrder dbu=new DBOrder();
+        
+        
+        List<Order> al= dbu.getNewOrders();
+        
+            DefaultTableModel model=(DefaultTableModel)tblOrders.getModel();
+            model.setRowCount(0);
+            Object[] row=new Object[2];
+            
+            for(int i=0;i<al.size();i++)
+                {
+                    row[0]=al.get(i).getOrderId();
+                    row[1]=al.get(i).getTid();
+                    
+                    
+                    
+                    model.addRow(row);
+                }
+    }
 
 
     /**
@@ -37,28 +65,34 @@ public class Chef extends javax.swing.JFrame {
     private void initComponents() {
 
         mainPanel = new javax.swing.JPanel();
+        txtError = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        Heading = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
         jPanel1 = new javax.swing.JPanel();
         btnViewOrder = new javax.swing.JLabel();
         btnPrepared = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tblOrderProducts = new javax.swing.JTable();
         txtFooter = new javax.swing.JLabel();
-        txtTitle = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblOrders = new javax.swing.JTable();
         txtTitle1 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        btnAddTablet = new javax.swing.JLabel();
+        txtTableID = new javax.swing.JLabel();
         btnRefresh = new javax.swing.JLabel();
         btnAddTablet2 = new javax.swing.JLabel();
+        txtoid = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        btnAddTablet = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         mainPanel.setBackground(new java.awt.Color(51, 51, 51));
         mainPanel.setLayout(null);
+
+        txtError.setForeground(new java.awt.Color(255, 255, 0));
+        txtError.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtError.setText("jLabel1");
+        mainPanel.add(txtError);
+        txtError.setBounds(450, 480, 370, 16);
 
         jLabel3.setBackground(new java.awt.Color(255, 255, 255));
         jLabel3.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
@@ -72,40 +106,35 @@ public class Chef extends javax.swing.JFrame {
             }
         });
         mainPanel.add(jLabel3);
-        jLabel3.setBounds(850, 20, 90, 30);
-
-        Heading.setFont(new java.awt.Font("Malayalam MN", 1, 24)); // NOI18N
-        Heading.setForeground(new java.awt.Color(255, 255, 255));
-        Heading.setText("Chef Panel");
-        mainPanel.add(Heading);
-        Heading.setBounds(110, 20, 140, 29);
-
-        jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        mainPanel.add(jSeparator1);
-        jSeparator1.setBounds(300, 20, 12, 30);
+        jLabel3.setBounds(830, 20, 90, 30);
 
         jPanel1.setBackground(new java.awt.Color(51, 51, 51));
 
         btnViewOrder.setBackground(new java.awt.Color(255, 255, 255));
         btnViewOrder.setForeground(new java.awt.Color(255, 255, 51));
         btnViewOrder.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        btnViewOrder.setText("View Order >>");
+        btnViewOrder.setText("View Order >");
         btnViewOrder.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 51)));
         btnViewOrder.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnViewOrder.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnViewOrderMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btnViewOrder, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
+            .addComponent(btnViewOrder, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btnViewOrder, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+            .addComponent(btnViewOrder, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
         );
 
         mainPanel.add(jPanel1);
-        jPanel1.setBounds(260, 130, 110, 40);
+        jPanel1.setBounds(260, 130, 100, 40);
 
         btnPrepared.setBackground(new java.awt.Color(255, 255, 255));
         btnPrepared.setForeground(new java.awt.Color(0, 204, 51));
@@ -113,10 +142,15 @@ public class Chef extends javax.swing.JFrame {
         btnPrepared.setText("Order Prepared ");
         btnPrepared.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 204, 0)));
         btnPrepared.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnPrepared.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnPreparedMouseClicked(evt);
+            }
+        });
         mainPanel.add(btnPrepared);
-        btnPrepared.setBounds(580, 480, 120, 40);
+        btnPrepared.setBounds(580, 500, 120, 40);
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tblOrderProducts.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -126,11 +160,23 @@ public class Chef extends javax.swing.JFrame {
             new String [] {
                 "Item Name", "Quantity", "Order Type"
             }
-        ));
-        jScrollPane2.setViewportView(jTable2);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(tblOrderProducts);
+        if (tblOrderProducts.getColumnModel().getColumnCount() > 0) {
+            tblOrderProducts.getColumnModel().getColumn(0).setMinWidth(250);
+            tblOrderProducts.getColumnModel().getColumn(1).setMinWidth(40);
+        }
 
         mainPanel.add(jScrollPane2);
-        jScrollPane2.setBounds(380, 130, 540, 330);
+        jScrollPane2.setBounds(370, 140, 540, 330);
 
         txtFooter.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
         txtFooter.setForeground(new java.awt.Color(255, 255, 255));
@@ -138,13 +184,7 @@ public class Chef extends javax.swing.JFrame {
         mainPanel.add(txtFooter);
         txtFooter.setBounds(410, 570, 209, 21);
 
-        txtTitle.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
-        txtTitle.setForeground(new java.awt.Color(255, 255, 255));
-        txtTitle.setText("On-Table Ordering System");
-        mainPanel.add(txtTitle);
-        txtTitle.setBounds(500, 20, 251, 30);
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblOrders.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -154,8 +194,16 @@ public class Chef extends javax.swing.JFrame {
             new String [] {
                 "Order ID", "Table ID"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tblOrders);
 
         mainPanel.add(jScrollPane1);
         jScrollPane1.setBounds(60, 100, 190, 410);
@@ -164,21 +212,13 @@ public class Chef extends javax.swing.JFrame {
         txtTitle1.setForeground(new java.awt.Color(255, 255, 255));
         txtTitle1.setText("On-Table Ordering System");
         mainPanel.add(txtTitle1);
-        txtTitle1.setBounds(500, 20, 251, 30);
+        txtTitle1.setBounds(350, 10, 251, 30);
 
-        jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Table ID : T001");
-        mainPanel.add(jLabel1);
-        jLabel1.setBounds(570, 90, 150, 30);
-
-        btnAddTablet.setBackground(new java.awt.Color(255, 255, 255));
-        btnAddTablet.setForeground(new java.awt.Color(255, 255, 51));
-        btnAddTablet.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        btnAddTablet.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 51)));
-        btnAddTablet.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        mainPanel.add(btnAddTablet);
-        btnAddTablet.setBounds(320, 70, 620, 490);
+        txtTableID.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        txtTableID.setForeground(new java.awt.Color(255, 255, 255));
+        txtTableID.setText("Table ID : ");
+        mainPanel.add(txtTableID);
+        txtTableID.setBounds(560, 90, 150, 30);
 
         btnRefresh.setBackground(new java.awt.Color(255, 255, 255));
         btnRefresh.setForeground(new java.awt.Color(0, 204, 204));
@@ -186,8 +226,13 @@ public class Chef extends javax.swing.JFrame {
         btnRefresh.setText("Refresh");
         btnRefresh.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 204, 204)));
         btnRefresh.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnRefresh.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnRefreshMouseClicked(evt);
+            }
+        });
         mainPanel.add(btnRefresh);
-        btnRefresh.setBounds(120, 520, 70, 30);
+        btnRefresh.setBounds(110, 520, 70, 30);
 
         btnAddTablet2.setBackground(new java.awt.Color(255, 255, 255));
         btnAddTablet2.setForeground(new java.awt.Color(255, 255, 51));
@@ -197,12 +242,38 @@ public class Chef extends javax.swing.JFrame {
         mainPanel.add(btnAddTablet2);
         btnAddTablet2.setBounds(30, 70, 260, 490);
 
+        txtoid.setBackground(new java.awt.Color(51, 51, 51));
+        txtoid.setForeground(new java.awt.Color(51, 51, 51));
+        txtoid.setBorder(null);
+        mainPanel.add(txtoid);
+        txtoid.setBounds(360, 90, 70, 16);
+
+        jLabel1.setForeground(new java.awt.Color(0, 255, 204));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Update Product");
+        jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 255, 204)));
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
+            }
+        });
+        mainPanel.add(jLabel1);
+        jLabel1.setBounds(30, 20, 120, 30);
+
+        btnAddTablet.setBackground(new java.awt.Color(255, 255, 255));
+        btnAddTablet.setForeground(new java.awt.Color(255, 255, 51));
+        btnAddTablet.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnAddTablet.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 51)));
+        btnAddTablet.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        mainPanel.add(btnAddTablet);
+        btnAddTablet.setBounds(320, 70, 600, 490);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 966, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 937, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -222,6 +293,85 @@ public class Chef extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_jLabel3MouseClicked
+
+    private void btnRefreshMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRefreshMouseClicked
+        getNewOrders();
+        txtError.setVisible(false);
+    }//GEN-LAST:event_btnRefreshMouseClicked
+
+    private void btnViewOrderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnViewOrderMouseClicked
+            int row1 = tblOrders.getSelectedRow();
+            String ID=tblOrders.getValueAt(row1, 0).toString();
+            String TID=tblOrders.getValueAt(row1, 1).toString();
+            txtTableID.setText("Table ID: "+TID);
+            txtoid.setText(ID);
+            
+            Order or=new Order();
+            or.setOrderId(ID);
+            
+            DBOrderProduct dbu=new DBOrderProduct();
+        
+        
+            List<OrderProduct> al= dbu.getOrderedItems(or);
+        
+            DefaultTableModel model=(DefaultTableModel)tblOrderProducts.getModel();
+            model.setRowCount(0);
+            Object[] row=new Object[3];
+            
+            for(int i=0;i<al.size();i++)
+                {
+                    row[0]=al.get(i).getName();
+                    row[1]=al.get(i).getQuantity();
+                    int type=al.get(i).getType();
+                    
+                    if(type==0)
+                    {
+                      row[2]="Dine In";  
+                    }else{
+                        row[2]="Take Away";
+                    }
+                    
+                    
+                    
+                    model.addRow(row);
+                }
+    }//GEN-LAST:event_btnViewOrderMouseClicked
+
+    private void btnPreparedMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPreparedMouseClicked
+            
+        if(txtoid.getText().isEmpty())
+        {
+            txtError.setVisible(true);
+            txtError.setText("Error : Please Select and View an Order");
+        }else{
+            
+            int id=Integer.parseInt(txtoid.getText());
+            
+            DBOrder or=new DBOrder();
+            Boolean res=or.prepareOrder(id);
+            
+            if(res)
+            {
+              txtError.setVisible(true);
+              txtError.setText("Success : Order Prepared Successfully");
+              
+              DefaultTableModel model=(DefaultTableModel)tblOrderProducts.getModel();
+              model.setRowCount(0);
+              getNewOrders();
+              
+            }else{
+              txtError.setVisible(true);
+              txtError.setText("Error : Please Check Order Details");
+
+            }
+        }
+
+    }//GEN-LAST:event_btnPreparedMouseClicked
+
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+        UpdateProduct up=new UpdateProduct();
+        up.setVisible(true);
+    }//GEN-LAST:event_jLabel1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -261,7 +411,6 @@ public class Chef extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel Heading;
     private javax.swing.JLabel btnAddTablet;
     private javax.swing.JLabel btnAddTablet2;
     private javax.swing.JLabel btnPrepared;
@@ -272,12 +421,13 @@ public class Chef extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
     private javax.swing.JPanel mainPanel;
+    private javax.swing.JTable tblOrderProducts;
+    private javax.swing.JTable tblOrders;
+    private javax.swing.JLabel txtError;
     private javax.swing.JLabel txtFooter;
-    private javax.swing.JLabel txtTitle;
+    private javax.swing.JLabel txtTableID;
     private javax.swing.JLabel txtTitle1;
+    private javax.swing.JTextField txtoid;
     // End of variables declaration//GEN-END:variables
 }

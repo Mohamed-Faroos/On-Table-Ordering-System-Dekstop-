@@ -89,6 +89,7 @@ public class ManageUser extends javax.swing.JFrame {
         btnViewUser = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
         setResizable(false);
 
         mainPanel.setBackground(new java.awt.Color(51, 51, 51));
