@@ -14,6 +14,11 @@ import static UI.Chef.username;
 import java.awt.BorderLayout;
 import static java.awt.Component.CENTER_ALIGNMENT;
 import java.awt.Container;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -529,17 +534,22 @@ public class Cashier extends javax.swing.JFrame {
                 Logger.getLogger(Cashier.class.getName()).log(Level.SEVERE, null, ex);
             } catch (JRException ex) {
                 Logger.getLogger(Cashier.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (URISyntaxException ex) {
+                Logger.getLogger(Cashier.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(Cashier.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_btnGenerateMouseClicked
 
     
-    public void getReport() throws ClassNotFoundException, SQLException, JRException
+    public void getReport() throws ClassNotFoundException, SQLException, JRException, URISyntaxException, FileNotFoundException
     {
         billPanel.removeAll();
          Class.forName("com.mysql.jdbc.Driver");
                Connection    con = DriverManager.getConnection("jdbc:mysql://localhost/OTOS", "root", "");
-               JasperDesign jd=JRXmlLoader.load("/Users/Faroos/Documents/Course/Final/Dekstop System/OTOS-Desktop/src/Reports/bill.jrxml");
+               InputStream targetStream = getClass().getResourceAsStream("/Reports/bill.jrxml");
+               JasperDesign jd=JRXmlLoader.load(targetStream);
                String Sql="Select * From OrderedProduct where oid="+txtoid.getText();
                
                HashMap map = new HashMap();
