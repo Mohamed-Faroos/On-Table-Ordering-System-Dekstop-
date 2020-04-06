@@ -136,11 +136,13 @@ public class DBPrediction {
 
                       NumericPrediction predForTarget = predsAtStep.get(0);
 
-                      System.out.println(dataset);
+                      //System.out.println(dataset);
                       
                       double prediction= predForTarget.predicted();
 
-                        int predic=(int) Math.round(prediction);
+                      int predic=(int) Math.round(prediction);
+                      
+                      
                         pred=new PredictedList();
                         pred.setPid(pid);
                         pred.setPname(pname);
