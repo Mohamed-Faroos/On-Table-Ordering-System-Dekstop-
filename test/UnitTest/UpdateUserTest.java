@@ -45,7 +45,7 @@ public class UpdateUserTest {
     @Test
     public void testUpdateUser() {
         System.out.println("updateUser");
-        User us = new User("U004", "Faroos", "Faroos124", 0, 0);
+        User us = new User("U006", "Rushad", "rushad456", 0, 0);
         DBUser instance = new DBUser();
         boolean expResult = true;
         boolean result = instance.updateUser(us);

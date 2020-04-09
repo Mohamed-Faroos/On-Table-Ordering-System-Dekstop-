@@ -45,7 +45,7 @@ public class UpdateCategoryTest {
     @Test
     public void testUpdateCategory() {
         System.out.println("updateCategory");
-        Category ct = new Category("C001", "Burger", "Good Tast", 0);
+        Category ct = new Category("C008", "Grill Item", "Spicy", 1);
         DBCategory instance = new DBCategory();
         boolean expResult = true;
         boolean result = instance.updateCategory(ct);

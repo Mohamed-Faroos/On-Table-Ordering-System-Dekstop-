@@ -46,7 +46,7 @@ public class AddBilledOrderTest {
      @Test
      public void addbilledOrder() {
          
-         System.out.print("Get New Orders");
+         System.out.print("Add Billed Order");
          DBOrder dbo=new DBOrder();
          boolean res=dbo.BillOrder(15);
          assertEquals(res, true);

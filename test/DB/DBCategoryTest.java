@@ -45,8 +45,8 @@ public class DBCategoryTest {
      */
     @Test
     public void testAddCategory() {
-        System.out.println("addCategory");
-        Category ct = new Category("C001", "Burger", "Tasty", 0);
+        System.out.println("Test Add Category");
+        Category ct = new Category("C008", "Grill Items", "Tasty", 0);
         DBCategory instance = new DBCategory();
         boolean expResult = true;
         boolean result = instance.addCategory(ct);
@@ -58,10 +58,10 @@ public class DBCategoryTest {
      */
     @Test
     public void testGetCategory() {
-        System.out.println("getCategory");
-        String id = "C001";
+        System.out.println("Test Get Category");
+        String id = "C008";
         DBCategory instance = new DBCategory();
-        String expResult = "Burger";
+        String expResult = "Grill Items";
         Category result = instance.getCategory(id);
         assertEquals(expResult, result.getcName());
     }
@@ -70,15 +70,11 @@ public class DBCategoryTest {
      * Test of getAllCategory method, of class DBCategory.
      */
     @Test
-    @Ignore
     public void testGetAllCategory() {
-        System.out.println("getAllCategory");
+        System.out.println("Test Get All Category");
         DBCategory instance = new DBCategory();
-        List<Category> expResult = null;
         List<Category> result = instance.getAllCategory();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertFalse(result.isEmpty());
     }
 
     /**
@@ -86,8 +82,8 @@ public class DBCategoryTest {
      */
     @Test
     public void testUpdateCategory() {
-        System.out.println("updateCategory");
-        Category ct = new Category("C001", "Burger", "Good Tast", 0);
+        System.out.println("Test Update Category");
+        Category ct = new Category("C008", "Grill Items", "Good Tast", 0);
         DBCategory instance = new DBCategory();
         boolean expResult = true;
         boolean result = instance.updateCategory(ct);
@@ -99,9 +95,9 @@ public class DBCategoryTest {
      */
     @Test
     public void testLastID() {
-        System.out.println("lastID");
+        System.out.println("Test Get New Category ID");
         DBCategory instance = new DBCategory();
-        String expResult = "C002";
+        String expResult = "C009";
         String result = instance.lastID();
         assertEquals(expResult, result);
     }

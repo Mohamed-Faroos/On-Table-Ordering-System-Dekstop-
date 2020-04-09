@@ -45,9 +45,9 @@ public class getTabletTest {
     @Test
     public void testGetTablet() {
         System.out.println("getTablet");
-        String id = "T001";
+        String id = "T005";
         DBTablet instance = new DBTablet();
         Tablet result = instance.getTablet(id);
-        assertEquals("tablet001", result.getPassword());
+        assertEquals("tablet005", result.getPassword());
     }
 }
