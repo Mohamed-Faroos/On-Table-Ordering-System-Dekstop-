@@ -50,7 +50,7 @@ public class UpdateFoodTest {
                        fd.setPid("P017");
                        fd.setPname("Grilled Chicken");
                        fd.setCid("C008");
-                       fd.setPrice(350);
+                       fd.setPrice(450);
                        fd.setQuantity(20);
                        fd.setAvailability(0);
                        

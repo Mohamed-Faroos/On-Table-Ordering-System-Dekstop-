@@ -48,8 +48,8 @@ public class UpdateFoodQuantityTest {
         System.out.print("Update Food Quantity");
         
         Food food=new Food();
-        food.setPid("P001");
-        food.setQuantity(20);
+        food.setPid("P017");
+        food.setQuantity(30);
         
         DBFood dbf=new DBFood();
         boolean res=dbf.updateQuantity(food);

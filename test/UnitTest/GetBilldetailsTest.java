@@ -5,8 +5,8 @@
  */
 package UnitTest;
 
-import DB.DBTablet;
-import main.Tablet;
+import DB.DBBill;
+import main.Bill;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -18,9 +18,9 @@ import static org.junit.Assert.*;
  *
  * @author Faroos
  */
-public class UpdateTabletTest {
+public class GetBilldetailsTest {
     
-    public UpdateTabletTest() {
+    public GetBilldetailsTest() {
     }
     
     @BeforeClass
@@ -39,16 +39,16 @@ public class UpdateTabletTest {
     public void tearDown() {
     }
 
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
+    
      @Test
-    public void testUpdateTablet() {
-        System.out.println("updateTablet");
-        Tablet tb = new Tablet("T005", "tablet005", 1,0);
-        DBTablet instance = new DBTablet();
-        boolean expResult = true;
-        boolean result = instance.updateTablet(tb);
-        assertEquals(expResult, result);
-    }
+     public void getBillDetails() {
+     
+         System.out.print("Get Bill Details by Id");
+         String Bill ="IN00016";
+         
+         DBBill bill=new DBBill();
+         Bill res=bill.getBill(Bill);
+         assertEquals("U005", res.getUid());
+     
+     }
 }

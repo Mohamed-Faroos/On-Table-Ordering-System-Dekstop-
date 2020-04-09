@@ -47,10 +47,10 @@ public class getFoodTest {
     @Test
     public void testGetFood() {
         System.out.println("Get Food By ID");
-        String id = "P001";
+        String id = "P017";
         DBFood instance = new DBFood(); 
         Food result = instance.getFood(id);
-        assertEquals(430, result.getPrice());
-        assertEquals("C002", result.getCid());
+        assertEquals(300, result.getPrice());
+        assertEquals("C008", result.getCid());
     }
 }
