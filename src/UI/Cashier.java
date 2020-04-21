@@ -51,9 +51,9 @@ public class Cashier extends javax.swing.JFrame {
 
     public static String userId;
     public static String username;
-    public static double total1;
-    public static double sCharge;
-    public static double NetTotal;
+    public static int total1;
+    public static int sCharge;
+    public static int NetTotal;
     public static String TID;
     public static String billNo;
     JasperPrint print;
@@ -488,7 +488,15 @@ public class Cashier extends javax.swing.JFrame {
             txtError.setText("Error : Please Enter Paid Amount");
             billFrame.setText("");
 
-        }else if(Float.parseFloat(txtPaid.getText())<total1)
+        }else 
+        if(!txtPaid.getText().matches("-?\\d+(\\.\\d+)?"))
+        {
+            txtError.setVisible(true);
+            txtError.setText("Error : Enter Valid Amount");
+            billFrame.setText("");
+
+        }else
+        if(Float.parseFloat(txtPaid.getText())<total1)
         {
             txtError.setVisible(true);
             txtError.setText("Error : Please Check the Entered Paid Amount");
@@ -546,10 +554,12 @@ public class Cashier extends javax.swing.JFrame {
     public void getReport() throws ClassNotFoundException, SQLException, JRException, URISyntaxException, FileNotFoundException
     {
         billPanel.removeAll();
-         Class.forName("com.mysql.jdbc.Driver");
+        
+               Class.forName("com.mysql.jdbc.Driver");
                Connection    con = DriverManager.getConnection("jdbc:mysql://localhost/OTOS", "root", "");
                InputStream targetStream = getClass().getResourceAsStream("/Reports/bill.jrxml");
                JasperDesign jd=JRXmlLoader.load(targetStream);
+               
                String Sql="Select * From OrderedProduct where oid="+txtoid.getText();
                
                HashMap map = new HashMap();
@@ -603,7 +613,7 @@ public class Cashier extends javax.swing.JFrame {
             
             for(int i=0;i<al.size();i++)
                 {
-                    double total=al.get(i).getQuantity()*al.get(i).getPrice();
+                    int total=al.get(i).getQuantity()*al.get(i).getPrice();
                     total1=total1+total;
 
                     row[0]=al.get(i).getName();

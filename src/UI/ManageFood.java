@@ -837,6 +837,7 @@ public class ManageFood extends javax.swing.JFrame {
                     txtcmsg1.setVisible(true);
                     txtcmsg1.setText("Success : Category Details Updated Successfully");
                     getAllCategories();
+                    txtcid1.setText("");
                     txtcname1.setText("");
                     txtcdesc1.setText("");
                     
@@ -879,62 +880,75 @@ public class ManageFood extends javax.swing.JFrame {
             txtpmsg.setVisible(true);
             txtpmsg.setText("Error : Upload Food Image");
         }else
-        if(txtfname.getText().isEmpty())
-        {
-            txtpmsg.setVisible(true);
-            txtpmsg.setText("Error : Enter Food Name");
-        }else if(txtprice.getText().isEmpty())
-        {
-            txtpmsg.setVisible(true);
-            txtpmsg.setText("Error : Enter Food Price");      
-        }else if(txtquantity.getText().isEmpty())
-        {
-            txtpmsg.setVisible(true);
-            txtpmsg.setText("Error : Enter Food Quantity");
-        }else{
-            
-
-            String pid=txtfid.getText();
-            String pname=txtfname.getText();
-            
-             String item=cmbCategory.getSelectedItem().toString();
-             int count=item.length();
-             
-            String cid=item.substring(count-4).trim();
-            int price=Integer.parseInt(txtprice.getText());
-            int quantity=Integer.parseInt(txtquantity.getText());
-            int availability=cmbStatus.getSelectedIndex();
-            String image=txtImageurl.getText();
-            
-                       Food fd=new Food();
-                       fd.setPid(pid);
-                       fd.setPname(pname);
-                       fd.setCid(cid);
-                       fd.setPrice(price);
-                       fd.setQuantity(quantity);
-                       fd.setAvailability(availability);
-                       fd.setImage(image);
-            DBFood dbf=new DBFood();
-            boolean rs=dbf.addFood(fd);
-            
-            if(rs)
+            if(txtfname.getText().isEmpty())
             {
                 txtpmsg.setVisible(true);
-                txtpmsg.setText("Success : Product Added Seccessfully");
-                
-                getLastFoodId();
-                txtfname.setText("");
-                cmbCategory.setSelectedIndex(0);
-                txtprice.setText("");
-                txtquantity.setText("");
-                cmbStatus.setSelectedIndex(0);
-                txtImageurl.setText("");
-                imageView.setIcon(null);
-                
-            }else{
-                txtpmsg.setVisible(true);
-                txtpmsg.setText("Error : Please check entered details");
-            }
+                txtpmsg.setText("Error : Enter Food Name");
+            }else if(txtprice.getText().isEmpty())
+                {
+                    txtpmsg.setVisible(true);
+                    txtpmsg.setText("Error : Enter Food Price");      
+                }else
+                    if(!txtprice.getText().matches("-?\\d+(\\.\\d+)?"))
+                    {
+                        txtpmsg.setVisible(true);
+                        txtpmsg.setText("Error : Enter Numeric Value for Food Price ");      
+                    }
+                    else 
+                        if(txtquantity.getText().isEmpty())
+                        {
+                            txtpmsg.setVisible(true);
+                            txtpmsg.setText("Error : Enter Food Quantity");
+
+                        }else 
+                            if(!txtquantity.getText().matches("-?\\d+(\\.\\d+)?"))
+                            {
+                                txtpmsg.setVisible(true);
+                                txtpmsg.setText("Error : Enter Numeric Value for Food Quantity ");
+                            }else{
+            
+
+                            String pid=txtfid.getText();
+                            String pname=txtfname.getText();
+
+                             String item=cmbCategory.getSelectedItem().toString();
+                             int count=item.length();
+
+                            String cid=item.substring(count-4).trim();
+                            int price=Integer.parseInt(txtprice.getText());
+                            int quantity=Integer.parseInt(txtquantity.getText());
+                            int availability=cmbStatus.getSelectedIndex();
+                            String image=txtImageurl.getText();
+            
+                                        Food fd=new Food();
+                                        fd.setPid(pid);
+                                        fd.setPname(pname);
+                                        fd.setCid(cid);
+                                        fd.setPrice(price);
+                                        fd.setQuantity(quantity);
+                                        fd.setAvailability(availability);
+                                        fd.setImage(image);
+                                    DBFood dbf=new DBFood();
+                                    boolean rs=dbf.addFood(fd);
+
+                                if(rs)
+                                {
+                                    txtpmsg.setVisible(true);
+                                    txtpmsg.setText("Success : Product Added Successfully");
+
+                                    getLastFoodId();
+                                    txtfname.setText("");
+                                    cmbCategory.setSelectedIndex(0);
+                                    txtprice.setText("");
+                                    txtquantity.setText("");
+                                    cmbStatus.setSelectedIndex(0);
+                                    txtImageurl.setText("");
+                                    imageView.setIcon(null);
+
+                                }else{
+                                    txtpmsg.setVisible(true);
+                                    txtpmsg.setText("Error : Please check entered details");
+                                }
         }
     }//GEN-LAST:event_btnSubmitMouseClicked
 
@@ -1043,15 +1057,30 @@ public class ManageFood extends javax.swing.JFrame {
         {
             txtpmsg1.setVisible(true);
             txtpmsg1.setText("Error : Enter Food Name");
-        }else if(txtprice1.getText().isEmpty())
+        }else 
+            if(txtprice1.getText().isEmpty())
         {
             txtpmsg1.setVisible(true);
-            txtpmsg1.setText("Error : Enter Food Price");      
-        }else if(txtquantity1.getText().isEmpty())
+            txtpmsg1.setText("Error : Enter Food Price");   
+            
+        }else 
+            if(!txtprice1.getText().matches("-?\\d+(\\.\\d+)?"))
+        {
+            txtpmsg1.setVisible(true);
+            txtpmsg1.setText("Error : Enter Numeric Value for Food Price ");      
+        }
+        else 
+            if(txtquantity1.getText().isEmpty())
         {
             txtpmsg1.setVisible(true);
             txtpmsg1.setText("Error : Enter Food Quantity");
-        }else{
+        }else 
+            if(!txtquantity1.getText().matches("-?\\d+(\\.\\d+)?"))
+        {
+            txtpmsg1.setVisible(true);
+            txtpmsg1.setText("Error : Enter Numeric Value for Food Quantity ");      
+        }
+        else {
             
 
             String pid=txtfid1.getText();

@@ -30,12 +30,13 @@ public class DBUser {
         util=DBUtil.getIntence();
         con=util.getConnection();
     }
-    
+    //Add User
     public boolean addUser(User ow)
     {
         try{
             
-        String sql="INSERT INTO `User`(`uid`, `username`, `password`, `userType`,`status`) VALUES (?,?,?,?,?)";
+        String sql="INSERT INTO `User`(`uid`, `username`, `password`, `userType`,`status`)"
+                    + " VALUES (?,?,?,?,?)";
         
          ps=con.prepareStatement(sql);
          ps.setString(1, ow.getUid());
@@ -54,16 +55,13 @@ public class DBUser {
     }
     
     public User getUser(String id)
-    {
-    
+    {   
         try {
             
             String sql="Select * From User Where uid=?";
             ps=con.prepareStatement(sql);
-            ps.setString(1, id);
-            
-            rs=util.DBEData(ps);
-            
+            ps.setString(1, id);           
+            rs=util.DBEData(ps);       
             if(rs.next())
             {
                 String ID=rs.getString("uid");
@@ -73,8 +71,7 @@ public class DBUser {
                 int status=rs.getInt("status");
                 
                 user = new User(ID, username, password, userType, status);
-            }
-            
+            }           
             
         } catch (Exception e) {
             e.printStackTrace();

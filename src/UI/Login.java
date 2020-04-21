@@ -157,6 +157,7 @@ public class Login extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    //user login
     private void btnLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoginMouseClicked
                 String userId=txtUser.getText();
                 String userPass=txtPass.getText();
@@ -165,31 +166,34 @@ public class Login extends javax.swing.JFrame {
         if(userId.isEmpty())
         {
             txtError.setVisible(true);
-            txtError.setText("Please Enter User ID");
+            txtError.setText("Error: Please Enter User ID");
         }else if(userPass.isEmpty())
         {
             txtError.setVisible(true);
-            txtError.setText("Please Enter User Password");
+            txtError.setText("Error: Please Enter User Password");
         }else {
 
             try
             {
+               //Set User details to User class 
                User user=new User();
                user.setUid(userId);
                user.setPassword(userPass);
                user.setUserType(type);
-               
+               //
                DBLogin dbl=new  DBLogin();
                User us=dbl.login(user);
                
                if(us!=null)
-               {
+               {        
+                        //Get returned User details
                         String id=us.getUid();
                         String password=us.getPassword();
                         int userType=us.getUserType();
                         String username=us.getUsername();
-
-                        String info[]=new String[2];  //creates an array to store  variable values. You can increase the size when needed
+                        
+                        //Store Username & Id as String Array 
+                        String info[]=new String[2];  
                         info[0]=id;
                         info[1]=username;
 
@@ -222,7 +226,7 @@ public class Login extends javax.swing.JFrame {
                         }
                }else{
                              txtError.setVisible(true);
-                             txtError.setText("Please Check the Your Login Details");
+                             txtError.setText("Error : User Details not exist in database");
                         }
             }catch(Exception e)
             {
