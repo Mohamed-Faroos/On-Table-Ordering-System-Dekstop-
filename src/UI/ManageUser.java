@@ -426,16 +426,23 @@ public class ManageUser extends javax.swing.JFrame {
                      txtMsg.setVisible(true);
                      txtMsg.setText("Error : Please Enter password");
                  }else
+                     if(txtPassword.getText().length()<=6)
+                    {
+                        txtMsg.setVisible(true);
+                        txtMsg.setText("Error : password length should be more than 6 charecters");
+                    }else
                      if(txtCpassword.getText().isEmpty())
                      {
                          txtMsg.setVisible(true);
                          txtMsg.setText("Error : Please Enter Confirm assword");
                      }else 
-                         if(!txtPassword.getText().equals(txtCpassword.getText()))
+                         
+                         if(!txtPassword.getText().matches(txtCpassword.getText()))
                          {
                              txtMsg.setVisible(true);
                              txtMsg.setText("Error : Password Not Matched");
                          }else{
+                             
                              try {
                                     String id=txtId.getText();
                                     int userType=cmbType.getSelectedIndex();

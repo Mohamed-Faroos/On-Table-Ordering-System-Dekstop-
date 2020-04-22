@@ -186,21 +186,32 @@ public class UpdateProduct extends javax.swing.JFrame {
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
         try {
-            int row = tblOrderProducts.getSelectedRow();
-        
-            String ID=tblOrderProducts.getValueAt(row, 0).toString();
-
+            if(String.valueOf(tblOrderProducts.getSelectedRow()).equals("-1"))
+            {
+                txtError.setVisible(true);
+                txtError.setText("Error : Plese Search & Select an Item");
+            }else
              if(txtqty.getText().isEmpty())
             {
                 txtError.setVisible(true);
                 txtError.setText("Error : Please Enter Updating Quantity");
-            }else{
-                Food fd=new Food();
-                fd.setPid(ID);
-                fd.setQuantity(Integer.parseInt(txtqty.getText()));
+            }else 
+                 if(!txtqty.getText().matches("-?\\d+(\\.\\d+)?"))
+                {
+                    txtError.setVisible(true);
+                    txtError.setText("Error : Enter Valid Numeric Quantity");      
+                }
+                else{
+                     
+                int row = tblOrderProducts.getSelectedRow();      
+                String  ID=tblOrderProducts.getValueAt(row, 0).toString();
                 
-                DBFood dbc=new DBFood();
-                Boolean res=dbc.updateQuantity(fd);
+                    Food fd=new Food();
+                    fd.setPid(ID);
+                    fd.setQuantity(Integer.parseInt(txtqty.getText()));
+
+                    DBFood dbc=new DBFood();
+                    Boolean res=dbc.updateQuantity(fd);
                 
                 if(res)
                 {

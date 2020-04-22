@@ -380,7 +380,7 @@ public class ManageTablet extends javax.swing.JFrame {
             if(rs){
                 
             txttmsg.setVisible(true);
-            txttmsg.setText("Error : Tablet Details Added Successfully");
+            txttmsg.setText("Success : Tablet Details Added Successfully");
             
             getLastID();
             txtpassword.setText("");
@@ -437,9 +437,10 @@ public class ManageTablet extends javax.swing.JFrame {
             if(rs){
                 
             txttmsg1.setVisible(true);
-            txttmsg1.setText("Error : Tablet Details Updated Successfully");
+            txttmsg1.setText("Success : Tablet Details Updated Successfully");
             
             getAllTablets();
+            txtTid1.setText("");
             txtpassword1.setText("");
             txtcpassword1.setText("");
             cmbStatus1.setSelectedIndex(0);
