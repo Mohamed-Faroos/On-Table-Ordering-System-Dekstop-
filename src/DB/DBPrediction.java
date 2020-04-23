@@ -52,22 +52,25 @@ public class DBPrediction {
     {
         op=new ArrayList<>();
         try {
+            //get sold products on previous 7 day and group by ID
+            String sql="SELECT * FROM OrderedProduct "
+                        + "WHERE order_date >= NOW()-INTERVAL 7 DAY AND"
+                        + " order_date <= NOW()+INTERVAL 1 DAY group by pid";
             
-            String sql="SELECT * FROM OrderedProduct WHERE order_date >= NOW()-INTERVAL 30 DAY AND order_date <= NOW()+INTERVAL 1 DAY group by pid";
             ps=con.prepareStatement(sql);
-            
             rs=util.DBEData(ps);
             
             while(rs.next())
             {
-                
-                String sql1="SELECT sum(quantity) as Qty,order_date as Date FROM OrderedProduct WHERE order_date >= NOW()-INTERVAL 30 DAY "
-                                    + "AND order_date <= NOW()+INTERVAL 1 DAY and pid='"+rs.getString("pid")+"' group by date(order_date)";
+                //get specific product total quantity and date
+                String sql1="SELECT sum(quantity) as Qty,order_date as Date FROM OrderedProduct WHERE"
+                        + " order_date >= NOW()-INTERVAL 7 DAY "
+                        + "AND order_date <= NOW()+INTERVAL 1 DAY and "
+                        + "pid='"+rs.getString("pid")+"' group by date(order_date)";
                 ps1=con.prepareStatement(sql1);
                 rs1=util.DBEData(ps1);
                 
-                int k = 0;
-                
+                int k = 0;               
                 while(rs1.next())
                 {
                     k++;
@@ -75,13 +78,13 @@ public class DBPrediction {
                 
                 if(k>1)
                 {
+                //Set Sold products details in to Array List    
                     OrderProduct orp=new OrderProduct();
                     orp.setPid(rs.getString("pid"));
                     orp.setName(rs.getString("pname"));
                     op.add(orp);
                 
                 }
-
             }
             
         } catch (Exception e) {
@@ -95,6 +98,7 @@ public class DBPrediction {
     public void prediction()
     {
         try{
+                //Get All the Sold product between previous seven days.
                 ArrayList<OrderProduct> orp=(ArrayList<OrderProduct>) soldProducts();
                 PredictedList.clear();
                 
@@ -108,39 +112,32 @@ public class DBPrediction {
                     query.setDatabaseURL("jdbc:mysql://localhost/OTOS");
                     query.setUsername("root");
                     query.setPassword("");
-                    query.setQuery("SELECT sum(quantity) as Qty,order_date as Date FROM OrderedProduct WHERE order_date >= NOW()-INTERVAL 30 DAY "
-                                    + "AND order_date <= NOW()+INTERVAL 1 DAY and pid='"+pid+"' group by date(order_date)"); //Read table
+                    query.setQuery("SELECT sum(quantity) as Qty,order_date as Date FROM OrderedProduct "
+                                    + "WHERE order_date >= NOW()-INTERVAL 7 DAY "
+                                    + "AND order_date <= NOW()+INTERVAL 1 DAY and pid='"+pid+"' "
+                                    + "group by date(order_date)"); //Read table
+                    //Conver dataset
                     Instances dataset = query.retrieveInstances(); //into data
+                    System.out.println(dataset);
 
-                    // new forecaster
-                    //InputStream targetStream = new FileInputStream(new File(getClass().getResourceAsStream("/Assets/FoodPrediction.model").toS));
+                    //Load Model 
                     InputStream in =getClass().getResourceAsStream("/Assets/FoodPrediction.model");
                     WekaForecaster forecaster=(WekaForecaster) SerializationHelper.read(in);
 
-
-                     forecaster.buildForecaster(dataset, System.out);
- 
-                    // prime the forecaster with enough recent historical data
-                    // to cover up to the maximum lag. In our case, we could just supply
-                    // the 12 most recent historical instances, as this covers our maximum
-                    // lag period
+                    //Load Dataset in to forecaser
+                    forecaster.buildForecaster(dataset, System.out);
                     forecaster.primeForecaster(dataset);
 
-                    // forecast for 12 units (months) beyond the end of the
-                    // training data
+                    // Predict Value
                     List<List<NumericPrediction>> forecast = forecaster.forecast(1, System.out);
-
-                    // output the predictions. Outer list is over the steps; inner list is over
-                    // the targets
-                      List<NumericPrediction> predsAtStep = forecast.get(0);
-
-                      NumericPrediction predForTarget = predsAtStep.get(0);
-
-                      System.out.println(dataset);
-                      
-                      double prediction= predForTarget.predicted();
-
-                        int predic=(int) Math.round(prediction);
+                    List<NumericPrediction> predsAtStep = forecast.get(0);
+                    NumericPrediction predForTarget = predsAtStep.get(0);
+                    
+                    //Get Predicted Value
+                    double prediction= predForTarget.predicted();
+                    int predic=(int) Math.round(prediction);
+                    
+                    //Set Predicted Value and Product details
                         pred=new PredictedList();
                         pred.setPid(pid);
                         pred.setPname(pname);

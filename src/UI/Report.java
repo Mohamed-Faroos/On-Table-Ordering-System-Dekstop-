@@ -199,7 +199,8 @@ public class Report extends javax.swing.JFrame {
                Connection    con = DriverManager.getConnection("jdbc:mysql://localhost/OTOS", "root", "");
                InputStream in = getClass().getResourceAsStream("/Reports/sales.jrxml");
                JasperDesign jd=JRXmlLoader.load(in);
-               String Sql="SELECT id,oid,pid,pname,sum(quantity) as quantity,sum(price) as price,order_date,type FROM OrderedProduct"
+               String Sql="SELECT id,oid,pid,pname,sum(quantity) as quantity,sum(price) as price,order_date,type"
+                       + " FROM OrderedProduct"
                        + " where order_date >= date('"+sdate+"') AND order_date <= date('"+edate+"') "
                        + "group by pname";
                

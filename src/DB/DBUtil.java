@@ -17,7 +17,7 @@ import java.sql.Statement;
  * @author Faroos
  */
 public class DBUtil {
-        private static DBUtil db=new DBUtil();
+    private static DBUtil db=new DBUtil();
     // JDBC driver name and database URL
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     static final String DB_URL = "jdbc:mysql://localhost/OTOS";
