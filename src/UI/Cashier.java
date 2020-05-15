@@ -9,13 +9,8 @@ import main.OrderProduct;
 import DB.DBBill;
 import DB.DBOrder;
 import DB.DBOrderProduct;
-import static UI.Chef.userId;
-import static UI.Chef.username;
 import java.awt.BorderLayout;
-import static java.awt.Component.CENTER_ALIGNMENT;
 import java.awt.Container;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
@@ -31,7 +26,6 @@ import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import main.Bill;
 import main.Order;
-import main.User;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -496,7 +490,7 @@ public class Cashier extends javax.swing.JFrame {
             billFrame.setText("");
 
         }else
-        if(Float.parseFloat(txtPaid.getText())<total1)
+        if(Float.parseFloat(txtPaid.getText())<NetTotal)
         {
             txtError.setVisible(true);
             txtError.setText("Error : Please Check the Entered Paid Amount");

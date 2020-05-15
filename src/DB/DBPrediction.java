@@ -136,12 +136,13 @@ public class DBPrediction {
                     //Get Predicted Value
                     double prediction= predForTarget.predicted();
                     int predic=(int) Math.round(prediction);
+                    int predictionValue=Math.abs(predic);
                     
                     //Set Predicted Value and Product details
                         pred=new PredictedList();
                         pred.setPid(pid);
                         pred.setPname(pname);
-                        pred.setPrediction(predic);
+                        pred.setPrediction(predictionValue);
                         PredictedList.addItem(pred);
 
 
