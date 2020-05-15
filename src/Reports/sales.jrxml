@@ -233,7 +233,7 @@
 		<band height="673" splitType="Stretch">
 			<barChart>
 				<chart>
-					<reportElement x="18" y="163" width="519" height="200" uuid="abdcd771-fced-4ccf-a8cc-1e9b62328994"/>
+					<reportElement x="0" y="163" width="555" height="200" uuid="abdcd771-fced-4ccf-a8cc-1e9b62328994"/>
 					<chartTitle/>
 					<chartSubtitle/>
 					<chartLegend/>
@@ -258,7 +258,7 @@
 			</barChart>
 			<barChart>
 				<chart>
-					<reportElement x="18" y="446" width="519" height="211" uuid="43b500b8-e097-49ff-a63b-5290e6cd1b02"/>
+					<reportElement x="0" y="446" width="555" height="211" uuid="43b500b8-e097-49ff-a63b-5290e6cd1b02"/>
 					<chartTitle/>
 					<chartSubtitle/>
 					<chartLegend/>

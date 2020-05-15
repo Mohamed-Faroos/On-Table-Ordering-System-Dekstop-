@@ -7,23 +7,13 @@ package UI;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.text.DateFormatter;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -33,9 +23,6 @@ import net.sf.jasperreports.engine.design.JRDesignQuery;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.view.JasperViewer;
-import org.jdatepicker.impl.JDatePanelImpl;
-import org.jdatepicker.impl.JDatePickerImpl;
-import org.jdatepicker.impl.UtilDateModel;
 
 /**
  *
@@ -199,7 +186,8 @@ public class Report extends javax.swing.JFrame {
                Connection    con = DriverManager.getConnection("jdbc:mysql://localhost/OTOS", "root", "");
                InputStream in = getClass().getResourceAsStream("/Reports/sales.jrxml");
                JasperDesign jd=JRXmlLoader.load(in);
-               String Sql="SELECT id,oid,pid,pname,sum(quantity) as quantity,sum(price) as price,order_date,type FROM OrderedProduct"
+               String Sql="SELECT id,oid,pid,pname,sum(quantity) as quantity,sum(price) as price,order_date,type"
+                       + " FROM OrderedProduct"
                        + " where order_date >= date('"+sdate+"') AND order_date <= date('"+edate+"') "
                        + "group by pname";
                
