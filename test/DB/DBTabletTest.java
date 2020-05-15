@@ -45,8 +45,8 @@ public class DBTabletTest {
      */
     @Test
     public void testAddTablet() {
-        System.out.println("addTablet");
-        Tablet tb = new Tablet("T001", "tablet001", 0,0);
+        System.out.println("Test Add Tablet");
+        Tablet tb = new Tablet("T005", "tablet005", 0,0);
         DBTablet instance = new DBTablet();
         boolean expResult = true;
         boolean result = instance.addTablet(tb);
@@ -57,15 +57,11 @@ public class DBTabletTest {
      * Test of getAllCategory method, of class DBTablet.
      */
     @Test
-    @Ignore
-    public void testGetAllCategory() {
-        System.out.println("getAllCategory");
+    public void testGetAllTablets() {
+        System.out.println("Test Get All Tablets");
         DBTablet instance = new DBTablet();
-        List<Tablet> expResult = null;
         List<Tablet> result = instance.getAllTablets();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertFalse(result.isEmpty());
     }
 
     /**
@@ -73,12 +69,11 @@ public class DBTabletTest {
      */
     @Test
     public void testGetTablet() {
-        System.out.println("getTablet");
-        String id = "T001";
+        System.out.println("Test Get Tablet");
+        String id = "T005";
         DBTablet instance = new DBTablet();
-        Tablet expResult = new Tablet("T001", "tablet001", 0,0);
         Tablet result = instance.getTablet(id);
-        assertEquals(expResult.getPassword(), result.getPassword());
+        assertEquals("tablet005", result.getPassword());
     }
 
     /**
@@ -86,8 +81,8 @@ public class DBTabletTest {
      */
     @Test
     public void testUpdateTablet() {
-        System.out.println("updateTablet");
-        Tablet tb = new Tablet("T001", "tablet0012", 1,0);
+        System.out.println("Test Update Tablet");
+        Tablet tb = new Tablet("T005", "tablet0051", 1,0);
         DBTablet instance = new DBTablet();
         boolean expResult = true;
         boolean result = instance.updateTablet(tb);
@@ -99,9 +94,9 @@ public class DBTabletTest {
      */
     @Test
     public void testLastID() {
-        System.out.println("lastID");
+        System.out.println("Test Get New Tablet ID");
         DBTablet instance = new DBTablet();
-        String expResult = "T002";
+        String expResult = "T006";
         String result = instance.lastID();
         assertEquals(expResult, result);
     }

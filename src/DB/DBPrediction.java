@@ -139,6 +139,7 @@ public class DBPrediction {
                     int predictionValue=Math.abs(predic);
                     
                     //Set Predicted Value and Product details
+
                         pred=new PredictedList();
                         pred.setPid(pid);
                         pred.setPname(pname);
